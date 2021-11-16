@@ -1,2 +1,2 @@
 # dongdinglin.github.io
-Lin, Dongding's Personal Homepage source codes
+Lin, Dongding's Personal Homepage source codes.
