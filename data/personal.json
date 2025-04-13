@@ -1,0 +1,67 @@
+{
+  "name": "Dongding Lin",
+  "title": "PhD Candidate",
+  "department": "Department of Computing",
+  "university": "The Hong Kong Polytechnic University",
+  "location": "Hung Hom, Kowloon, Hong Kong, China",
+  "email": "22037064r (at) connect.polyu.hk or lindongding (at) gmail.com",
+  "bio": "<p>I am currently a PhD candidate in the <a href='https://polyunlp.github.io/' target='_blank'>NLP Group</a> at <a href='https://www.polyu.edu.hk/' target='_blank'>The Hong Kong Polytechnic University</a>, under the supervision of Professor <a href='https://www4.comp.polyu.edu.hk/~cswjli/' target='_blank'>Maggie Wenjie Li</a>. My research focuses on Situated Conversational Recommendation, LLM-based Reasoning, and Multimodal LLMs. Additionally, I am deeply interested in areas such as Speech Generation and Visual Understanding. I am passionate about applying NLP technologies to real-world scenarios, aiming to help people experience the various ways in which AI can enrich their lives.</p><p>Prior to my doctoral studies, I earned a Bachelor's degree from <a href='https://www.sysu.edu.cn/' target='_blank'>Sun Yat-sen University</a>, graduating with a GPA of 3.8/4.0, ranking 37th out of 433 students. I was directly admitted to the Master's program through the postgraduate recommendation and successfully completed my Master's degree, achieving a GPA of 3.9/4.0. During my graduate studies, I was fortunate to be co-advised by <a href='https://minyang.me/' target='_blank'>Prof. Min Yang</a> at SIAT, Chinese Academy of Sciences.</p><p><strong style='color: #e74c3c; font-size: 1.1em; background-color: #f9f9f9; padding: 2px 5px; border-radius: 3px;'>🔍 I am available for the 2025-2026 job market and actively seeking industry research positions in NLP/AI!</strong></p>",
+  "social": [
+    {
+      "platform": "GitHub",
+      "url": "https://github.com/DongdingLin",
+      "icon": "fab fa-github"
+    },
+    {
+      "platform": "Google Scholar",
+      "url": "https://scholar.google.com/citations?view_op=list_works&hl=zh-CN&user=JM4i0R8AAAAJ",
+      "icon": "fas fa-graduation-cap"
+    }
+  ],
+  "cv": {
+    "url": "files/CV_DongdingLin.pdf",
+    "label": "Download CV",
+    "icon": "fas fa-file-pdf"
+  },
+  "contact": {
+    "email": "22037064r@connect.polyu.hk",
+    "location": "Hung Hom, Kowloon, Hong Kong, China"
+  },
+  "research_interests": [
+    {
+      "area": "Large Language Models (LLMs)",
+      "details": "Dialogue systems, Multi-turn interaction, Situated Conversational Recommendation, etc."
+    },
+    {
+      "area": "LLM-based Reasoning",
+      "details": "LLM-based Reasoning, Latent Chain of Thought, etc."
+    },
+    {
+      "area": "Multimodal LLMs",
+      "details": "Multimodal LLMs, Visual Reasoning, Speech Generation, etc."
+    }
+  ],
+  "misc": "<p>I enjoy table tennis, mobile games, reading, and movies.</p><p>I hope to travel around the world someday and explore different cultures and landscapes.</p>",
+  "footerText": "© 2025 Dongding Lin | Last updated: April 2025",
+  "contactPage": {
+    "title": "Contact Me",
+    "introduction": "If you are interested in my research or have any ideas for collaboration, please feel free to contact me through the following methods.",
+    "contactMethods": [
+      {
+        "type": "Email",
+        "icon": "fas fa-envelope",
+        "details": "22037064r@connect.polyu.hk"
+      },
+      {
+        "type": "Office Address",
+        "icon": "fas fa-map-marker-alt",
+        "details": "Hung Hom, Kowloon, Hong Kong, China<br>The Hong Kong Polytechnic University, PQ719"
+      },
+      {
+        "type": "WeChat",
+        "icon": "fab fa-weixin",
+        "details": "WeChat ID: lindongding88"
+      }
+    ]
+  }
+} 

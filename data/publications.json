@@ -1,0 +1,152 @@
+{
+  "publications": [
+    {
+      "title": "SCREEN: A Benchmark for Situated Conversational Recommendation",
+      "authors": [
+        {"name": "Dongding Lin", "is_self": true},
+        {"name": "Jian Wang", "is_self": false},
+        {"name": "Chak Tou Leong", "is_self": false},
+        {"name": "Wenjie Li", "is_self": false}
+      ],
+      "venue": "ACM MM 2024 (The 32nd ACM International Conference on Multimedia)",
+      "impact_factor": "CCF-A",
+      "citations": 0,
+      "links": [
+        {"type": "Paper", "url": "https://dl.acm.org/doi/pdf/10.1145/3664647.3681651"},
+        {"type": "Code", "url": "https://github.com/DongdingLin/SCREEN"}
+      ],
+      "abstract": "Engaging in conversational recommendations within a specific scenario represents a promising paradigm in the real world. Scenario-relevant situations often affect conversations and recommendations from two closely related aspects: varying the appealingness of items to users, namely situated item representation, and shifting user interests in the targeted items, namely situated user preference. We highlight that considering those situational factors is crucial, as this aligns with the realistic conversational recommendation process in the physical world. However, it is challenging yet under-explored. In this work, we are pioneering to bridge this gap and introduce a novel setting: Situated Conversational Recommendation Systems (SCRS). We observe an emergent need for high-quality datasets, and building one from scratch requires tremendous human effort. To this end, we construct a new benchmark, named SCREEN, via a role-playing method based on multimodal large language models. We take two multimodal large language models to play the roles of a user and a recommender, simulating their interactions in a co-observed scene. Our SCREEN comprises over 20k dialogues across 1.5k diverse situations, providing a rich foundation for exploring situational influences on conversational recommendations. Based on the SCREEN, we propose three worth-exploring subtasks and evaluate several representative baseline models. Our evaluations suggest that the benchmark is high quality, establishing a solid experimental basis for future research."
+    },
+    {
+      "title": "Target-constrained Bidirectional Planning for Generation of Target-oriented Proactive Dialogue",
+      "authors": [
+        {"name": "Jian Wang", "is_self": false},
+        {"name": "Dongding Lin", "is_self": true},
+        {"name": "Wenjie Li", "is_self": false}
+      ],
+      "venue": "TOIS 2024 (ACM Transactions on Information Systems)",
+      "impact_factor": "CCF-A",
+      "citations": 2,
+      "links": [
+        {"type": "Paper", "url": "https://dl.acm.org/doi/pdf/10.1145/3652598"},
+        {"type": "Code", "url": "https://github.com/iwangjian/TRIP"}
+      ],
+      "abstract": "Target-oriented proactive dialogue systems aim at leading conversations from a dialogue context toward a pre-determined target, such as making recommendations on designated items or introducing new specific topics. To this end, it is critical for such dialogue systems to plan reasonable actions to drive the conversation proactively, and meanwhile, to plan appropriate topics to move the conversation forward to the target topic smoothly. In this work, we mainly focus on effective dialogue planning for target-oriented dialogue generation. Inspired by decision-making theories in cognitive science, we propose a novel target-constrained bidirectional planning (TRIP) approach, which plans an appropriate dialogue path by looking ahead and looking back. By formulating the planning as a generation task, our TRIP bidirectionally generates a dialogue path consisting of a sequence of <action, topic> pairs using two Transformer decoders. They are expected to supervise each other and converge on consistent actions and topics by minimizing the decision gap and contrastive generation of targets. Moreover, we propose a target-constrained decoding algorithm with a bidirectional agreement to better control the planning process. Subsequently, we adopt the planned dialogue paths to guide dialogue generation in a pipeline manner, where we explore two variants: prompt-based generation and plan-controlled generation. Extensive experiments are conducted on two challenging dialogue datasets, which are re-purposed for exploring target-oriented dialogue. Our automatic and human evaluations demonstrate that the proposed methods significantly outperform various baseline models."
+    },
+    {
+      "title": "Instruct once, chat consistently in multiple rounds: An efficient tuning framework for dialogue",
+      "authors": [
+        {"name": "Jian Wang", "is_self": false},
+        {"name": "Chak Tou Leong", "is_self": false},
+        {"name": "Jiashuo Wang", "is_self": false},
+        {"name": "Dongding Lin", "is_self": true},
+        {"name": "Wenjie Li", "is_self": false},
+        {"name": "Xiao-Yong Wei", "is_self": false}
+      ],
+      "venue": "ACL 2024 (The 62nd Annual Meeting of the Association for Computational Linguistics)",
+      "impact_factor": "CCF-A",
+      "citations": 8,
+      "links": [
+        {"type": "Paper", "url": "https://aclanthology.org/2024.acl-long.219.pdf"},
+        {"type": "Code", "url": "https://github.com/iwangjian/Midi-Tuning"}
+      ],
+      "abstract": "Tuning language models for dialogue generation has been a prevalent paradigm for building capable dialogue agents. Yet, traditional tuning narrowly views dialogue generation as resembling other language generation tasks, ignoring the role disparities between two speakers and the multi-round interactive process that dialogues ought to be. Such a manner often leads to unsatisfactory chat consistency for the built agent. In this work, we emphasize the interactive, communicative nature of dialogue and argue that it is more feasible to model the speaker roles of agent and user separately, enabling the agent to adhere to its role consistently. With this in mind, we propose an efficient Multi-round Interactive Dialogue Tuning (MIDI-Tuning) framework1. It models the agent and user individually with two adapters built upon large language models. The adapters make use of respective utterances round by round in alternating order and they are tuned via a round-level memory caching mechanism. Extensive experiments demonstrate that, our framework performs superior to traditional finetuning and harbors the tremendous potential for improving dialogue consistency."
+    },
+    {
+      "title": "Target-oriented proactive dialogue systems with personalization: Problem formulation and dataset curation",
+      "authors": [
+        {"name": "Jian Wang", "is_self": false},
+        {"name": "Yi Cheng", "is_self": false},
+        {"name": "Dongding Lin", "is_self": true},
+        {"name": "Chak Tou Leong", "is_self": false},
+        {"name": "Wenjie Li", "is_self": false}
+      ],
+      "venue": "EMNLP 2023 (The 2023 Conference on Empirical Methods in Natural Language Processing)",
+      "impact_factor": "CCF-B",
+      "citations": 14,
+      "links": [
+        {"type": "Paper", "url": "https://aclanthology.org/2023.emnlp-main.72.pdf"},
+        {"type": "Code", "url": "https://github.com/iwangjian/TopDial"}
+      ],
+      "abstract": "Target-oriented dialogue systems, designed to proactively steer conversations toward predefined targets or accomplish specific system-side goals, are an exciting area in conversational AI. In this work, by formulating a <dialogue act, topic> pair as the conversation target, we explore a novel problem of personalized target-oriented dialogue by considering personalization during the target accomplishment process. However, there remains an emergent need for high-quality datasets, and building one from scratch requires tremendous human effort. To address this, we propose an automatic dataset curation framework using a role-playing approach. Based on this framework, we construct a large-scale personalized target-oriented dialogue dataset, TopDial, which comprises about 18K multi-turn dialogues. The experimental results show that this dataset is of high quality and could contribute to exploring personalized target-oriented dialogue."
+    },
+    {
+      "title": "COLA: Improving conversational recommender systems by collaborative augmentation",
+      "authors": [
+        {"name": "Dongding Lin*", "is_self": true},
+        {"name": "Jian Wang*", "is_self": false},
+        {"name": "Wenjie Li", "is_self": false}
+      ],
+      "venue": "AAAI 2023 (The 37th AAAI Conference on Artificial Intelligence)",
+      "impact_factor": "CCF-A",
+      "citations": 16,
+      "links": [
+        {"type": "Paper", "url": "https://ojs.aaai.org/index.php/AAAI/article/download/25567/25339"},
+        {"type": "Code", "url": "https://github.com/DongdingLin/COLA"}
+      ],
+      "abstract": "Conversational recommender systems (CRS) aim to employ natural language conversations to suggest suitable products to users. Understanding user preferences for prospective items and learning efficient item representations are crucial for CRS. Despite various attempts, earlier studies mostly learned item representations based on individual conversations, ignoring item popularity embodied among all others. Besides, they still need support in efficiently capturing user preferences since the information reflected in a single conversation is limited. Inspired by collaborative filtering, we propose a collaborative augmentation (COLA) method to simultaneously improve both item representation learning and user preference modeling to address these issues. We construct an interactive user-item graph from all conversations, which augments item representations with user-aware information, ie, item popularity. To improve user preference modeling, we retrieve similar conversations from the training corpus, where the involved items and attributes that reflect the user's potential interests are used to augment the user representation through gate control. Extensive experiments on two benchmark datasets demonstrate the effectiveness of our method."
+    },
+    {
+      "title": "Dialogue Planning via Brownian Bridge Stochastic Process for Goal-directed Proactive Dialogue",
+      "authors": [
+        {"name": "Jian Wang*", "is_self": false},
+        {"name": "Dongding Lin*", "is_self": true},
+        {"name": "Wenjie Li", "is_self": false}
+      ],
+      "venue": "ACL 2023 Findings (The 61st Annual Meeting of the Association for Computational Linguistics)",
+      "impact_factor": "CCF-A",
+      "citations": 18,
+      "links": [
+        {"type": "Paper", "url": "https://aclanthology.org/2023.findings-acl.25.pdf"},
+        {"type": "Code", "url": "https://github.com/iwangjian/Color4Dial"}
+      ],
+      "abstract": "Goal-directed dialogue systems aim to proactively reach a pre-determined target through multi-turn conversations. The key to achieving this task lies in planning dialogue paths that smoothly and coherently direct conversations towards the target. However, this is a challenging and under-explored task. In this work, we propose a coherent dialogue planning approach that uses a stochastic process to model the temporal dynamics of dialogue paths. We define a latent space that captures the coherence of goal-directed behavior using a Brownian bridge process, which allows us to incorporate user feedback flexibly in dialogue planning. Based on the derived latent trajectories, we generate dialogue paths explicitly using pre-trained language models. We finally employ these paths as natural language prompts to guide dialogue generation. Our experiments show that our approach generates more coherent utterances and achieves the goal with a higher success rate."
+    },
+    {
+      "title": "A target-driven planning approach for goal-directed dialog systems",
+      "authors": [
+        {"name": "Jian Wang", "is_self": false},
+        {"name": "Dongding Lin", "is_self": true},
+        {"name": "Wenjie Li", "is_self": false}
+      ],
+      "venue": "TNNLS 2023 (IEEE Transactions on Neural Networks and Learning Systems)",
+      "impact_factor": "CCF-B",
+      "citations": 11,
+      "links": [
+        {"type": "Paper", "url": "https://iwangjian.github.io/pdf/TNNLS2023.wang.pdf"},
+        {"type": "Code", "url": "https://github.com/iwangjian/Plan4RecDial"}
+      ],
+      "abstract": "Existing dialog systems mainly build social bonds reactively with users for chitchat or assist users with specific tasks. In this work, we push forward to a promising yet under-explored proactive dialog paradigm called goal-directed dialog systems, where the “goal” refers to achieving the recommendation for a predetermined target topic through social conversations. We focus on how to make plans that naturally lead users to achieve the goal through smooth topic transitions. To this end, we propose a target-driven planning network (TPNet) to drive the system to transit between different conversation stages. Built upon the widely used transformer architecture, TPNet frames the complicated planning process as a sequence generation task, which plans a dialog path consisting of dialog actions and topics. We then apply our TPNet with planned content to guide dialog generation using various backbone models. Extensive experiments show that our approach obtains the state-of-the-art performance in automatic and human evaluations. The results demonstrate that TPNet affects the improvement of goal-directed dialog systems significantly."
+    },
+    {
+      "title": "Follow me: Conversation planning for target-driven recommendation dialogue systems",
+      "authors": [
+        {"name": "Jian Wang", "is_self": false},
+        {"name": "Dongding Lin", "is_self": true},
+        {"name": "Wenjie Li", "is_self": false}
+      ],
+      "venue": "arXiv 2022",
+      "citations": 11,
+      "links": [
+        {"type": "Paper", "url": "https://arxiv.org/pdf/2208.03516"},
+        {"type": "Code", "url": "https://github.com/iwangjian/Plan4RecDial"}
+      ],
+      "abstract": "Recommendation dialogue systems aim to build social bonds with users and provide high-quality recommendations. This paper pushes forward towards a promising paradigm called target-driven recommendation dialogue systems, which is highly desired yet under-explored. We focus on how to naturally lead users to accept the designated targets gradually through conversations. To this end, we propose a Target-driven Conversation Planning (TCP) framework to plan a sequence of dialogue actions and topics, driving the system to transit between different conversation stages proactively. We then apply our TCP with planned content to guide dialogue generation. Experimental results show that our conversation planning significantly improves the performance of target-driven recommendation dialogue systems."
+    },
+    {
+      "title": "Target-guided knowledge-aware recommendation dialogue system: an empirical investigation",
+      "authors": [
+        {"name": "Dongding Lin", "is_self": true},
+        {"name": "Jian Wang", "is_self": false},
+        {"name": "Wenjie Li", "is_self": false}
+      ],
+      "venue": "CEUR-WS 2022 (Proceedings of the Joint KaRS & ComplexRec Workshop)",
+      "citations": 9,
+      "links": [
+        {"type": "Paper", "url": "https://ceur-ws.org/Vol-2960/paper7.pdf"}
+      ],
+      "abstract": "The target-guided recommendation dialogue system aims to make high-quality recommendations through interactive conversations proactively and naturally. Existing methods still struggle to incorporate background knowledge for coherent response generation, and to recommend appropriate items with respect to dialogue context, user preference and recommendation target. In this paper, we investigate the problem of target-guided knowledge-aware recommendation dialogue and design a dialogue generation system to alleviate the above-mentioned issues. Specifically, we employ pre-trained language models with multi-task learning to jointly learn response generation and goal prediction towards the target. We also present a knowledge-preserving encoding strategy to maintain the facts in background knowledge. Extensive experiments on two benchmark datasets show that our system significantly outperforms various competitive models in terms of both automatic and manual evaluations. We further provide analysis and discussions to demonstrate that our system is effective in leveraging both related knowledge and planned goals to generate fluent, informative and coherent responses towards the target of recommendation."
+    }
+  ],
+  "all_publications_url": "https://scholar.google.com/citations?view_op=list_works&hl=zh-CN&user=JM4i0R8AAAAJ"
+} 

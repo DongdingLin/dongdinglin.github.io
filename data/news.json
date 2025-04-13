@@ -1,0 +1,28 @@
+{
+  "news": [
+    {
+      "date": "November 2024",
+      "content": "I will attend AAAI 2025 in San Diego, USA. Welcome to have a chat with me at the conference!"
+    },
+    {
+      "date": "July 2024",
+      "content": "One paper has been accepted by ACM MM 2024!"
+    },
+    {
+      "date": "May 2024",
+      "content": "One paper has been accepted by ACL 2024!"
+    },
+    {
+      "date": "October 2023",
+      "content": "One paper has been accepted by EMNLP 2023!"
+    },
+    {
+      "date": "May 2023",
+      "content": "One paper has been accepted by ACL 2023 Findings!"
+    },
+    {
+      "date": "November 2022",
+      "content": "One paper has been accepted by AAAI 2023!"
+    }
+  ]
+} 

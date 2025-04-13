@@ -1,0 +1,36 @@
+{
+  "skills": [
+    {
+      "category": "Languages",
+      "skills": [
+        {"name": "Mandarin", "level": 100},
+        {"name": "English", "level": 80},
+        {"name": "Cantonese", "level": 80},
+        {"name": "Chaoshan Dialect", "level": 100}
+      ]
+    },
+    {
+      "skills": [
+        {"name": "Python", "level": 95},
+        {"name": "Java", "level": 85},
+        {"name": "C++", "level": 80},
+        {"name": "JavaScript", "level": 75},
+        {"name": "SQL", "level": 85}
+      ]
+    },
+    {
+      "category": "Frameworks & Libraries",
+      "skills": [
+        {"name": "PyTorch", "level": 90},
+        {"name": "TensorFlow", "level": 85},
+        {"name": "Scikit-learn", "level": 90},
+        {"name": "Hugging Face", "level": 95},
+        {"name": "Matlab", "level": 80}
+      ]
+    },
+    {
+      "category": "Tools & Technologies",
+      "items": ["Git", "Linux", "LaTeX"]
+    }
+  ]
+} 

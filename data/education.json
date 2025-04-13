@@ -1,0 +1,22 @@
+{
+  "education": [
+    {
+      "degree": "PhD Candidate",
+      "field": "The Department of Computing",
+      "institution": "The Hong Kong Polytechnic University",
+      "period": "2022-Present"
+    },
+    {
+      "degree": "Master's Degree",
+      "field": "School of Computer Science and Engineering",
+      "institution": "Sun Yat-sen University",
+      "period": "2017-2020"
+    },
+    {
+      "degree": "Bachelor's Degree",
+      "field": "School of Computer Science and Engineering",
+      "institution": "Sun Yat-sen University",
+      "period": "2013-2017"
+    }
+  ]
+} 

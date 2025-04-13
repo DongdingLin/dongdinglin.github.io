@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Dongding Lin, PhD Candidate in Computer Science focusing on NLP, ML and AI research.">
+    <meta name="keywords" content="Dongding Lin, Contact, Computer Science, NLP, Machine Learning, AI">
+    <meta name="author" content="Dongding Lin">
+    <meta name="robots" content="index, follow">
+    <title>Contact Me - Dongding Lin's Personal Homepage</title>
+    <!-- Favicons -->
+    <link rel="icon" href="pic/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="pic/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="pic/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="pic/favicon.png">
+    <link rel="shortcut icon" href="pic/favicon.png">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Contact Dongding Lin">
+    <meta property="og:description" content="Get in touch with Dongding Lin, PhD Candidate in Computer Science.">
+    <meta property="og:image" content="pic/profile.jpg">
+    <meta property="og:url" content="https://lindongding.github.io/contact.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <style>
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .form-group input, 
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .contact-methods {
+            display: flex;
+            justify-content: space-around;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .contact-method {
+            text-align: center;
+            margin: 10px;
+            padding: 20px;
+            min-width: 200px;
+        }
+        
+        .contact-method i {
+            font-size: 2em;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading error message (hidden by default) -->
+    <div id="loading-error" style="display: none; text-align: center; padding: 20px; background-color: #f8d7da; color: #721c24; margin: 20px; border-radius: 5px; font-weight: bold; border: 2px solid #f5c6cb;">
+        Failed to load data. Please refresh the page or try again later.
+    </div>
+
+    <div class="nav-bar">
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <div class="main-content" style="flex: 1;">
+            <h1><i class="fas fa-paper-plane"></i> <span id="contact-title">Loading...</span></h1>
+            
+            <p id="contact-introduction">Loading introduction...</p>
+            
+            <div id="contact-methods-container" class="contact-methods">
+                Loading contact methods...
+            </div>
+        </div>
+    </div>
+    
+    <a href="#" id="back-to-top" title="Back to Top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    
+    <footer>
+        <span id="footer-text">Loading footer...</span>
+    </footer>
+
+    <script>
+        // Back to top button functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToTopButton = document.getElementById('back-to-top');
+            
+            // Show button when user scrolls down 300px
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.style.display = 'flex';
+                } else {
+                    backToTopButton.style.display = 'none';
+                }
+            });
+            
+            // Scroll to top when button is clicked
+            backToTopButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            });
+        });
+    </script>
+    <script src="theme.js"></script>
+    <script src="js/data-loader.js"></script>
+</body>
+</html> 
