@@ -313,19 +313,29 @@ function renderPublications(publications) {
         View on Google Scholar <i class="fas fa-graduation-cap"></i>
     </a>`;
     
+    // 确保按钮在各种模式下都可见
+    seeMoreBtn.style.display = 'block';
+    seeMoreBtn.style.visibility = 'visible';
+    seeMoreBtn.style.opacity = '1';
+    
     // Directly bind the correct URL to the click event
     const scholarLink = seeMoreBtn.querySelector('a');
-    scholarLink.addEventListener('click', function(e) {
-        e.preventDefault();
+    if (scholarLink) {
+        scholarLink.style.visibility = 'visible';
+        scholarLink.style.opacity = '1';
         
-        // Force open the correct URL
-        try {
-            window.open(publicationsUrl, '_blank', 'noopener,noreferrer');
-        } catch (error) {
-            // As a fallback, try direct assignment
-            window.location.href = publicationsUrl;
-        }
-    });
+        scholarLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Force open the correct URL
+            try {
+                window.open(publicationsUrl, '_blank', 'noopener,noreferrer');
+            } catch (error) {
+                // As a fallback, try direct assignment
+                window.location.href = publicationsUrl;
+            }
+        });
+    }
 }
 
 // Render education
