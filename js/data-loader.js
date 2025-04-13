@@ -271,7 +271,7 @@ function renderPublications(publications) {
             html += `
                 <div class="publication">
                     <p>
-                        <strong>"${pub.title || 'Untitled'}"</strong><br>
+                        <strong>${pub.title || 'Untitled'}</strong><br>
                         ${authorsHtml}<br>
                         <em>${pub.venue || 'Venue information unavailable'}</em><br>
                         ${rankHtml ? `${rankHtml}<br>` : ''}
