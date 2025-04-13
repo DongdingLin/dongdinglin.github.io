@@ -1,4 +1,4 @@
-# lindongding.github.io
+# dongdinglin.github.io
 Dongding Lin's Professional Portfolio & Academic Homepage
 
 ## About
@@ -21,7 +21,7 @@ This is a professional portfolio and academic homepage showcasing expertise in N
 - Potential Research Collaborators
 
 ## Usage
-Visit https://lindongding.github.io to view the professional portfolio.
+Visit https://dongdinglin.github.io to view the professional portfolio.
 
 ## Technical Implementation
 - Built with HTML5, CSS3, and JavaScript
@@ -32,8 +32,8 @@ Visit https://lindongding.github.io to view the professional portfolio.
 
 ## Local Development
 For local development and preview:
-1. Clone the repository: `git clone https://github.com/lindongding/lindongding.github.io.git`
-2. Enter the project directory: `cd lindongding.github.io`
+1. Clone the repository: `git clone https://github.com/lindongding/dongdinglin.github.io.git`
+2. Enter the project directory: `cd dongdinglin.github.io`
 3. Open the index.html file in your browser for local preview
 4. Alternatively, run a local server: `python -m http.server 8000` and visit http://localhost:8000
 
