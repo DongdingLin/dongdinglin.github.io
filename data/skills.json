@@ -10,6 +10,7 @@
       ]
     },
     {
+      "category": "Programming Languages",
       "skills": [
         {"name": "Python", "level": 95},
         {"name": "Java", "level": 85},
