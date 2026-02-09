@@ -127,27 +127,6 @@
         <span id="footer-text">Loading footer...</span>
     </footer>
 
-    <script>
-        // Back to top button functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const backToTopButton = document.getElementById('back-to-top');
-            
-            // Show button when user scrolls down 300px
-            window.addEventListener('scroll', function() {
-                if (window.pageYOffset > 300) {
-                    backToTopButton.style.display = 'flex';
-                } else {
-                    backToTopButton.style.display = 'none';
-                }
-            });
-            
-            // Scroll to top when button is clicked
-            backToTopButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                window.scrollTo({top: 0, behavior: 'smooth'});
-            });
-        });
-    </script>
     <script src="theme.js"></script>
     <script src="js/data-loader.js"></script>
 </body>

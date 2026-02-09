@@ -14,6 +14,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="pic/favicon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="pic/favicon.png">
     <link rel="shortcut icon" href="pic/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,7 +27,7 @@
     <meta property="og:url" content="https://lindongding.github.io">
     <meta name="twitter:card" content="summary_large_image">
 </head>
-<body>
+<body class="homepage">
     <!-- Loading error message (hidden by default) -->
     <div id="loading-error" style="display: none; text-align: center; padding: 20px; background-color: #f8d7da; color: #721c24; margin: 20px; border-radius: 5px; font-weight: bold; border: 2px solid #f5c6cb;">
         Failed to load data. Please refresh the page or try again later.
@@ -39,84 +42,113 @@
 
     <div class="container">
         <div class="main-content">
-            <h1 id="name">Loading...</h1>
-            <p id="personal-info">
-                Loading personal information...
-            </p>
+            <section class="hero-card">
+                <h1 id="name">Loading...</h1>
+                <p id="personal-info">
+                    Loading personal information...
+                </p>
 
-            <div id="social-links" class="social-links">
-                Loading social links...
-            </div>
+                <div id="job-seeking-banner" class="job-seeking-banner" hidden>
+                    <i class="fas fa-briefcase"></i>
+                    <span class="job-seeking-text"></span>
+                </div>
 
-            <p id="bio">
-                Loading bio...
-            </p>
+                <div id="social-links" class="social-links">
+                    Loading social links...
+                </div>
 
-            <h2><i class="fas fa-newspaper"></i> News</h2>
-            <div id="news-container">
-                Loading news...
-            </div>
+                <p id="bio">
+                    Loading bio...
+                </p>
+            </section>
 
-            <h2><i class="fas fa-flask"></i> Research Interests</h2>
-            <p>My research interests include the following areas:</p>
-            <ul id="research-interests">
-                Loading research interests...
-            </ul>
-            <p><em>I am actively looking for collaborators interested in the above research directions. Please feel free to contact me if you are interested.</em></p>
+            <section class="section-card">
+                <h2><i class="fas fa-code"></i> Skills</h2>
+                <div id="skills-container" class="skills-container">
+                    Loading skills...
+                </div>
+            </section>
 
-            <h2><i class="fas fa-code"></i> Skills</h2>
-            <div id="skills-container" class="skills-container">
-                Loading skills...
-            </div>
+            <section class="section-card">
+                <h2><i class="fas fa-file-alt"></i> Selected Publications</h2>
+                <div id="publications-container" class="publications-container">
+                    Loading publications...
+                </div>
 
-            <h2><i class="fas fa-file-alt"></i> Selected Publications</h2>
-            <div id="publications-container" class="publications-container">
-                Loading publications...
-            </div>
+                <div id="see-more-publications" class="see-more-publications">
+                    <a href="#" class="see-more-button">See All Publications <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </section>
 
-            <div id="see-more-publications" class="see-more-publications">
-                <a href="#" class="see-more-button">See All Publications <i class="fas fa-arrow-right"></i></a>
-            </div>
+            <section class="section-card">
+                <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+                <ul id="education-container">
+                    Loading education...
+                </ul>
+            </section>
 
-            <h2><i class="fas fa-graduation-cap"></i> Education</h2>
-            <ul id="education-container">
-                Loading education...
-            </ul>
+            <section class="section-card">
+                <h2><i class="fas fa-briefcase"></i> Experience</h2>
+                <ul id="experience-container">
+                    Loading experience...
+                </ul>
+            </section>
 
-            <h2><i class="fas fa-briefcase"></i> Experience</h2>
-            <ul id="experience-container">
-                Loading experience...
-            </ul>
+            <section class="section-card">
+                <h2><i class="fas fa-award"></i> Honors and Awards</h2>
+                <div id="awards-container">
+                    Loading awards...
+                </div>
+            </section>
 
-            <h2><i class="fas fa-award"></i> Honors and Awards</h2>
-            <ul id="awards-container">
-                Loading awards...
-            </ul>
+            <section class="section-card">
+                <h2><i class="fas fa-tasks"></i> Academic Services</h2>
+                <p><strong>Reviewer</strong></p>
+                <ul id="service-container">
+                    Loading academic services...
+                </ul>
+            </section>
 
-            <h2><i class="fas fa-tasks"></i> Academic Services</h2>
-            <p><strong>Reviewer</strong></p>
-            <ul id="service-container">
-                Loading academic services...
-            </ul>
+            <section class="section-card">
+                <h2><i class="fas fa-chalkboard-teacher"></i> Teaching Experience</h2>
+                <ul id="teaching-container">
+                    Loading teaching experience...
+                </ul>
+            </section>
 
-            <h2><i class="fas fa-chalkboard-teacher"></i> Teaching Experience</h2>
-            <ul id="teaching-container">
-                Loading teaching experience...
-            </ul>
-
-            <h2><i class="fas fa-coffee"></i> Miscellaneous</h2>
-            <p id="misc-content">
-                Loading miscellaneous information...
-            </p>
+            <section class="section-card">
+                <h2><i class="fas fa-coffee"></i> Miscellaneous</h2>
+                <p id="misc-content">
+                    Loading miscellaneous information...
+                </p>
+            </section>
         </div>
 
-        <div class="sidebar">
-            <img src="pic/profile.jpg" alt="Photo of Dongding Lin" class="profile-pic">
-            <div class="contact-info">
-                <p><i class="fas fa-envelope"></i> <span id="contact-email">Loading email...</span></p>
-                <p><i class="fas fa-map-marker-alt"></i> <span id="contact-location">Loading location...</span></p>
+        <aside class="sidebar">
+            <div class="profile-card">
+                <img src="pic/profile.jpg" alt="Photo of Dongding Lin" class="profile-pic" loading="lazy">
+                <div class="contact-info">
+                    <p><i class="fas fa-envelope"></i> <span id="contact-email">Loading email...</span></p>
+                    <p><i class="fas fa-map-marker-alt"></i> <span id="contact-location">Loading location...</span></p>
+                </div>
             </div>
-        </div>
+
+            <section class="section-card sidebar-card">
+                <h2><i class="fas fa-newspaper"></i> News</h2>
+                <div id="news-container">
+                    Loading news...
+                </div>
+            </section>
+
+            <section class="section-card sidebar-card">
+                <h2><i class="fas fa-flask"></i> Research Interests</h2>
+                <p>My research interests include the following areas:</p>
+                <ul id="research-interests">
+                    Loading research interests...
+                </ul>
+                <p><em>I am actively looking for collaborators interested in the above research directions. Please feel free to contact me if you are interested.</em></p>
+            </section>
+        </aside>
     </div>
 
     <a href="#" id="back-to-top" title="Back to Top">
@@ -127,41 +159,6 @@
         <span id="footer-text">Loading footer...</span>
     </footer>
 
-    <script>
-        // Toggle abstract visibility
-        function toggleAbstract(id) {
-            const abstract = document.getElementById(id);
-            if (abstract.style.display === 'none') {
-                abstract.style.display = 'block';
-                // Smooth scroll to make abstract visible
-                setTimeout(() => {
-                    abstract.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }, 100);
-            } else {
-                abstract.style.display = 'none';
-            }
-        }
-        
-        // Back to top button functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const backToTopButton = document.getElementById('back-to-top');
-            
-            // Show button when user scrolls down 300px
-            window.addEventListener('scroll', function() {
-                if (window.pageYOffset > 300) {
-                    backToTopButton.style.display = 'flex';
-                } else {
-                    backToTopButton.style.display = 'none';
-                }
-            });
-            
-            // Scroll to top when button is clicked
-            backToTopButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                window.scrollTo({top: 0, behavior: 'smooth'});
-            });
-        });
-    </script>
     <script src="theme.js"></script>
     <script src="js/data-loader.js"></script>
 </body>

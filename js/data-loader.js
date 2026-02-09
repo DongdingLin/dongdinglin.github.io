@@ -1,146 +1,214 @@
 // Data loader for personal website
+const FALLBACK_PUBLICATIONS_URL = 'https://scholar.google.com/citations?view_op=list_works&hl=en&user=JM4i0R8AAAAJ';
+const DATA_VERSION = '2026-02-09';
+const HOME_DATA_FILES = [
+    'personal.json',
+    'publications.json',
+    'education.json',
+    'experience.json',
+    'skills.json',
+    'news.json'
+];
+const CONTACT_DATA_FILES = ['personal.json'];
+const RECENT_NEWS_WINDOW_DAYS = 365;
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Determine if current page is contact page
-    const isContactPage = window.location.pathname.includes('contact.html');
-    
-    // 添加随机参数或时间戳以防止缓存
-    const timestamp = new Date().getTime();
-    
-    // Load all data files
-    Promise.all([
-        fetch(`data/personal.json?t=${timestamp}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`无法加载 personal.json: ${response.status}`);
-                }
-                return response.json();
-            }),
-        fetch(`data/publications.json?t=${timestamp}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`无法加载 publications.json: ${response.status}`);
-                }
-                return response.json();
-            }),
-        fetch(`data/education.json?t=${timestamp}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`无法加载 education.json: ${response.status}`);
-                }
-                return response.json();
-            }),
-        fetch(`data/experience.json?t=${timestamp}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`无法加载 experience.json: ${response.status}`);
-                }
-                return response.json();
-            }),
-        fetch(`data/skills.json?t=${timestamp}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`无法加载 skills.json: ${response.status}`);
-                }
-                return response.json();
-            }),
-        fetch(`data/news.json?t=${timestamp}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`无法加载 news.json: ${response.status}`);
-                }
-                return response.json();
-            })
-    ])
-    .then(([personal, publications, education, experience, skills, news]) => {
-        try {
-            // Render footer and set title for all pages
-            renderFooter(personal.footerText);
-            document.title = `${isContactPage ? 'Contact' : ''} ${personal.name}'s Personal Homepage`.trim();
-            
-            if (isContactPage) {
-                // Render contact page content
-                renderContactPage(personal);
-            } else {
-                // Render all sections for the main page
-                renderPersonalInfo(personal);
-                
-                // Only render highlights if they exist
-                if (personal.highlights && Array.isArray(personal.highlights) && personal.highlights.length > 0) {
-                    // Check if highlights container exists in the DOM
-                    const highlightsContainer = document.getElementById('highlights-grid');
-                    if (highlightsContainer) {
-                        renderHighlights(personal.highlights);
-                    }
-                }
-                
-                renderNews(news.news);
-                renderResearchInterests(personal.research_interests);
-                renderSkills(skills.skills);
-                renderPublications(publications.publications);
-                renderEducation(education.education);
-                renderExperience(experience);
-                renderMisc(personal.misc);
-            }
-        } catch (renderError) {
-            document.getElementById('loading-error').style.display = 'block';
-            document.getElementById('loading-error').textContent = `渲染错误: ${renderError.message}`;
-        }
-    })
-    .catch(error => {
-        document.getElementById('loading-error').style.display = 'block';
-        document.getElementById('loading-error').textContent = `数据加载失败: ${error.message}. 请刷新页面或稍后重试。`;
+    initBackToTop();
+    initPage().catch(error => {
+        showLoadingError(`Failed to load data: ${error.message}. Please refresh the page and try again.`);
     });
 });
 
-// Render personal information
-function renderPersonalInfo(data) {
-    // Set name in header
-    document.getElementById('name').textContent = data.name;
-    
-    // Set personal info
-    const personalInfoHtml = `
-        ${data.title}<br>
-        ${data.department}<br>
-        ${data.university}<br>
-        ${data.location}<br>
-        <strong>Email</strong>: ${data.email}
-    `;
-    document.getElementById('personal-info').innerHTML = personalInfoHtml;
-    
-    // Set bio - using innerHTML to support HTML content including links
-    // Replace \n with <br> tags to ensure proper line breaks in HTML
-    const bioWithLineBreaks = data.bio.replace(/\\n/g, '<br><br>');
-    document.getElementById('bio').innerHTML = bioWithLineBreaks;
-    
-    // Set contact info in sidebar
-    document.getElementById('contact-email').textContent = data.contact.email;
-    document.getElementById('contact-location').textContent = data.contact.location;
-    
-    // Set social links
-    const socialLinksContainer = document.getElementById('social-links');
-    let socialHtml = '';
-    
-    data.social.forEach((link, index) => {
-        socialHtml += `<a href="${link.url}" target="_blank"><i class="${link.icon}"></i> ${link.platform}</a>`;
-        if (index < data.social.length - 1) {
-            socialHtml += ' | ';
+async function initPage() {
+    const isContactPage = window.location.pathname.includes('contact.html');
+    const fileNames = isContactPage ? CONTACT_DATA_FILES : HOME_DATA_FILES;
+    const dataByFile = await loadDataFiles(fileNames);
+
+    try {
+        const personal = dataByFile['personal.json'] || {};
+        const nameForTitle = personal.name || 'Dongding Lin';
+
+        renderFooter(personal.footerText || '');
+        document.title = `${isContactPage ? 'Contact' : ''} ${nameForTitle}'s Personal Homepage`.trim();
+
+        if (isContactPage) {
+            renderContactPage(personal);
+            return;
+        }
+
+        renderPersonalInfo(personal);
+
+        if (Array.isArray(personal.highlights) && personal.highlights.length > 0) {
+            const highlightsContainer = document.getElementById('highlights-grid');
+            if (highlightsContainer) {
+                renderHighlights(personal.highlights);
+            }
+        }
+
+        renderNews((dataByFile['news.json'] || {}).news);
+        renderResearchInterests(personal.research_interests);
+        renderSkills((dataByFile['skills.json'] || {}).skills);
+        renderPublications(dataByFile['publications.json'] || {});
+        renderEducation((dataByFile['education.json'] || {}).education);
+        renderExperience(dataByFile['experience.json'] || {});
+        renderMisc(personal.misc);
+        initPublicationAbstractToggle();
+    } catch (renderError) {
+        showLoadingError(`Render error: ${renderError.message}`);
+    }
+}
+
+async function loadDataFiles(fileNames) {
+    const uniqueFiles = [...new Set(fileNames)];
+    const entries = await Promise.all(
+        uniqueFiles.map(async fileName => [fileName, await fetchJson(fileName)])
+    );
+
+    return Object.fromEntries(entries);
+}
+
+function fetchJson(fileName) {
+    return fetch(buildDataUrl(fileName), { cache: 'default' }).then(response => {
+        if (!response.ok) {
+            throw new Error(`${fileName}: ${response.status}`);
+        }
+        return response.json();
+    });
+}
+
+function buildDataUrl(fileName) {
+    const versionSuffix = DATA_VERSION ? `?v=${encodeURIComponent(DATA_VERSION)}` : '';
+    return `data/${fileName}${versionSuffix}`;
+}
+
+function showLoadingError(message) {
+    const loadingError = document.getElementById('loading-error');
+    if (!loadingError) {
+        return;
+    }
+
+    loadingError.style.display = 'block';
+    loadingError.textContent = message;
+}
+
+function initBackToTop() {
+    const backToTopButton = document.getElementById('back-to-top');
+    if (!backToTopButton) {
+        return;
+    }
+
+    const toggleVisibility = () => {
+        backToTopButton.style.display = window.pageYOffset > 300 ? 'flex' : 'none';
+    };
+
+    window.addEventListener('scroll', toggleVisibility, { passive: true });
+    toggleVisibility();
+
+    backToTopButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+
+function initPublicationAbstractToggle() {
+    const container = document.getElementById('publications-container');
+    if (!container || container.dataset.abstractBound === 'true') {
+        return;
+    }
+
+    container.addEventListener('click', function(event) {
+        const button = event.target.closest('.abstract-toggle');
+        if (!button) {
+            return;
+        }
+
+        const abstractId = button.getAttribute('data-target');
+        const abstract = document.getElementById(abstractId);
+        if (!abstract) {
+            return;
+        }
+
+        const expanding = abstract.hidden;
+        abstract.hidden = !expanding;
+        button.setAttribute('aria-expanded', String(expanding));
+        button.textContent = expanding ? 'Hide Abstract' : 'Abstract';
+
+        if (expanding) {
+            setTimeout(() => {
+                abstract.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
         }
     });
-    
-    // Add CV button
-    socialHtml += ` | <a href="${data.cv.url}" target="_blank" class="cv-button"><i class="${data.cv.icon}"></i> ${data.cv.label}</a>`;
-    
-    socialLinksContainer.innerHTML = socialHtml;
-    
-    // Set page title
-    document.title = `${data.name}'s Personal Homepage`;
+
+    container.dataset.abstractBound = 'true';
+}
+
+// Render personal information
+function renderPersonalInfo(data) {
+    const contact = data.contact || {};
+
+    document.getElementById('name').textContent = data.name || '';
+
+    const personalInfoHtml = [
+        escapeHtml(data.title || ''),
+        escapeHtml(data.department || ''),
+        escapeHtml(data.university || ''),
+        escapeHtml(data.location || ''),
+        `<strong>Email</strong>: ${escapeHtml(data.email || '')}`
+    ].join('<br>');
+    document.getElementById('personal-info').innerHTML = personalInfoHtml;
+
+    const bioWithLineBreaks = String(data.bio || '').replace(/\\n/g, '<br><br>');
+    document.getElementById('bio').innerHTML = bioWithLineBreaks;
+
+    document.getElementById('contact-email').textContent = contact.email || '';
+    document.getElementById('contact-location').textContent = contact.location || '';
+
+    const banner = document.getElementById('job-seeking-banner');
+    if (banner) {
+        const bannerText = typeof data.jobSeekingBanner === 'string' ? data.jobSeekingBanner.trim() : '';
+        const bannerTextEl = banner.querySelector('.job-seeking-text');
+
+        if (bannerText) {
+            if (bannerTextEl) {
+                bannerTextEl.textContent = bannerText;
+            }
+            banner.hidden = false;
+        } else {
+            banner.hidden = true;
+        }
+    }
+
+    const socialLinksContainer = document.getElementById('social-links');
+    const socialLinks = Array.isArray(data.social)
+        ? data.social.map(link => {
+            const iconClass = typeof link.icon === 'string' ? link.icon : 'fas fa-link';
+            const platform = escapeHtml(link.platform || 'Link');
+            const url = sanitizeUrl(link.url);
+            return `<a href="${url}" target="_blank" rel="noopener noreferrer"><i class="${iconClass}"></i> ${platform}</a>`;
+        })
+        : [];
+
+    const cvEntries = Array.isArray(data.cvs) ? data.cvs : (data.cv ? [data.cv] : []);
+    const cvLinks = cvEntries.map(item => {
+        const iconClass = typeof item.icon === 'string' ? item.icon : 'fas fa-file';
+        const label = escapeHtml(item.label || 'CV');
+        const url = sanitizeUrl(item.url);
+        return `<a href="${url}" target="_blank" class="cv-button" rel="noopener noreferrer"><i class="${iconClass}"></i> ${label}</a>`;
+    });
+
+    socialLinksContainer.innerHTML = [...socialLinks, ...cvLinks].join('');
+
+    if (data.name) {
+        document.title = `${data.name}'s Personal Homepage`;
+    }
 }
 
 // Render professional highlights
 function renderHighlights(highlights) {
     const container = document.getElementById('highlights-grid');
     let html = '';
-    
+
     highlights.forEach(item => {
         html += `
             <div class="highlight-item">
@@ -148,137 +216,160 @@ function renderHighlights(highlights) {
                     <i class="${item.icon}"></i>
                 </div>
                 <div class="highlight-content">
-                    <h3>${item.title}</h3>
-                    <p>${item.description}</p>
+                    <h3>${escapeHtml(item.title || '')}</h3>
+                    <p>${escapeHtml(item.description || '')}</p>
                 </div>
             </div>
         `;
     });
-    
+
     container.innerHTML = html;
 }
 
 // Render news items
 function renderNews(newsItems) {
     const container = document.getElementById('news-container');
+    const items = Array.isArray(newsItems) ? [...newsItems] : [];
     let html = '';
-    
-    newsItems.forEach((item, index) => {
+
+    items.sort((a, b) => (parseNewsDate(b.date) || 0) - (parseNewsDate(a.date) || 0));
+
+    items.forEach(item => {
+        const isRecent = isRecentNews(item.date);
         html += `
             <div class="news-item">
-                <p>${index < 3 ? '🔥 ' : ''}[${item.date}] ${item.content}</p>
+                <p>${isRecent ? '<span class="news-badge">NEW</span> ' : ''}<span class="news-date">[${escapeHtml(item.date || 'Date TBD')}]</span> ${escapeHtml(item.content || '')}</p>
             </div>
         `;
     });
-    
-    container.innerHTML = html;
+
+    container.innerHTML = html || '<p>No news updates yet.</p>';
+}
+
+function parseNewsDate(rawDate) {
+    if (typeof rawDate !== 'string') {
+        return null;
+    }
+
+    const normalized = rawDate.trim();
+    if (!normalized) {
+        return null;
+    }
+
+    const directTimestamp = Date.parse(normalized);
+    if (!Number.isNaN(directTimestamp)) {
+        return directTimestamp;
+    }
+
+    const monthYearTimestamp = Date.parse(`1 ${normalized}`);
+    if (!Number.isNaN(monthYearTimestamp)) {
+        return monthYearTimestamp;
+    }
+
+    return null;
+}
+
+function isRecentNews(rawDate) {
+    const parsedDate = parseNewsDate(rawDate);
+    if (!parsedDate) {
+        return false;
+    }
+
+    const daysAgo = (Date.now() - parsedDate) / (1000 * 60 * 60 * 24);
+    return daysAgo >= 0 && daysAgo <= RECENT_NEWS_WINDOW_DAYS;
 }
 
 // Render research interests
 function renderResearchInterests(interests) {
     const container = document.getElementById('research-interests');
+    const list = Array.isArray(interests) ? interests : [];
     let html = '';
-    
-    interests.forEach(item => {
-        html += `<li><strong>${item.area}</strong>: ${item.details}</li>`;
+
+    list.forEach(item => {
+        html += `<li><strong>${escapeHtml(item.area || '')}</strong>: ${escapeHtml(item.details || '')}</li>`;
     });
-    
+
     container.innerHTML = html;
 }
 
 // Render skills
 function renderSkills(skillCategories) {
     const container = document.getElementById('skills-container');
-    let html = '<table style="width: 100%;">';
-    
-    skillCategories.forEach(category => {
-        html += `<tr>
-            <td style="vertical-align: top; padding-right: 20px; font-weight: bold; width: 30%;">${category.category}</td>
-            <td style="vertical-align: top;">`;
-        
-        if (category.skills) {
-            // 对于带级别的技能，直接显示名称
-            const skillNames = category.skills.map(skill => skill.name);
-            html += skillNames.join(', ');
-        } else if (category.items) {
-            // 对于简单列表，直接显示所有项目
-            html += category.items.join(', ');
-        }
-        
-        html += '</td></tr>';
+    const categories = Array.isArray(skillCategories) ? skillCategories : [];
+    let html = '<div class="skills-grid">';
+
+    categories.forEach(category => {
+        const categoryName = escapeHtml(category.category || 'Other');
+        const rawItems = Array.isArray(category.skills)
+            ? category.skills.map(skill => skill.name)
+            : (Array.isArray(category.items) ? category.items : []);
+        const tags = rawItems
+            .map(item => String(item || '').trim())
+            .filter(item => item.length > 0)
+            .map(item => `<span class="skill-tag">${escapeHtml(item)}</span>`)
+            .join('');
+
+        html += `
+            <section class="skill-group">
+                <h3>${categoryName}</h3>
+                <div class="skill-tags">${tags || '<span class="skill-tag skill-tag-empty">TBD</span>'}</div>
+            </section>
+        `;
     });
-    
-    html += '</table>';
+
+    html += '</div>';
     container.innerHTML = html;
 }
 
 // Render publications
-function renderPublications(publications) {
+function renderPublications(publicationsData) {
     const container = document.getElementById('publications-container');
+    const publications = Array.isArray(publicationsData.publications) ? publicationsData.publications : [];
     let html = '';
-    
+
     publications.forEach((pub, index) => {
         try {
-            // Build authors string with self highlighted
-            let authorsHtml = '';
-            if (pub.authors && Array.isArray(pub.authors)) {
-                pub.authors.forEach((author, i) => {
-                    if (author.is_self) {
-                        authorsHtml += `<strong>${author.name}</strong>`;
-                    } else {
-                        authorsHtml += author.name;
-                    }
-                    
-                    if (i < pub.authors.length - 1) {
-                        authorsHtml += ', ';
-                    }
-                });
-            } else {
-                // Fallback if authors data is missing
-                authorsHtml = 'Authors information unavailable';
-            }
-            
-            // Build links
-            let linksHtml = '';
-            if (pub.links && Array.isArray(pub.links)) {
-                pub.links.forEach((link, i) => {
-                    linksHtml += `[<a href="${link.url}" target="_blank">${link.type}</a>]`;
-                    if (i < pub.links.length - 1) {
-                        linksHtml += ' ';
-                    }
-                });
-                linksHtml += ` [<a href="#" onclick="toggleAbstract('abstract${index+1}'); return false;">Abstract</a>]`;
-            }
-            
-            // Build rank and citation info - hide citations if zero or missing
-            let rankHtml = '';
+            const authorsHtml = Array.isArray(pub.authors) && pub.authors.length > 0
+                ? pub.authors.map(author => author.is_self ? `<strong>${escapeHtml(author.name || '')}</strong>` : escapeHtml(author.name || '')).join(', ')
+                : 'Authors information unavailable';
+
+            const publicationLinks = Array.isArray(pub.links)
+                ? pub.links.map(link => {
+                    const linkType = escapeHtml(link.type || 'Link');
+                    const url = sanitizeUrl(link.url);
+                    return `<a class="publication-link" href="${url}" target="_blank" rel="noopener noreferrer">${linkType}</a>`;
+                })
+                : [];
+
+            const abstractId = `abstract-${index + 1}`;
+            publicationLinks.push(
+                `<button type="button" class="publication-link abstract-toggle" data-target="${abstractId}" aria-expanded="false" aria-controls="${abstractId}">Abstract</button>`
+            );
+
+            const metaItems = [];
             if (pub.impact_factor) {
-                rankHtml = `<span class="publication-impact">Rank: ${pub.impact_factor}`;
-                
-                // Only add citations if they exist and are greater than 0
-                if (pub.citations && pub.citations > 0) {
-                    rankHtml += `, Citations: ${pub.citations}`;
-                }
-                rankHtml += `</span>`;
+                metaItems.push(`Rank: ${escapeHtml(pub.impact_factor)}`);
             }
-            
-            // Build abstract HTML - handle missing abstracts
-            const abstractHtml = pub.abstract 
-                ? `<div id="abstract${index+1}" class="abstract" style="display:none;"><p>${pub.abstract}</p></div>`
-                : `<div id="abstract${index+1}" class="abstract" style="display:none;"><p>Abstract not available</p></div>`;
-            
-            // Build the complete publication entry
+            if (Number(pub.citations) > 0) {
+                metaItems.push(`Citations: ${escapeHtml(String(pub.citations))}`);
+            }
+            const metaHtml = metaItems.length > 0
+                ? `<span class="publication-impact">${metaItems.join(' | ')}</span>`
+                : '';
+
+            const abstractText = pub.abstract ? escapeHtml(pub.abstract) : 'Abstract not available';
+
             html += `
-                <div class="publication">
+                <article class="publication">
                     <p>
-                        <strong>${pub.title || 'Untitled'}</strong><br>
+                        <strong>${escapeHtml(pub.title || 'Untitled')}</strong><br>
                         ${authorsHtml}<br>
-                        <em>${pub.venue || 'Venue information unavailable'}</em><br>
-                        ${rankHtml ? `${rankHtml}<br>` : ''}
-                        ${linksHtml}
+                        <em>${escapeHtml(pub.venue || 'Venue information unavailable')}</em><br>
+                        ${metaHtml}
                     </p>
-                    ${abstractHtml}
-                </div>
+                    <div class="publication-links">${publicationLinks.join('')}</div>
+                    <div id="${abstractId}" class="abstract" hidden><p>${abstractText}</p></div>
+                </article>
             `;
         } catch (error) {
             console.error(`Error rendering publication at index ${index}:`, error);
@@ -289,120 +380,105 @@ function renderPublications(publications) {
             `;
         }
     });
-    
+
     container.innerHTML = html;
-    
-    // See all publications button - use the all_publications_url from JSON if available
+
     const seeMoreBtn = document.getElementById('see-more-publications');
-    
-    // Fallback to a hardcoded URL if the JSON one isn't working
-    const scholarUrl = "https://scholar.google.com/citations?view_op=list_works&hl=en&user=JM4i0R8AAAAJ";
-    
-    // Check if the all_publications_url exists and is not just "#"
-    const rawPublicationsUrl = (publications.all_publications_url && 
-                             publications.all_publications_url !== "#" && 
-                             publications.all_publications_url.includes("scholar.google.com")) 
-        ? publications.all_publications_url 
-        : scholarUrl;
-    
-    // Properly encode the URL to ensure it works correctly
-    const publicationsUrl = encodeURI(rawPublicationsUrl);
-    
-    // Use Google Scholar icon instead of arrow for the publications link
+    if (!seeMoreBtn) {
+        return;
+    }
+
+    const publicationsUrl = getPublicationsUrl(publicationsData.all_publications_url);
     seeMoreBtn.innerHTML = `<a href="${publicationsUrl}" target="_blank" rel="noopener noreferrer" class="see-more-button">
         View on Google Scholar <i class="fas fa-graduation-cap"></i>
     </a>`;
-    
-    // 确保按钮在各种模式下都可见
+
     seeMoreBtn.style.display = 'block';
     seeMoreBtn.style.visibility = 'visible';
     seeMoreBtn.style.opacity = '1';
-    
-    // Directly bind the correct URL to the click event
-    const scholarLink = seeMoreBtn.querySelector('a');
-    if (scholarLink) {
-        scholarLink.style.visibility = 'visible';
-        scholarLink.style.opacity = '1';
-        
-        scholarLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Force open the correct URL
-            try {
-                window.open(publicationsUrl, '_blank', 'noopener,noreferrer');
-            } catch (error) {
-                // As a fallback, try direct assignment
-                window.location.href = publicationsUrl;
-            }
-        });
-    }
+}
+
+function getPublicationsUrl(rawUrl) {
+    const hasValidScholarUrl =
+        typeof rawUrl === 'string' &&
+        rawUrl !== '#' &&
+        rawUrl.includes('scholar.google.com');
+
+    return hasValidScholarUrl ? rawUrl : FALLBACK_PUBLICATIONS_URL;
 }
 
 // Render education
 function renderEducation(education) {
     const container = document.getElementById('education-container');
+    const items = Array.isArray(education) ? education : [];
     let html = '';
-    
-    education.forEach(item => {
-        html += `<li><strong>${item.period}</strong>: ${item.degree}, ${item.field}, ${item.institution}</li>`;
+
+    items.forEach(item => {
+        html += `<li><strong>${escapeHtml(item.period || '')}</strong>: ${escapeHtml(item.degree || '')}, ${escapeHtml(item.field || '')}, ${escapeHtml(item.institution || '')}</li>`;
     });
-    
+
     container.innerHTML = html;
 }
 
 // Render experience and related info
 function renderExperience(data) {
-    // Work experience
+    const experienceItems = Array.isArray(data.experience) ? data.experience : [];
+
     const expContainer = document.getElementById('experience-container');
     let expHtml = '';
-    
-    data.experience.forEach(item => {
-        let details = item.department ? `, ${item.department}` : '';
-        expHtml += `<li><strong>${item.period}</strong>: ${item.position}, ${item.company}${details}</li>`;
+
+    experienceItems.forEach(item => {
+        const details = item.department ? `, ${escapeHtml(item.department)}` : '';
+        const highlights = Array.isArray(item.highlights) ? item.highlights : [];
+        const highlightsHtml = highlights.length > 0
+            ? `<div class="experience-highlights">${highlights.map(text => `<div class="experience-highlight-item">- ${escapeHtml(text)}</div>`).join('')}</div>`
+            : '';
+
+        expHtml += `<li><strong>${escapeHtml(item.period || '')}</strong>: ${escapeHtml(item.position || '')}, ${escapeHtml(item.company || '')}${details}${highlightsHtml}</li>`;
     });
-    
+
     expContainer.innerHTML = expHtml;
-    
-    // Awards - 改为表格布局
+
     const awardsContainer = document.getElementById('awards-container');
-    let awardsHtml = '<table style="width: 100%; border-collapse: collapse;">';
-    
-    data.awards.forEach(award => {
+    const awards = Array.isArray(data.awards) ? data.awards : [];
+    let awardsHtml = '<ul class="awards-list">';
+
+    awards.forEach(award => {
         awardsHtml += `
-            <tr>
-                <td style="padding-bottom: 10px; text-align: left; padding-right: 20px;">${award.name}</td>
-                <td style="padding-bottom: 10px; text-align: right; white-space: nowrap; font-style: italic; color: #333; font-weight: 500;">${award.year}</td>
-            </tr>
+            <li class="award-item">
+                <span class="award-name">${award.name || ''}</span>
+                <span class="award-year">${escapeHtml(award.year || '')}</span>
+            </li>
         `;
     });
-    
-    awardsHtml += '</table>';
+
+    awardsHtml += '</ul>';
     awardsContainer.innerHTML = awardsHtml;
-    
-    // Academic service
+
     const serviceContainer = document.getElementById('service-container');
+    const reviewers = Array.isArray(data.academic_service?.reviewer) ? data.academic_service.reviewer : [];
     let serviceHtml = '';
-    
-    data.academic_service.reviewer.forEach(item => {
-        serviceHtml += `<li>${item}</li>`;
+
+    reviewers.forEach(item => {
+        serviceHtml += `<li>${escapeHtml(item)}</li>`;
     });
-    
+
     serviceContainer.innerHTML = serviceHtml;
-    
-    // Teaching
+
     const teachingContainer = document.getElementById('teaching-container');
+    const teachingItems = Array.isArray(data.teaching) ? data.teaching : [];
     let teachingHtml = '';
-    
-    data.teaching.forEach(item => {
-        teachingHtml += `<li><strong>${item.period}</strong>: ${item.course}, ${item.role}</li>`;
+
+    teachingItems.forEach(item => {
+        teachingHtml += `<li><strong>${escapeHtml(item.period || '')}</strong>: ${escapeHtml(item.course || '')}, ${escapeHtml(item.role || '')}</li>`;
     });
-    
+
     teachingContainer.innerHTML = teachingHtml;
 }
 
 // Render miscellaneous section
 function renderMisc(miscText) {
-    document.getElementById('misc-content').innerHTML = miscText;
+    document.getElementById('misc-content').innerHTML = miscText || '';
 }
 
 // Render footer
@@ -412,27 +488,51 @@ function renderFooter(footerText) {
 
 // Render contact page
 function renderContactPage(data) {
-    const contactPage = data.contactPage;
-    
-    // Set page title and content
-    document.getElementById('contact-title').textContent = contactPage.title;
-    document.getElementById('contact-introduction').textContent = contactPage.introduction;
-    
-    // Render contact methods
+    const contactPage = data.contactPage || {};
+
+    document.getElementById('contact-title').textContent = contactPage.title || 'Contact';
+    document.getElementById('contact-introduction').textContent = contactPage.introduction || '';
+
     const methodsContainer = document.getElementById('contact-methods-container');
+    const contactMethods = Array.isArray(contactPage.contactMethods) ? contactPage.contactMethods : [];
     let methodsHtml = '';
-    
-    contactPage.contactMethods.forEach(method => {
+
+    contactMethods.forEach(method => {
         methodsHtml += `
             <div class="contact-method">
                 <i class="${method.icon}"></i>
-                <h3>${method.type}</h3>
-                <p>${method.details}</p>
+                <h3>${escapeHtml(method.type || '')}</h3>
+                <p>${method.details || ''}</p>
             </div>
         `;
     });
-    
+
     methodsContainer.innerHTML = methodsHtml;
-    
-    // 表单渲染代码已删除
-} 
+}
+
+function sanitizeUrl(rawUrl) {
+    if (typeof rawUrl !== 'string') {
+        return '#';
+    }
+
+    try {
+        const parsedUrl = new URL(rawUrl, window.location.origin);
+        const protocol = parsedUrl.protocol.toLowerCase();
+        if (protocol === 'http:' || protocol === 'https:' || protocol === 'mailto:') {
+            return parsedUrl.href;
+        }
+    } catch (error) {
+        return '#';
+    }
+
+    return '#';
+}
+
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}

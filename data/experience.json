@@ -1,6 +1,13 @@
 {
   "experience": [
     {
+      "position": "Research Intern",
+      "company": "Huawei Hong Kong Research Center (HKRC)",
+      "department": "Fermat Lab, Huawei 2012 Labs",
+      "period": "Aug 2025-Present",
+      "description": "Research internship focused on wireless optimization and mathematical reasoning data generation."
+    },
+    {
       "position": "Research Assistant",
       "company": "The Hong Kong Polytechnic University",
       "department": "NLP Group, PolyU",
@@ -43,14 +50,14 @@
   },
   "teaching": [
     {
-        "course": "NATURAL LANGUAGE PROCESSING (COMP5423_20242_A)",
-        "role": "Teaching Assistant",
-        "period": "2024/25 Semester 2"
+      "course": "NATURAL LANGUAGE PROCESSING (COMP5423_20242_A)",
+      "role": "Teaching Assistant",
+      "period": "2024/25 Semester 2"
     },
     {
-        "course": "DATA STRUCTURES AND DATABASE SYSTEMS (COMP5112_20241_B)",
-        "role": "Teaching Assistant",
-        "period": "2024/25 Semester 1"
+      "course": "DATA STRUCTURES AND DATABASE SYSTEMS (COMP5112_20241_B)",
+      "role": "Teaching Assistant",
+      "period": "2024/25 Semester 1"
     },
     {
       "course": "NATURAL LANGUAGE PROCESSING (COMP5423_20232_A)",
@@ -101,4 +108,4 @@
       "year": "2014-2015"
     }
   ]
-} 
+}
