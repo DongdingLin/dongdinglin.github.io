@@ -1,0 +1,106 @@
+\documentclass[11pt,a4paper,fontset=fandol]{ctexart}
+
+\usepackage[left=1.6cm,right=1.6cm,top=1.2cm,bottom=1.2cm]{geometry}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{titlesec}
+
+\hypersetup{
+    colorlinks=true,
+    urlcolor=[RGB]{26,76,149},
+    linkcolor=black
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlist[itemize]{leftmargin=1.4em, itemsep=2pt, topsep=2pt}
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\vspace{-0.3em}\titlerule]
+\titlespacing*{\section}{0pt}{0.8em}{0.5em}
+
+\newcommand{\ResumeEntry}[4]{
+    \textbf{#1} \hfill {\small #2} \\
+    {\small #3} \hfill {\small #4} \\
+}
+
+\begin{document}
+
+{\LARGE\textbf{林东鼎 \quad Dongding Lin}} \hfill {\small 意向岗位：大模型算法工程师 / LLM 研究工程师} \\
+{\small 手机：(+86) 137 5006 5371 \quad 邮箱：22037064r@connect.polyu.hk \quad 地点：香港} \\
+{\small GitHub：\url{https://github.com/DongdingLin} \quad Google Scholar：\url{https://scholar.google.com/citations?user=JM4i0R8AAAAJ}}
+
+\section*{个人优势}
+\begin{itemize}
+    \item 聚焦 \textbf{LLM 对话系统、会话推荐、多模态 LLM、推理增强}，研究与工程结合紧密。
+    \item 主导构建 SCREEN 基准：覆盖 \textbf{1.5k 场景、20k+ 多轮对话}，支撑情境会话推荐任务评测。
+    \item 在 ACM MM、ACL、AAAI、TOIS、TNNLS 等发表多篇论文，具备从问题定义到实验落地的完整闭环能力。
+\end{itemize}
+
+\section*{教育背景}
+\ResumeEntry{香港理工大学（The Hong Kong Polytechnic University）}{2022.09 -- 至今}{计算学系 \textbf{博士研究生}（NLP Group）}{导师：Wenjie Li}
+\ResumeEntry{中山大学}{2017.09 -- 2020.07}{计算机技术 \textbf{硕士}}{GPA：3.9/4.0}
+\ResumeEntry{中山大学}{2013.09 -- 2017.07}{软件工程 \textbf{学士}}{GPA：3.8/4.0，排名 37/433}
+
+\section*{实习与研究经历}
+\ResumeEntry{华为香港研究中心（HKRC）, Fermat Lab}{2025.08 -- 至今}{Research Intern（大模型相关）}{}
+\begin{itemize}
+    \item 参与无线优化与数学推理方向的数据构建，支持大模型训练/评测场景的数据生产。
+    \item 面向工业问题设计任务数据与评估方案，提升数据可用性与迭代效率。
+\end{itemize}
+
+\ResumeEntry{香港理工大学 NLP Group}{2022.12 -- 至今}{Research Assistant / PhD Research}{}
+\begin{itemize}
+    \item 研究方向：情境会话推荐（SCR）、LLM 推理、多模态 LLM。
+    \item 负责模型方案设计、数据构建、实验评测与论文写作，持续产出顶会/期刊成果。
+\end{itemize}
+
+\ResumeEntry{香港理工大学 NLP Group}{2021.07 -- 2022.12}{Research Assistant}{}
+\begin{itemize}
+    \item 研究目标导向会话系统与会话推荐，围绕对话规划与生成建立可复用技术框架。
+\end{itemize}
+
+\section*{核心项目（大模型方向）}
+\textbf{SCREEN: Situated Conversational Recommendation Benchmark（ACM MM 2024）} \\
+\begin{itemize}
+    \item 提出情境会话推荐任务设定，使用多模态大模型角色扮演生成高质量训练/评测数据。
+    \item 构建 20k+ 对话、1.5k 场景基准，定义子任务并完成多模型系统评测。
+\end{itemize}
+
+\textbf{MIDI-Tuning: Multi-round Interactive Dialogue Tuning（ACL 2024）} \\
+\begin{itemize}
+    \item 设计多轮对话高效调优框架，分角色建模 agent/user，提升多轮一致性与稳定性。
+\end{itemize}
+
+\textbf{TRIP: Target-constrained Bidirectional Planning（TOIS 2024）} \\
+\begin{itemize}
+    \item 提出双向规划机制（look-ahead / look-back），增强目标导向对话的规划质量与可控性。
+\end{itemize}
+
+\section*{论文与成果（Selected）}
+\begin{itemize}
+    \item \textbf{Dongding Lin}, Jian Wang, Chak Tou Leong, Wenjie Li. SCREEN: A Benchmark for Situated Conversational Recommendation. \textit{ACM MM 2024}.
+    \item Jian Wang, \textbf{Dongding Lin}, Wenjie Li. Target-constrained Bidirectional Planning for Generation of Target-oriented Proactive Dialogue. \textit{TOIS 2024}.
+    \item Jian Wang, Chak Tou Leong, Jiashuo Wang, \textbf{Dongding Lin}, Wenjie Li, Xiao-Yong Wei. Instruct once, chat consistently in multiple rounds. \textit{ACL 2024}.
+    \item \textbf{Dongding Lin*}, Jian Wang*, Wenjie Li. COLA: Improving Conversational Recommender Systems by Collaborative Augmentation. \textit{AAAI 2023}.
+    \item Jian Wang*, \textbf{Dongding Lin*}, Wenjie Li. Dialogue Planning via Brownian Bridge Stochastic Process for Goal-directed Proactive Dialogue. \textit{ACL Findings 2023}.
+\end{itemize}
+
+\section*{技术栈}
+\begin{tabular}{>{\bfseries}p{2.8cm}p{12.7cm}}
+编程语言 & Python, C/C++, Java, JavaScript, SQL, MATLAB \\
+框架与工具 & PyTorch, TensorFlow, Hugging Face, Scikit-learn, Linux, Git, LaTeX \\
+方向关键词 & LLM 训练与推理、Prompt/Agent、对话系统、会话推荐、多模态理解 \\
+语言能力 & 中文（母语）、英文（CET-4/6，IELTS 6.5） \\
+\end{tabular}
+
+\section*{荣誉奖项}
+\begin{itemize}
+    \item 百度 2021 语言与智能技术竞赛：\textbf{4/750}
+    \item Kaggle 材料质量预测竞赛：\textbf{4/119}
+    \item 中山大学优秀毕业生（前 3\%）、优秀毕业论文（前 3\%）
+    \item 中山大学研究生奖学金（二等奖、三等奖）
+\end{itemize}
+
+\end{document}

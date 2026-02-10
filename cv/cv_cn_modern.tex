@@ -1,0 +1,137 @@
+\documentclass[11pt,a4paper,fontset=fandol]{ctexart}
+
+\usepackage[left=1.35cm,right=1.35cm,top=1.1cm,bottom=1.1cm]{geometry}
+\usepackage{fontspec}
+\setmainfont{Arial}
+\setCJKmainfont{Hiragino Sans GB}
+\setCJKsansfont{Heiti SC}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fontawesome5}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2.1pt}
+\setlength{\emergencystretch}{2em}
+\renewcommand{\arraystretch}{1.08}
+\setlist[itemize]{leftmargin=1.35em,itemsep=1.6pt,topsep=1.4pt,parsep=0pt,partopsep=0pt}
+
+\definecolor{Accent}{RGB}{38,115,220}
+\definecolor{RuleGray}{RGB}{140,145,155}
+\definecolor{BodyText}{RGB}{30,36,48}
+
+\newcommand{\Section}[1]{%
+    \vspace{0.50em}
+    {\color{Accent}\bfseries\large #1}\par
+    \vspace{0.26em}
+    {\color{RuleGray}\hrule height 0.8pt}
+    \vspace{0.42em}
+}
+
+\newcommand{\Entry}[4]{%
+\begin{tabularx}{\linewidth}{@{}Xr@{}}
+\textbf{#1} & \textit{#2}\\
+{\small #3} & {\small #4}
+\end{tabularx}\vspace{0.16em}
+}
+
+\begin{document}
+\color{BodyText}
+
+\begin{center}
+{\fontsize{23}{23}\selectfont\bfseries\color{Accent} 林东鼎 \quad DONGDING LIN}\\[3pt]
+{\small
+\faMapMarker*\ 香港 \ \textbullet\ 
+\faPhone\ (+86)~137~5006~5371 \ \textbullet\ 
+\faEnvelope\ \href{mailto:22037064r@connect.polyu.hk}{22037064r@connect.polyu.hk}\\[2pt]
+\faGithub\ \href{https://github.com/DongdingLin}{github.com/DongdingLin}
+\ \textbullet\ 
+\faGraduationCap\ \href{https://scholar.google.com/citations?user=JM4i0R8AAAAJ}{Google Scholar}
+\ \textbullet\ 
+\textbf{求职方向：}大模型算法工程师 / LLM 研究工程师
+}
+\end{center}
+
+\Section{个人概述}
+香港理工大学计算学系博士研究生，研究方向聚焦 \textbf{LLM 推理、对话系统、多模态 LLM 与会话推荐}。具备从任务定义、数据构建、模型设计到实验评测的完整研发能力，持续在 ACM MM、ACL、AAAI、TOIS、TNNLS 等产出成果。
+
+\Section{教育背景}
+\Entry{香港理工大学}{2022.09 -- 至今}{计算学系博士研究生（NLP Group）}{香港}
+\Entry{中山大学}{2017.09 -- 2020.07}{计算机技术硕士，GPA 3.9/4.0}{广州}
+\Entry{中山大学}{2013.09 -- 2017.07}{软件工程学士，GPA 3.8/4.0（排名 37/433）}{广州}
+
+\Section{实习与研究经历}
+\Entry{华为香港研究中心（HKRC）Fermat Lab}{2025.08 -- 至今}{Research Intern（大模型相关）}{香港}
+\begin{itemize}
+    \item 参与面向工业场景的数学推理数据构建，支持 LLM 训练与评估迭代。
+    \item 负责数据设计与质量控制，提升训练样本一致性和评测稳定性。
+\end{itemize}
+
+\Entry{香港理工大学 NLP Group}{2022.12 -- 至今}{Research Assistant / PhD Research}{香港}
+\begin{itemize}
+    \item 研究方向：情境会话推荐（SCR）、LLM 推理、多模态理解。
+    \item 负责模型方案设计、实验评测与论文产出，形成多篇顶会/期刊成果。
+    \item 主导 benchmark 构建与基线系统实现，推动可复用研究流程沉淀。
+\end{itemize}
+
+\Entry{香港理工大学 NLP Group}{2021.07 -- 2022.12}{Research Assistant}{香港}
+\begin{itemize}
+    \item 研究目标导向会话系统与会话推荐，搭建可复用的对话规划生成框架。
+\end{itemize}
+
+\Entry{中山大学集体智能系统实验室}{2018.02 -- 2020.07}{Research Assistant}{广州}
+\begin{itemize}
+    \item 研究机器阅读理解，提出分层信息传递与记忆流机制并验证其有效性。
+\end{itemize}
+
+\Section{核心项目（LLM）}
+\textbf{SCREEN：情境会话推荐基准} \hfill \textit{ACM MM 2024}
+\begin{itemize}
+    \item 提出情境会话推荐任务设定，构建 \textbf{20k+ 对话、1.5k 场景} benchmark。
+    \item 设计子任务与基线实验，为真实交互场景下的大模型能力评估提供标准化支撑。
+\end{itemize}
+
+\textbf{MIDI-Tuning：多轮对话一致性高效调优} \hfill \textit{ACL 2024}
+\begin{itemize}
+    \item 提出角色建模驱动的多轮调优方法，提升对话一致性与可控性。
+\end{itemize}
+
+\textbf{TRIP：目标约束双向规划} \hfill \textit{TOIS 2024}
+\begin{itemize}
+    \item 通过 look-ahead / look-back 双向规划策略，提升目标导向对话生成质量。
+\end{itemize}
+
+\Section{代表论文（Selected）}
+\begin{itemize}
+    \item \textbf{Dongding Lin}, Jian Wang, Chak Tou Leong, Wenjie Li. SCREEN: A Benchmark for Situated Conversational Recommendation. \textit{ACM MM 2024}.
+    \item Jian Wang, \textbf{Dongding Lin}, Wenjie Li. Target-constrained Bidirectional Planning for Generation of Target-oriented Proactive Dialogue. \textit{TOIS 2024}.
+    \item Jian Wang, Chak Tou Leong, Jiashuo Wang, \textbf{Dongding Lin}, Wenjie Li, Xiao-Yong Wei. Instruct once, chat consistently in multiple rounds. \textit{ACL 2024}.
+    \item Jian Wang, Yi Cheng, \textbf{Dongding Lin}, et al. Target-oriented proactive dialogue systems with personalization. \textit{EMNLP 2023}.
+    \item \textbf{Dongding Lin*}, Jian Wang*, Wenjie Li. COLA: Improving Conversational Recommender Systems by Collaborative Augmentation. \textit{AAAI 2023}.
+\end{itemize}
+
+\Section{学术服务与教学}
+\begin{itemize}
+    \item 审稿服务：ACL Rolling Review（ARR）、ACL、EMNLP、ACM MM。
+    \item 助教课程：\textit{自然语言处理}（2024/25 S2，2023/24 S2）、\textit{数据结构与数据库系统}（2024/25 S1）、\textit{移动计算}（2023/24 S1）。
+\end{itemize}
+
+\Section{技术栈}
+\begin{tabularx}{\linewidth}{@{}>{\bfseries}p{2.9cm}X@{}}
+编程语言 & Python, C/C++, Java, JavaScript, SQL, MATLAB \\
+框架工具 & PyTorch, TensorFlow, Hugging Face, Scikit-learn, Linux, Git, LaTeX \\
+能力关键词 & LLM 训练与推理、Prompt/Agent、对话系统、会话推荐、多模态理解
+\end{tabularx}
+
+\Section{荣誉奖项}
+\begin{itemize}
+    \item 百度 2021 语言与智能技术竞赛：\textbf{4/750}
+    \item Kaggle 材料质量预测竞赛：\textbf{4/119}
+    \item 中山大学优秀毕业生（前 3\%）、优秀毕业论文（前 3\%）
+    \item 中山大学本科与研究生阶段多次一/二/三等奖学金
+\end{itemize}
+
+\end{document}
