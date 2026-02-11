@@ -34,11 +34,17 @@
 \end{tabularx}\vspace{0.16em}
 }
 
+\newcommand{\EduOneLine}[5][0.18em]{%
+\begin{tabularx}{\linewidth}{@{}>{\bfseries}p{3.2cm} >{\raggedright\arraybackslash}X r@{}}
+#2 & {\small #4} & {\small \textit{#3} \ \textbullet\ #5}
+\end{tabularx}\vspace{#1}
+}
+
 \begin{document}
 \color{BodyText}
 
 \begin{center}
-{\fontsize{23}{23}\selectfont\bfseries\color{Accent} 林东定 \quad DONGDING LIN}\\[3pt]
+{\fontsize{23}{23}\selectfont\bfseries\color{Accent} 林东定 \quad LIN DONGDING}\\[3pt]
 {\small
 \faMapMarker*\ 香港 \ \textbullet\ 
 \faPhone\ (+86)~137~5006~5371 \ \textbullet\ 
@@ -47,58 +53,48 @@
 \ \textbullet\ 
 \faGraduationCap\ \href{https://scholar.google.com/citations?user=JM4i0R8AAAAJ}{Google Scholar}
 \ \textbullet\ 
-\textbf{求职方向：}大模型算法工程师 / LLM 研究工程师
+\textbf{求职方向：}大模型算法工程师
 }
 \end{center}
 
 \Section{个人概述}
-香港理工大学计算学系博士研究生，研究方向聚焦 \textbf{LLM 推理、对话系统、多模态 LLM 与会话推荐}。具备从任务定义、数据构建、模型设计到实验评测的完整研发能力，持续在 ACM MM、ACL、AAAI、TOIS、TNNLS 等产出成果。
+香港理工大学电子计算学系博士研究生，研究聚焦 \textbf{LLM 推理、对话系统、多模态大模型与情境会话推荐}。
+熟悉从任务定义、数据构建、模型设计到实验评测的完整研发流程，并具备工程落地与迭代优化能力，相关工作发表于 ACM MM、ACL、AAAI、TOIS、TNNLS 等。
 
 \Section{教育背景}
-\Entry{香港理工大学}{2022.09 -- 至今}{计算学系博士研究生（NLP Group）}{香港}
-\Entry{中山大学}{2017.09 -- 2020.07}{计算机技术硕士，GPA 3.9/4.0}{广州}
-\Entry{中山大学}{2013.09 -- 2017.07}{软件工程学士，GPA 3.8/4.0（排名 37/433）}{广州}
+\EduOneLine{香港理工大学}{2022.09 -- 至今}{计算学系博士研究生（NLP Group，4.18/4.3）}{香港，中国}
+\EduOneLine{中山大学}{2017.09 -- 2020.07}{计算机技术硕士（推免/保研），GPA 3.9/4.0}{广州，中国}
+\EduOneLine[-1.4em]{中山大学}{2013.09 -- 2017.07}{软件工程学士，GPA 3.8/4.0（排名 37/433）}{广州，中国}
 
 \Section{实习与研究经历}
-\Entry{华为香港研究中心（HKRC）Fermat Lab}{2025.08 -- 至今}{Research Intern（大模型相关）}{香港}
+\Entry{华为香港研究中心（HKRC）Fermat Lab}{2025.08 -- 至今}{Research Intern，优秀实习生}{香港，中国}
 \begin{itemize}
-    \item \textbf{无线网络边缘侧在线学习与数据剪枝：}面向端侧算力受限场景，构建端云协同轻量训练方案；结合混合 OOD 过滤、蒸馏难例挖掘与 GPU 加速 K-Means 去冗余，在仿真中实现 \textbf{4x} 算力下降（75\%）且精度保持率 \textbf{$>$97\%}。
-    \item \textbf{神经符号数学推理数据工厂：}搭建“LLM 语义解析 + Mathematica 符号验证”闭环，保障合成数据逻辑一致性与标签准确性；AIME/HMMT 风格题泛化成功率由 \textbf{7.8\%} 提升至 \textbf{63.95\%}，Math500 新题正确率提升至 \textbf{99\%}。
-    \item \textbf{真实对话数据清洗与语义对齐：}基于句向量与聚类替代规则清洗，去除 ASR 噪声、无效拒答与长尾离群样本，筛选高价值 I.I.D. 黄金数据，提升对话模型在真实场景的鲁棒性与响应质量。
+    \item \textbf{无线在线训练数据筛减（基站资源优化）:}
+    面向在线训练场景，设计本地数据筛选与分布外（OOD）过滤策略；结合蒸馏式判别与 GPU-KMeans 聚类，在基本不损性能的前提下将训练算力 \textbf{降低 4x}，性能衰减控制在 \textbf{≤3\%}，并提交技术报告和相应的代码实现，形成可复用配置与日志闭环，支持快速回滚与复现实验。
+    \item \textbf{数学题数据自动泛化 + 形式化校验（Math500/竞赛/K12）:} 搭建自动流水线：变量抽取 $\rightarrow$ 参数泛化 $\rightarrow$ Mathematica 求解与一致性校验，并输出结构化标注以支持多题型扩展，支持批量生成；将 Math500 泛化率从 \textbf{42.74\% 提升至 58.6\%}，新题准确率从 \textbf{87.4\% 提升至 99\%}；竞赛题泛化率从 \textbf{7.8\% 提升至 63.95\%}；在 K12 多题型场景引入多路泛化策略，将整体泛化率提升至 \textbf{42\%}；核心能力封装为 \textbf{SDK} 交付落地。
+    \item \textbf{同分布（IID）对话数据筛选:}为模拟真实用户提问并用于新模型效果评测，构建同分布且高质量的对话数据；以句向量检索与聚类结合规则清洗，剔除ASR噪声、拒答与离群样本，沉淀高价值 IID 数据。
+
 \end{itemize}
 
-\Entry{香港理工大学 NLP Group}{2022.12 -- 至今}{Research Assistant / PhD Research}{香港}
+\Entry{香港理工大学 NLP Group}{2022.12 -- 至今}{PhD Research}{香港}
 \begin{itemize}
-    \item 研究方向：情境会话推荐（SCR）、LLM 推理、多模态理解。
-    \item 负责模型方案设计、实验评测与论文产出，形成多篇顶会/期刊成果。
-    \item 主导 benchmark 构建与基线系统实现，推动可复用研究流程沉淀。
+    \item \textbf{情境会话推荐（SCR）建模与评测：}围绕场景、上下文与用户偏好，梳理交互链路并定义任务设定与评测指标；实现数据处理、训练与评测的端到端流水线，支撑系列论文与可复现实验。
+    \item \textbf{SiPeR：场景迁移 + 贝叶斯偏好推断：}面向 SCR 的“去哪/选什么（Where/What）”决策，同时建模场景迁移与目标场景预测，估计当前场景是否满足需求并在必要时引导迁移到更合适场景；利用多模态大模型 likelihood 做贝叶斯逆推断以刻画隐式偏好，在 SIMMC 2.1 与 SCREEN 上平均提升 \textbf{10.9\%/10.6\%}。
+
+    \item \textbf{Re2A：Rubric 驱动的偏好推理与双对齐生成：}将 SCR 设计为 reason-then-align 流程：用自动 Rubrics 提供多维奖励信号，实现\textbf{无需人工标注}的显式偏好状态推理；
+    再用 Preference-conditioned DPO 同时对齐“偏好满足 + 场景一致”，在 SIMMC 2.1 上将幻觉率从 \textbf{25.4\% 降至 5.2\%}、弱匹配率从 \textbf{22.6\% 降至 7.4\%}。
 \end{itemize}
 
 \Entry{香港理工大学 NLP Group}{2021.07 -- 2022.12}{Research Assistant}{香港}
 \begin{itemize}
-    \item 研究目标导向会话系统与会话推荐，搭建可复用的对话规划生成框架。
+    \item \textbf{目标导向对话规划与生成（框架工程化）：}
+    围绕“目标约束、对话状态与用户偏好”设计对话规划与生成方案，引入 look-ahead/反馈修正等策略提升多轮可控性与目标达成；并将数据预处理、状态/意图建模、规划器与生成器模块化封装，统一训练/推理接口与评测脚本，支持多策略快速对比与复现实验。
 \end{itemize}
 
-\Entry{中山大学集体智能系统实验室}{2018.02 -- 2020.07}{Research Assistant}{广州}
+\Entry{中山大学CIS实验室}{2018.02 -- 2020.07}{Research Assistant}{广州}
 \begin{itemize}
-    \item 研究机器阅读理解，提出分层信息传递与记忆流机制并验证其有效性。
-\end{itemize}
-
-\Section{核心项目（LLM）}
-\textbf{SCREEN：情境会话推荐基准} \hfill \textit{ACM MM 2024}
-\begin{itemize}
-    \item 提出情境会话推荐任务设定，构建 \textbf{20k+ 对话、1.5k 场景} benchmark。
-    \item 设计子任务与基线实验，为真实交互场景下的大模型能力评估提供标准化支撑。
-\end{itemize}
-
-\textbf{MIDI-Tuning：多轮对话一致性高效调优} \hfill \textit{ACL 2024}
-\begin{itemize}
-    \item 提出角色建模驱动的多轮调优方法，提升对话一致性与可控性。
-\end{itemize}
-
-\textbf{TRIP：目标约束双向规划} \hfill \textit{TOIS 2024}
-\begin{itemize}
-    \item 通过 look-ahead / look-back 双向规划策略，提升目标导向对话生成质量。
+    \item \textbf{机器阅读理解与多跳推理（层级传播 + 记忆流）：}
+    面向长文档证据聚合与跨句关系建模，提出分层信息传递与记忆更新机制增强证据追踪与信息保真，搭建训练/评测流水线并开展系统性消融与误差分析，沉淀可复现实验代码与配置。
 \end{itemize}
 
 \Section{代表论文（Selected）}
@@ -119,8 +115,8 @@
 \Section{技术栈}
 \begin{tabularx}{\linewidth}{@{}>{\bfseries}p{2.9cm}X@{}}
 编程语言 & Python, C/C++, Java, JavaScript, SQL, MATLAB \\
-框架工具 & PyTorch, TensorFlow, Hugging Face, Scikit-learn, Linux, Git, LaTeX \\
-能力关键词 & LLM 训练与推理、Prompt/Agent、对话系统、会话推荐、多模态理解
+深度学习工具 & PyTorch, TensorFlow, Hugging Face, Scikit-learn \\
+兴趣研究方向 & LLM 训练与推理、对话系统、会话推荐、多模态理解
 \end{tabularx}
 
 \Section{荣誉奖项}

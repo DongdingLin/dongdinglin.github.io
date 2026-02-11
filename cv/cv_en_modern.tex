@@ -29,92 +29,77 @@
     \vspace{0.42em}
 }
 
-\newcommand{\Entry}[4]{%
+\newcommand{\Entry}[5][0.16em]{%
 \begin{tabularx}{\linewidth}{@{}Xr@{}}
-\textbf{#1} & \textit{#2}\\
-{\small #3} & {\small #4}
-\end{tabularx}\vspace{0.16em}
+\textbf{#2} & \textit{#3}\\
+{\small #4} & {\small #5}
+\end{tabularx}\vspace{#1}
 }
 
 \begin{document}
 \color{BodyText}
 
 \begin{center}
-{\fontsize{23}{23}\selectfont\bfseries\color{Accent} DONGDING LIN}\\[3pt]
-{\small
-\faMapMarker*\ Hong Kong \ \textbullet\ 
-\faPhone\ (+86)~137~5006~5371 \ \textbullet\ 
-\faEnvelope\ \href{mailto:22037064r@connect.polyu.hk}{22037064r@connect.polyu.hk}\\[2pt]
-\faGithub\ \href{https://github.com/DongdingLin}{github.com/DongdingLin}
-\ \textbullet\ 
-\faGraduationCap\ \href{https://scholar.google.com/citations?user=JM4i0R8AAAAJ}{Google Scholar}
-\ \textbullet\ 
-\textbf{Target Role:} LLM Research Engineer / Applied Scientist
-}
+    {\fontsize{23}{23}\selectfont\bfseries\color{Accent} LIN DONGDING}\\[3pt]
+    {\small
+    \faMapMarker*\ Hong Kong SAR, China \ \textbullet\ 
+    \faPhone\ (+86)~137~5006~5371 \ \textbullet\ 
+    \faEnvelope\ \href{mailto:22037064r@connect.polyu.hk}{22037064r@connect.polyu.hk}\\[2pt]
+    \faGithub\ \href{https://github.com/DongdingLin}{github.com/DongdingLin}
+    \ \textbullet\ 
+    \faGraduationCap\ \href{https://scholar.google.com/citations?user=JM4i0R8AAAAJ}{Google Scholar}
+    \ \textbullet\ 
+    \textbf{Target Role:} LLM Algorithm Engineer / Applied Research Scientist
+    }
 \end{center}
 
 \Section{SUMMARY}
-PhD candidate at The Hong Kong Polytechnic University with research focus on \textbf{LLM reasoning, conversational AI, and multimodal LLMs}. Strong end-to-end experience in problem formulation, data construction, model design, and reproducible evaluation. Proven publication record in ACM MM, ACL, AAAI, TOIS, and TNNLS.
+Ph.D. student at the Department of Computing, The Hong Kong Polytechnic University. Research focuses on \textbf{LLM reasoning, dialogue systems, multimodal LLMs, and situated conversational recommendation}. Experienced in the full R\&D lifecycle from task formulation and data construction to model design and experimental evaluation, with strong capability in engineering deployment and iterative optimization. Publications appear in ACM MM, ACL, AAAI, TOIS, and TNNLS.
 
 \Section{EDUCATION}
-\Entry{The Hong Kong Polytechnic University}{Sept. 2022 -- Present}{PhD Candidate, Department of Computing (NLP Group)}{Hong Kong, China}
-\Entry{Sun Yat-sen University}{Sept. 2017 -- Jul. 2020}{M.Eng. in Computer Technology, GPA: 3.9/4.0}{Guangzhou, China}
-\Entry{Sun Yat-sen University}{Sept. 2013 -- Jul. 2017}{B.Eng. in Software Engineering, GPA: 3.8/4.0 (Rank: 37/433)}{Guangzhou, China}
+\Entry{The Hong Kong Polytechnic University}{Sept.\ 2022 -- Present}{PhD Candidate, Department of Computing (NLP Group)}{Hong Kong, China}
+\Entry{Sun Yat-sen University}{Sept.\ 2017 -- Jul.\ 2020}{M.Eng.\ in Computer Technology, GPA: 3.9/4.0 (Recommended Admission)}{Guangzhou, China}
+\Entry[-0.5em]{Sun Yat-sen University}{Sept.\ 2013 -- Jul.\ 2017}{B.Eng.\ in Software Engineering, GPA: 3.8/4.0 (Rank: 37/433)}{Guangzhou, China}
 
 \Section{EXPERIENCE}
-\Entry{Huawei Hong Kong Research Center (HKRC), Fermat Lab}{Aug. 2025 -- Present}{Research Intern}{Hong Kong, China}
+\Entry{Huawei Hong Kong Research Center (HKRC), Fermat Lab}{Aug 2025 -- Present}{Research Intern (Outstanding Intern)}{Hong Kong SAR, China}
 \begin{itemize}
-    \item \textbf{Wireless edge online learning and data pruning:} built an end-cloud lightweight training pipeline for compute-constrained base-station scenarios; combined hybrid OOD filtering, distillation-based hard mining, and GPU-accelerated K-Means deduplication, achieving \textbf{4x} lower training compute (75\%) with \textbf{$>$97\%} accuracy retention.
-    \item \textbf{Neuro-symbolic math reasoning data synthesis:} developed a ``LLM semantic parsing + Mathematica symbolic verification'' data factory to enforce logical consistency and ground-truth correctness; improved AIME/HMMT-style generalization from \textbf{7.8\%} to \textbf{63.95\%}, and raised Math500 new-problem accuracy to \textbf{99\%}.
-    \item \textbf{Real-world dialogue data curation and semantic alignment:} replaced rule-based cleaning with sentence-embedding and clustering pipelines to remove ASR noise, invalid refusals, and long-tail outliers, producing IID high-value ``golden'' data that improved robustness and response quality in production-like scenarios.
+    \item \textbf{Wireless online-training data pruning (base-station resource optimization):}
+    For online training settings, designed local data selection and out-of-distribution (OOD) filtering strategies. Combined a distillation-based discriminator with GPU-KMeans clustering to reduce training compute by \textbf{4$\times$} with \textbf{$\le$3\%} performance degradation. Delivered a technical report and production-ready implementation, including reusable configurations and a logging loop for rapid rollback and reproducible experiments.
+    \item \textbf{Automatic generalization + formal verification for math problems (Math500 / Competitive-math benchmarks (e.g., AIME/HMMT) / K12):}
+    Built an automated pipeline: variable extraction $\rightarrow$ parameter generalization $\rightarrow$ Mathematica solving and consistency checking, producing structured annotations for extensible problem types and batch generation. Improved Math500 generalization rate from \textbf{42.74\% to 58.6\%}, and new-item accuracy from \textbf{87.4\% to 99\%}. Improved competition-problem generalization from \textbf{7.8\% to 63.95\%}. For multi-type K12 settings, introduced multi-branch generalization strategies to raise overall generalization to \textbf{42\%}. Packaged core capabilities as an \textbf{SDK} for deployment.
+    \item \textbf{In-distribution (IID) dialogue data selection:}
+    Constructed high-quality, in-distribution dialogue data to better emulate real user queries for model evaluation. Built a hybrid cleaning pipeline that integrates rule-based heuristics with sentence-embedding retrieval and clustering to filter ASR noise, refusal patterns, and outliers, producing a high-quality IID dialogue set for reliable evaluation.
 \end{itemize}
 
-\Entry{NLP Group, The Hong Kong Polytechnic University}{Dec. 2022 -- Present}{Research Assistant / PhD Research}{Hong Kong, China}
+\Entry{NLP Group, The Hong Kong Polytechnic University}{Dec 2022 -- Present}{Ph.D. Research}{Hong Kong SAR, China}
 \begin{itemize}
-    \item Research focus: situated conversational recommendation, LLM reasoning, and multimodal understanding.
-    \item Led projects from task definition and benchmark creation to baseline implementation and paper submission.
-    \item Published first-author / co-first papers in top-tier venues and journals.
+    \item \textbf{Situated conversational recommendation (SCR) task modeling and evaluation:}
+    Systematically formulated the interaction pipeline involving scenarios, context, and user preferences, and defined task setups and evaluation metrics. Implemented an end-to-end pipeline for data processing, training, and evaluation to support a series of papers with reproducible experiments.
+    \item \textbf{SiPeR: scenario transfer + Bayesian preference inference:}Addressed ``Where/What'' decision-making in SCR by jointly modeling scenario transfer and target-scenario prediction, with a calibrated transition decision module. Estimated whether the current scenario meets user needs and guided transfer when necessary. Leveraged MLLM likelihood for Bayesian inverse inference to characterize implicit preferences and filter visual distractors, achieving average gains of \textbf{10.9\%/10.6\%} on SIMMC 2.1 and SCREEN.
+    \item \textbf{Re2A: rubric-driven preference reasoning and dual-aligned generation:}
+    Cast SCR as a reason-then-align process: automatically generated rubrics to provide multi-dimensional reward signals, enabling explicit preference-state inference \textbf{without human annotation}. Then applied Preference-conditioned DPO to jointly align preference satisfaction and scenario consistency, reducing hallucination rate from \textbf{25.4\% to 5.2\%} and weak-match rate from \textbf{22.6\% to 7.4\%} on SIMMC 2.1.
 \end{itemize}
 
-\Entry{NLP Group, The Hong Kong Polytechnic University}{Jul. 2021 -- Dec. 2022}{Research Assistant}{Hong Kong, China}
+\Entry{NLP Group, The Hong Kong Polytechnic University}{Jul 2021 -- Dec 2022}{Research Assistant}{Hong Kong SAR, China}
 \begin{itemize}
-    \item Studied target-oriented dialogue planning and conversational recommendation frameworks.
-    \item Built planning-enhanced generation pipelines for proactive and controllable dialogue.
+    \item \textbf{Target-oriented dialogue planning and generation (framework engineering):}
+    Designed planning and generation methods around target constraints, dialogue states, and user preferences; incorporated look-ahead and feedback-based correction to improve multi-turn controllability and goal achievement. Modularized preprocessing, intent modeling, planner, and generator with unified training/inference interfaces and evaluation scripts, supporting rapid strategy comparison and reproducible experiments.
 \end{itemize}
 
 \Entry{Collective Intelligence Systems Lab, Sun Yat-sen University}{Feb. 2018 -- Jul. 2020}{Research Assistant}{Guangzhou, China}
 \begin{itemize}
-    \item Worked on machine reading comprehension, proposing hierarchical information transmission and memory-flow mechanisms.
-\end{itemize}
-
-\Section{SELECTED PROJECTS (LLM)}
-\textbf{SCREEN: A Benchmark for Situated Conversational Recommendation} \hfill \textit{ACM MM 2024}
-\begin{itemize}
-    \item Proposed a new task setting for situated conversational recommendation.
-    \item Built a benchmark with \textbf{20k+ dialogues} over \textbf{1.5k scenarios} via multimodal role-playing generation.
-    \item Designed subtasks and baseline evaluations to support future model development and comparison.
-\end{itemize}
-
-\textbf{MIDI-Tuning: Instruct Once, Chat Consistently in Multiple Rounds} \hfill \textit{ACL 2024}
-\begin{itemize}
-    \item Proposed a role-aware tuning framework for multi-round dialogue consistency.
-    \item Improved stability of agent behavior with efficient adapter-based training strategy.
-\end{itemize}
-
-\textbf{TRIP: Target-constrained Bidirectional Planning} \hfill \textit{TOIS 2024}
-\begin{itemize}
-    \item Introduced look-ahead/look-back bidirectional planning for target-oriented proactive dialogue.
-    \item Improved path quality and controllability for downstream dialogue generation.
+    \item \textbf{Machine reading comprehension and multi-hop reasoning (hierarchical propagation + memory flow):}Proposed hierarchical information propagation and memory-update mechanisms for evidence aggregation in long documents and cross-sentence relation modeling. Built training/evaluation pipelines and conducted systematic ablations and error analyses, with reproducible code and configurations.
 \end{itemize}
 
 \Section{SELECTED PUBLICATIONS}
 \begin{itemize}
-    \item \textbf{Dongding Lin}, Jian Wang, Chak Tou Leong, Wenjie Li. SCREEN: A Benchmark for Situated Conversational Recommendation. \textit{ACM MM 2024}.
-    \item Jian Wang, \textbf{Dongding Lin}, Wenjie Li. Target-constrained Bidirectional Planning for Generation of Target-oriented Proactive Dialogue. \textit{TOIS 2024}.
-    \item Jian Wang, Chak Tou Leong, Jiashuo Wang, \textbf{Dongding Lin}, Wenjie Li, Xiao-Yong Wei. Instruct once, chat consistently in multiple rounds: An efficient tuning framework for dialogue. \textit{ACL 2024}.
-    \item Jian Wang, Yi Cheng, \textbf{Dongding Lin}, et al. Target-oriented proactive dialogue systems with personalization. \textit{EMNLP 2023}.
-    \item \textbf{Dongding Lin*}, Jian Wang*, Wenjie Li. COLA: Improving Conversational Recommender Systems by Collaborative Augmentation. \textit{AAAI 2023}.
-    \item Jian Wang*, \textbf{Dongding Lin*}, Wenjie Li. Dialogue Planning via Brownian Bridge Stochastic Process for Goal-directed Proactive Dialogue. \textit{ACL Findings 2023}.
+    \item \textbf{Dongding Lin}, Jian Wang, Chak Tou Leong, Wenjie Li. SCREEN: A Benchmark for Situated Conversational Recommendation. \textit{ACM MM 2024} (CCF-A).
+    \item Jian Wang, \textbf{Dongding Lin}, Wenjie Li. Target-constrained Bidirectional Planning for Generation of Target-oriented Proactive Dialogue. \textit{TOIS 2024} (CCF-A).
+    \item Jian Wang, Chak Tou Leong, Jiashuo Wang, \textbf{Dongding Lin}, Wenjie Li, Xiao-Yong Wei. Instruct once, chat consistently in multiple rounds: An efficient tuning framework for dialogue. \textit{ACL 2024} (CCF-A).
+    \item Jian Wang, Yi Cheng, \textbf{Dongding Lin}, et al. Target-oriented proactive dialogue systems with personalization. \textit{EMNLP 2023} (CCF-A).
+    \item \textbf{Dongding Lin*}, Jian Wang*, Wenjie Li. COLA: Improving Conversational Recommender Systems by Collaborative Augmentation. \textit{AAAI 2023} (CCF-A).
+    \item Jian Wang*, \textbf{Dongding Lin*}, Wenjie Li. Dialogue Planning via Brownian Bridge Stochastic Process for Goal-directed Proactive Dialogue. \textit{ACL Findings 2023} (CCF-A).
 \end{itemize}
 
 \Section{ACADEMIC SERVICES \& TEACHING}
@@ -127,15 +112,14 @@ PhD candidate at The Hong Kong Polytechnic University with research focus on \te
 \begin{tabularx}{\linewidth}{@{}>{\bfseries}p{2.9cm}X@{}}
 Programming & Python, C/C++, Java, JavaScript, SQL, MATLAB \\
 ML Stack & PyTorch, TensorFlow, Hugging Face, Scikit-learn \\
-Research Areas & LLM reasoning, dialogue systems, conversational recommendation, multimodal understanding \\
-Tools & Linux, Git, LaTeX
+Research Areas & LLM reasoning, dialogue systems, conversational recommendation, multimodal understanding
 \end{tabularx}
 
 \Section{AWARDS}
 \begin{itemize}
     \item Ranked \textbf{4/750} in 2021 Language and Intelligence Challenge (Baidu).
     \item Ranked \textbf{4/119} in Materials Quality Prediction Kaggle Competition.
-    \item Outstanding Graduate Award (Top 3\%), Excellent Graduation Thesis (Top 3\%), Sun Yat-sen University.
+    \item Outstanding Graduate Award (\textbf{Top 3\%} of Sun Yat-sen University), Excellent Graduation Thesis (\textbf{Top 3\%} of Sun Yat-sen University).
     \item First/Second/Third Prize Scholarships during undergraduate and postgraduate study.
 \end{itemize}
 
