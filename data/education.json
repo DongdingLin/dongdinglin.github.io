@@ -2,21 +2,30 @@
   "education": [
     {
       "degree": "PhD Candidate",
+      "degree_zh": "博士研究生",
       "field": "The Department of Computing",
+      "field_zh": "计算学系",
       "institution": "The Hong Kong Polytechnic University",
+      "institution_zh": "香港理工大学",
       "period": "2022-Present"
     },
     {
       "degree": "Master's Degree",
+      "degree_zh": "硕士",
       "field": "School of Computer Science and Engineering",
+      "field_zh": "计算机学院",
       "institution": "Sun Yat-sen University",
+      "institution_zh": "中山大学",
       "period": "2017-2020"
     },
     {
       "degree": "Bachelor's Degree",
+      "degree_zh": "学士",
       "field": "School of Computer Science and Engineering",
+      "field_zh": "计算机学院",
       "institution": "Sun Yat-sen University",
+      "institution_zh": "中山大学",
       "period": "2013-2017"
     }
   ]
-} 
+}

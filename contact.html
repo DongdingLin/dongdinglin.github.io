@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="pic/favicon.png">
     <link rel="shortcut icon" href="pic/favicon.png">
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles.css?v=20260211">
+    <link rel="stylesheet" href="styles.css?v=20260211lang2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Open Graph / Social Media -->
     <meta property="og:title" content="Contact Dongding Lin">
@@ -102,8 +102,13 @@
 
     <div class="nav-bar">
         <ul>
-            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="index.html"><i class="fas fa-home"></i> <span id="nav-home-text">Home</span></a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> <span id="nav-contact-text">Contact</span></a></li>
+            <li>
+                <a href="#" id="language-toggle" class="language-toggle-link" aria-label="Switch language">
+                    <i class="fas fa-language"></i> <span id="language-toggle-text">中文</span>
+                </a>
+            </li>
         </ul>
     </div>
 
@@ -119,7 +124,7 @@
         </div>
     </div>
     
-    <a href="#" id="back-to-top" title="Back to Top">
+    <a href="#" id="back-to-top" title="Back to Top" aria-label="Back to Top">
         <i class="fas fa-arrow-up"></i>
     </a>
     
@@ -127,7 +132,7 @@
         <span id="footer-text">Loading footer...</span>
     </footer>
 
-    <script src="theme.js?v=20260211"></script>
-    <script src="js/data-loader.js?v=20260211"></script>
+    <script src="theme.js?v=20260211lang2"></script>
+    <script src="js/data-loader.js?v=20260211lang2"></script>
 </body>
 </html> 

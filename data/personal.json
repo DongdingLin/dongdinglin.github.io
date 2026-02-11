@@ -1,20 +1,37 @@
 {
   "name": "Dongding Lin",
+  "name_zh": "林东定",
   "title": "Ph.D. Candidate",
+  "title_zh": "博士研究生",
   "department": "Department of Computing",
+  "department_zh": "计算学系",
   "university": "The Hong Kong Polytechnic University",
+  "university_zh": "香港理工大学",
   "location": "Hung Hom, Kowloon, Hong Kong, China",
+  "location_zh": "中国香港九龙红磡",
   "email": "22037064r (at) connect.polyu.hk or lindongding (at) gmail.com",
   "jobSeekingBanner": "Actively seeking industry research positions in NLP/LLMs (2026).",
-  "bio": "<p>I am currently a fourth-year Ph.D. candidate in the <a href='https://polyunlp.github.io/' target='_blank'>NLP Group</a> at <a href='https://www.polyu.edu.hk/' target='_blank'>The Hong Kong Polytechnic University</a>, under the supervision of Professor <a href='https://www4.comp.polyu.edu.hk/~cswjli/' target='_blank'>Maggie Wenjie Li</a>. My research focuses on Situated Conversational Recommendation, LLM-based Reasoning, and Multimodal LLMs. Additionally, I am deeply interested in areas such as Speech Generation and Visual Understanding. Since August 2025, I have been serving as a Research Intern at Huawei Hong Kong Research Center (HKRC), Fermat Lab (Huawei 2012 Labs). I am passionate about applying NLP technologies to real-world scenarios, aiming to help people experience the various ways in which AI can enrich their lives.</p><p>Prior to my doctoral studies, I earned a Bachelor's degree from <a href='https://www.sysu.edu.cn/' target='_blank'>Sun Yat-sen University</a>, graduating with a GPA of 3.8/4.0, ranking 37th out of 433 students. I was directly admitted to the Master's program through the postgraduate recommendation and successfully completed my Master's degree, achieving a GPA of 3.9/4.0. During my graduate studies, I was fortunate to be co-advised by <a href='https://minyang.me/' target='_blank'>Prof. Min Yang</a> at SIAT, Chinese Academy of Sciences.</p>",
+  "jobSeekingBanner_zh": "正在积极寻找 2026 年 NLP/LLM 相关产业研究岗位。",
+  "bio": "<p>I am currently a fourth-year Ph.D. candidate in the <a href='https://polyunlp.github.io/' target='_blank'>NLP Group</a> at <a href='https://www.polyu.edu.hk/' target='_blank'>The Hong Kong Polytechnic University</a>, under the supervision of Professor <a href='https://www4.comp.polyu.edu.hk/~cswjli/' target='_blank'>Maggie Wenjie Li</a>. My research focuses on Situated Conversational Recommendation, LLM-based Reasoning, and Multimodal LLMs. Additionally, I am deeply interested in areas such as Speech Generation and Visual Understanding. Since August 2025, I have been serving as a Research Intern at <a href='https://www.linkedin.com/company/huawei-hong-kong-research-center-hkrc/?originalSubdomain=hk' target='_blank'>Huawei Hong Kong Research Center (HKRC)</a>, Fermat Lab (Huawei 2012 Labs). I am passionate about applying NLP technologies to real-world scenarios, aiming to help people experience the various ways in which AI can enrich their lives.</p><p>Prior to my doctoral studies, I earned a Bachelor's degree from <a href='https://www.sysu.edu.cn/' target='_blank'>Sun Yat-sen University</a>, graduating with a GPA of <strong>3.8/4.0</strong>, ranking <strong>37th out of 433</strong> students. I was directly admitted to the Master's program through the postgraduate recommendation and successfully completed my Master's degree, achieving a GPA of <strong>3.9/4.0</strong>. During my graduate studies, I was fortunate to be co-advised by <a href='https://minyang.me/' target='_blank'>Prof. Min Yang</a> at SIAT, Chinese Academy of Sciences.</p>",
+  "bio_zh": "<p>我目前是<a href='https://polyunlp.github.io/' target='_blank'>香港理工大学 NLP Group</a> 四年级博士生，导师为 <a href='https://www4.comp.polyu.edu.hk/~cswjli/' target='_blank'>Maggie Wenjie Li</a> 教授。研究方向包括情境对话推荐、基于大模型的推理，以及多模态大模型。同时，我也关注语音生成和视觉理解等方向。自 2025 年 8 月起，我在<a href='https://www.linkedin.com/company/huawei-hong-kong-research-center-hkrc/?originalSubdomain=hk' target='_blank'>华为香港研究中心（HKRC）</a> Fermat Lab（华为 2012 实验室）担任研究实习生，持续探索 NLP 技术在真实业务场景中的落地。</p><p>在博士阶段之前，我毕业于<a href='https://www.sysu.edu.cn/' target='_blank'>中山大学</a>，本科 GPA <strong>3.8/4.0</strong>（<strong>37/433</strong>），后通过推免继续攻读硕士并取得 GPA <strong>3.9/4.0</strong>。硕士期间，我有幸在中科院深圳先进院（SIAT）与 <a href='https://minyang.me/' target='_blank'>Min Yang</a> 教授共同开展研究。</p>",
   "social": [
     {
+      "platform": "WeChat",
+      "platform_zh": "微信",
+      "icon": "fab fa-weixin",
+      "interaction": "wechat-modal",
+      "wechat_id": "lindongding88",
+      "qr_image": "pic/QR_code.png"
+    },
+    {
       "platform": "GitHub",
+      "platform_zh": "GitHub",
       "url": "https://github.com/DongdingLin",
       "icon": "fab fa-github"
     },
     {
       "platform": "Google Scholar",
+      "platform_zh": "Google Scholar",
       "url": "https://scholar.google.com/citations?view_op=list_works&hl=zh-CN&user=JM4i0R8AAAAJ",
       "icon": "fas fa-graduation-cap"
     }
@@ -23,11 +40,15 @@
     {
       "url": "cv/cv_cn_modern.pdf",
       "label": "简历下载",
+      "label_en": "Resume (CN)",
+      "label_zh": "简历下载",
       "icon": "fas fa-file-pdf"
     },
     {
       "url": "cv/cv_en_modern.pdf",
       "label": "CV Download",
+      "label_en": "CV Download",
+      "label_zh": "英文简历",
       "icon": "fas fa-file-pdf"
     }
   ],
@@ -38,37 +59,52 @@
   "research_interests": [
     {
       "area": "Large Language Models (LLMs)",
-      "details": "Dialogue systems, Multi-turn interaction, Situated Conversational Recommendation, etc."
+      "area_zh": "大语言模型（LLMs）",
+      "details": "Dialogue systems, Multi-turn interaction, Situated Conversational Recommendation, etc.",
+      "details_zh": "对话系统、多轮交互、情境对话推荐等。"
     },
     {
       "area": "LLM-based Reasoning",
-      "details": "LLM-based Reasoning, Latent Chain of Thought, etc."
+      "area_zh": "大模型推理",
+      "details": "LLM-based Reasoning, Latent Chain of Thought, etc.",
+      "details_zh": "LLM 推理、隐式思维链等。"
     },
     {
       "area": "Multimodal LLMs",
-      "details": "Multimodal LLMs, Visual Reasoning, Speech Generation, etc."
+      "area_zh": "多模态大模型",
+      "details": "Multimodal LLMs, Visual Reasoning, Speech Generation, etc.",
+      "details_zh": "多模态大模型、视觉推理、语音生成等。"
     }
   ],
   "misc": "<p>I enjoy table tennis, mobile games, reading, and movies.</p><p>I hope to travel around the world someday and explore different cultures and landscapes.</p>",
+  "misc_zh": "<p>我平时喜欢打乒乓球、玩手游、看书和看电影。</p><p>也希望未来有机会去更多国家旅行，体验不同文化与风景。</p>",
   "footerText": "© 2026 Dongding Lin | Last updated: February 2026",
+  "footerText_zh": "© 2026 林东定 | 最近更新：2026 年 2 月",
   "contactPage": {
     "title": "Contact Me",
+    "title_zh": "联系方式",
     "introduction": "If you are interested in my research or have any ideas for collaboration, please feel free to contact me through the following methods.",
+    "introduction_zh": "如果你对我的研究感兴趣，或希望开展合作，欢迎通过以下方式联系我。",
     "contactMethods": [
       {
         "type": "Email",
+        "type_zh": "邮箱",
         "icon": "fas fa-envelope",
         "details": "22037064r@connect.polyu.hk"
       },
       {
         "type": "Office Address",
+        "type_zh": "办公地址",
         "icon": "fas fa-map-marker-alt",
-        "details": "Hung Hom, Kowloon, Hong Kong, China<br>The Hong Kong Polytechnic University, PQ719"
+        "details": "Hung Hom, Kowloon, Hong Kong, China<br>The Hong Kong Polytechnic University, PQ719",
+        "details_zh": "中国香港九龙红磡<br>香港理工大学 PQ719"
       },
       {
         "type": "WeChat",
+        "type_zh": "微信",
         "icon": "fab fa-weixin",
-        "details": "WeChat ID: lindongding88"
+        "details": "WeChat ID: lindongding88",
+        "details_zh": "微信号：lindongding88"
       }
     ]
   }

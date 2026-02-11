@@ -12,6 +12,8 @@
       "impact_factor": "CCF-A",
       "citations": 1,
       "doi": "10.1145/3664647.3681651",
+      "thumbnail": "pic/ACMMM_2024.png",
+      "thumbnail_alt": "SCREEN paper teaser (ACM MM 2024)",
       "links": [
         {"type": "Paper", "url": "https://dl.acm.org/doi/pdf/10.1145/3664647.3681651"},
         {"type": "Code", "url": "https://github.com/DongdingLin/SCREEN"}
@@ -29,6 +31,8 @@
       "impact_factor": "CCF-A",
       "citations": 9,
       "doi": "10.1145/3652598",
+      "thumbnail": "pic/TOIS_2024.png",
+      "thumbnail_alt": "TRIP paper teaser (TOIS 2024)",
       "links": [
         {"type": "Paper", "url": "https://dl.acm.org/doi/pdf/10.1145/3652598"},
         {"type": "Code", "url": "https://github.com/iwangjian/TRIP"}
@@ -48,6 +52,9 @@
       "venue": "ACL 2024 (The 62nd Annual Meeting of the Association for Computational Linguistics)",
       "impact_factor": "CCF-A",
       "citations": 18,
+      "doi": "10.18653/v1/2024.acl-long.219",
+      "thumbnail": "pic/ACL_2024.png",
+      "thumbnail_alt": "MIDI-Tuning paper teaser (ACL 2024)",
       "links": [
         {"type": "Paper", "url": "https://aclanthology.org/2024.acl-long.219.pdf"},
         {"type": "Code", "url": "https://github.com/iwangjian/Midi-Tuning"}
@@ -66,6 +73,9 @@
       "venue": "EMNLP 2023 (The 2023 Conference on Empirical Methods in Natural Language Processing)",
       "impact_factor": "CCF-B",
       "citations": 36,
+      "doi": "10.18653/v1/2023.emnlp-main.72",
+      "thumbnail": "pic/EMNLP_2023.png",
+      "thumbnail_alt": "TopDial paper teaser (EMNLP 2023)",
       "links": [
         {"type": "Paper", "url": "https://aclanthology.org/2023.emnlp-main.72.pdf"},
         {"type": "Code", "url": "https://github.com/iwangjian/TopDial"}
@@ -82,6 +92,9 @@
       "venue": "AAAI 2023 (The 37th AAAI Conference on Artificial Intelligence)",
       "impact_factor": "CCF-A",
       "citations": 31,
+      "doi": "10.1609/aaai.v37i4.25567",
+      "thumbnail": "pic/AAAI_2023.png",
+      "thumbnail_alt": "COLA paper teaser (AAAI 2023)",
       "links": [
         {"type": "Paper", "url": "https://ojs.aaai.org/index.php/AAAI/article/download/25567/25339"},
         {"type": "Code", "url": "https://github.com/DongdingLin/COLA"}
@@ -98,6 +111,9 @@
       "venue": "ACL 2023 Findings (The 61st Annual Meeting of the Association for Computational Linguistics)",
       "impact_factor": "CCF-A",
       "citations": 29,
+      "doi": "10.18653/v1/2023.findings-acl.25",
+      "thumbnail": "pic/ACL_2023_Findings.png",
+      "thumbnail_alt": "Color4Dial paper teaser (ACL Findings 2023)",
       "links": [
         {"type": "Paper", "url": "https://aclanthology.org/2023.findings-acl.25.pdf"},
         {"type": "Code", "url": "https://github.com/iwangjian/Color4Dial"}
@@ -114,6 +130,9 @@
       "venue": "TNNLS 2023 (IEEE Transactions on Neural Networks and Learning Systems)",
       "impact_factor": "CCF-B",
       "citations": 19,
+      "doi": "10.1109/TNNLS.2023.3242071",
+      "thumbnail": "pic/TNNLS_2023.png",
+      "thumbnail_alt": "TPNet paper teaser (TNNLS 2023)",
       "links": [
         {"type": "Paper", "url": "https://iwangjian.github.io/pdf/TNNLS2023.wang.pdf"},
         {"type": "Code", "url": "https://github.com/iwangjian/Plan4RecDial"}
@@ -128,7 +147,10 @@
         {"name": "Wenjie Li", "is_self": false}
       ],
       "venue": "arXiv 2022",
+      "doi": "10.48550/arXiv.2208.03516",
       "citations": 15,
+      "thumbnail": "pic/Arxiv_2022.png",
+      "thumbnail_alt": "Follow me paper teaser (arXiv 2022)",
       "links": [
         {"type": "Paper", "url": "https://arxiv.org/pdf/2208.03516"},
         {"type": "Code", "url": "https://github.com/iwangjian/Plan4RecDial"}
@@ -144,6 +166,8 @@
       ],
       "venue": "CEUR-WS 2022 (Proceedings of the Joint KaRS & ComplexRec Workshop)",
       "citations": 10,
+      "thumbnail": "pic/CEUR-WS_2022.png",
+      "thumbnail_alt": "Target-guided knowledge-aware dialogue paper teaser (CEUR-WS 2022)",
       "links": [
         {"type": "Paper", "url": "https://ceur-ws.org/Vol-2960/paper7.pdf"}
       ],

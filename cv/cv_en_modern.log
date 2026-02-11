@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2026.2.10)  10 FEB 2026 12:52
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2026.2.10)  11 FEB 2026 12:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -440,7 +440,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 60--63
  []
 
 
-Underfull \hbox (badness 1533) in paragraph at lines 86--87
+Underfull \hbox (badness 1533) in paragraph at lines 87--88
 []\TU/Arial(0)/m/n/10.95 Worked on machine reading comprehension, proposing hie
 rarchical information transmission and
  []
@@ -460,12 +460,12 @@ Package rerunfilecheck Info: File `cv_en_modern.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 13328 strings out of 473832
- 254404 string characters out of 5729481
- 725978 words of memory out of 5000000
- 36248 multiletter control sequences out of 15000+600000
- 562152 words of font info for 73 fonts, out of 8000000 for 9000
+ 13326 strings out of 473832
+ 254334 string characters out of 5729481
+ 723978 words of memory out of 5000000
+ 36247 multiletter control sequences out of 15000+600000
+ 562144 words of font info for 72 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 79i,9n,93p,367b,382s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 79i,9n,93p,410b,432s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 Output written on cv_en_modern.pdf (2 pages).

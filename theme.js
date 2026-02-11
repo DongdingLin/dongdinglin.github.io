@@ -1,4 +1,6 @@
 // Theme switching functionality
+const THEME_LANGUAGE_STORAGE_KEY = 'site_language';
+
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize theme
     const currentTheme = localStorage.getItem('theme') || 'light';
@@ -18,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             navBar.appendChild(themeToggleLi);
             
             // Update icon and text
-            updateThemeToggle(currentTheme);
+            updateThemeToggle(currentTheme, getSiteLanguage());
             
             // Add event listener
             document.getElementById('theme-toggle').addEventListener('click', function(e) {
@@ -27,6 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
+
+    window.addEventListener('site-language-change', event => {
+        const language = event?.detail?.lang || getSiteLanguage();
+        const activeTheme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
+        updateThemeToggle(activeTheme, language);
+    });
 });
 
 // Toggle theme
@@ -35,7 +43,7 @@ function toggleTheme() {
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     
     setTheme(newTheme);
-    updateThemeToggle(newTheme);
+    updateThemeToggle(newTheme, getSiteLanguage());
     
     // Save to local storage
     localStorage.setItem('theme', newTheme);
@@ -51,15 +59,25 @@ function setTheme(theme) {
 }
 
 // Update toggle button icon and text
-function updateThemeToggle(theme) {
+function updateThemeToggle(theme, language = 'en') {
     const themeIcon = document.getElementById('theme-icon');
     const themeText = document.getElementById('theme-text');
+    if (!themeIcon || !themeText) {
+        return;
+    }
+
+    const lang = language === 'zh' ? 'zh' : 'en';
     
     if (theme === 'dark') {
         themeIcon.className = 'fas fa-sun';
-        themeText.textContent = 'Light Mode';
+        themeText.textContent = lang === 'zh' ? '浅色模式' : 'Light Mode';
     } else {
         themeIcon.className = 'fas fa-moon';
-        themeText.textContent = 'Dark Mode';
+        themeText.textContent = lang === 'zh' ? '深色模式' : 'Dark Mode';
     }
-} 
+}
+
+function getSiteLanguage() {
+    const stored = localStorage.getItem(THEME_LANGUAGE_STORAGE_KEY);
+    return stored === 'zh' ? 'zh' : 'en';
+}

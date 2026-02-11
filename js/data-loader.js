@@ -1,6 +1,6 @@
 // Data loader for personal website
 const FALLBACK_PUBLICATIONS_URL = 'https://scholar.google.com/citations?view_op=list_works&hl=en&user=JM4i0R8AAAAJ';
-const DATA_VERSION = '2026-02-11';
+const DATA_VERSION = '2026-02-11-lang2';
 const HOME_DATA_FILES = [
     'personal.json',
     'publications.json',
@@ -11,8 +11,120 @@ const HOME_DATA_FILES = [
 ];
 const CONTACT_DATA_FILES = ['personal.json'];
 const RECENT_NEWS_WINDOW_DAYS = 365;
+const LANGUAGE_STORAGE_KEY = 'site_language';
+const DEFAULT_LANGUAGE = 'en';
+const SUPPORTED_LANGUAGES = ['en', 'zh'];
+const UI_TEXT = {
+    en: {
+        nav: {
+            home: 'Home',
+            contact: 'Contact',
+            toggleLanguage: '中文'
+        },
+        sections: {
+            skills: 'Skills',
+            publications: 'Selected Publications',
+            education: 'Education',
+            experience: 'Experience',
+            awards: 'Honors and Awards',
+            services: 'Academic Services',
+            teaching: 'Teaching Experience',
+            misc: 'Miscellaneous',
+            news: 'News',
+            interests: 'Research Interests'
+        },
+        labels: {
+            reviewer: 'Reviewer',
+            email: 'Email',
+            interestsIntro: 'My research interests include the following areas:',
+            interestsOutro: 'I am actively looking for collaborators interested in the above research directions. Please feel free to contact me if you are interested.',
+            backToTop: 'Back to Top',
+            noNews: 'No news updates yet.',
+            dateTbd: 'Date TBD',
+            tbd: 'TBD'
+        },
+        publications: {
+            rank: 'Rank',
+            citations: 'Citations',
+            abs: 'ABS',
+            hideAbs: 'HIDE ABS',
+            abstractUnavailable: 'Abstract not available',
+            noPublications: 'No publications available yet.',
+            paperPreview: 'Paper Preview',
+            viewScholar: 'View on Google Scholar'
+        },
+        contact: {
+            defaultTitle: 'Contact',
+            defaultIntroduction: 'Feel free to contact me through the following methods.'
+        },
+        wechat: {
+            title: 'WeChat',
+            subtitle: 'Scan the QR code to connect.',
+            fallback: 'QR image is unavailable right now.',
+            idPrefix: 'WeChat ID',
+            idMissing: 'WeChat ID not provided'
+        }
+    },
+    zh: {
+        nav: {
+            home: '主页',
+            contact: '联系',
+            toggleLanguage: 'EN'
+        },
+        sections: {
+            skills: '技能',
+            publications: '代表论文',
+            education: '教育背景',
+            experience: '经历',
+            awards: '荣誉奖项',
+            services: '学术服务',
+            teaching: '教学经历',
+            misc: '其他',
+            news: '新闻动态',
+            interests: '研究方向'
+        },
+        labels: {
+            reviewer: '审稿服务',
+            email: '邮箱',
+            interestsIntro: '我的研究兴趣主要包括以下方向：',
+            interestsOutro: '欢迎对上述方向感兴趣的老师与同学联系交流，期待合作。',
+            backToTop: '回到顶部',
+            noNews: '暂无新闻更新。',
+            dateTbd: '日期待定',
+            tbd: '待补充'
+        },
+        publications: {
+            rank: '级别',
+            citations: '引用',
+            abs: '摘要',
+            hideAbs: '收起摘要',
+            abstractUnavailable: '暂无摘要',
+            noPublications: '暂无论文信息。',
+            paperPreview: '论文预览',
+            viewScholar: '查看 Google Scholar'
+        },
+        contact: {
+            defaultTitle: '联系方式',
+            defaultIntroduction: '欢迎通过以下方式联系我。'
+        },
+        wechat: {
+            title: '微信',
+            subtitle: '请扫码添加微信联系。',
+            fallback: '二维码暂时无法显示。',
+            idPrefix: '微信号',
+            idMissing: '未提供微信号'
+        }
+    }
+};
+
+let currentLanguage = DEFAULT_LANGUAGE;
+let cachedDataByFile = null;
+let isCurrentContactPage = false;
 
 document.addEventListener('DOMContentLoaded', function() {
+    currentLanguage = resolveInitialLanguage();
+    installLanguageToggle();
+    setLanguage(currentLanguage, { persist: false, rerender: false });
     initBackToTop();
     initPage().catch(error => {
         showLoadingError(`Failed to load data: ${error.message}. Please refresh the page and try again.`);
@@ -20,19 +132,23 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 async function initPage() {
-    const isContactPage = window.location.pathname.includes('contact.html');
-    const fileNames = isContactPage ? CONTACT_DATA_FILES : HOME_DATA_FILES;
-    const dataByFile = await loadDataFiles(fileNames);
+    isCurrentContactPage = window.location.pathname.includes('contact.html');
+    const fileNames = isCurrentContactPage ? CONTACT_DATA_FILES : HOME_DATA_FILES;
+    cachedDataByFile = await loadDataFiles(fileNames);
+    renderPage(cachedDataByFile, isCurrentContactPage);
+}
 
+function renderPage(dataByFile, isContactPage) {
     try {
         const personal = dataByFile['personal.json'] || {};
-        const nameForTitle = personal.name || 'Dongding Lin';
+        const nameForTitle = getLocalizedValue(personal, 'name', 'Dongding Lin');
 
-        renderFooter(personal.footerText || '');
-        document.title = `${isContactPage ? 'Contact' : ''} ${nameForTitle}'s Personal Homepage`.trim();
+        renderFooter(getLocalizedValue(personal, 'footerText', ''));
+        document.title = buildPageTitle(nameForTitle, isContactPage);
 
         if (isContactPage) {
             renderContactPage(personal);
+            applyStaticTranslations();
             return;
         }
 
@@ -51,11 +167,147 @@ async function initPage() {
         renderPublications(dataByFile['publications.json'] || {});
         renderEducation((dataByFile['education.json'] || {}).education);
         renderExperience(dataByFile['experience.json'] || {});
-        renderMisc(personal.misc);
+        renderMisc(getLocalizedValue(personal, 'misc', ''));
         initPublicationAbstractToggle();
+        applyStaticTranslations();
     } catch (renderError) {
         showLoadingError(`Render error: ${renderError.message}`);
     }
+}
+
+function resolveInitialLanguage() {
+    const stored = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+    if (SUPPORTED_LANGUAGES.includes(stored)) {
+        return stored;
+    }
+    return DEFAULT_LANGUAGE;
+}
+
+function installLanguageToggle() {
+    const toggle = document.getElementById('language-toggle');
+    if (!toggle || toggle.dataset.bound === 'true') {
+        return;
+    }
+
+    toggle.addEventListener('click', event => {
+        event.preventDefault();
+        const nextLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
+        setLanguage(nextLanguage);
+    });
+
+    toggle.dataset.bound = 'true';
+}
+
+function setLanguage(lang, options = {}) {
+    const normalized = SUPPORTED_LANGUAGES.includes(lang) ? lang : DEFAULT_LANGUAGE;
+    currentLanguage = normalized;
+    document.documentElement.lang = normalized === 'zh' ? 'zh-CN' : 'en';
+
+    if (options.persist !== false) {
+        localStorage.setItem(LANGUAGE_STORAGE_KEY, normalized);
+    }
+
+    applyStaticTranslations();
+
+    if (options.rerender !== false && cachedDataByFile) {
+        renderPage(cachedDataByFile, isCurrentContactPage);
+    }
+
+    window.dispatchEvent(new CustomEvent('site-language-change', { detail: { lang: normalized } }));
+}
+
+function applyStaticTranslations() {
+    setTextById('nav-home-text', getUiText('nav.home'));
+    setTextById('nav-contact-text', getUiText('nav.contact'));
+    setTextById('language-toggle-text', getUiText('nav.toggleLanguage'));
+    const languageToggle = document.getElementById('language-toggle');
+    if (languageToggle) {
+        languageToggle.setAttribute('aria-label', currentLanguage === 'zh' ? 'Switch to English' : '切换到中文');
+    }
+
+    setTextById('section-skills-title', getUiText('sections.skills'));
+    setTextById('section-publications-title', getUiText('sections.publications'));
+    setTextById('section-education-title', getUiText('sections.education'));
+    setTextById('section-experience-title', getUiText('sections.experience'));
+    setTextById('section-awards-title', getUiText('sections.awards'));
+    setTextById('section-services-title', getUiText('sections.services'));
+    setTextById('section-teaching-title', getUiText('sections.teaching'));
+    setTextById('section-misc-title', getUiText('sections.misc'));
+    setTextById('section-news-title', getUiText('sections.news'));
+    setTextById('section-interests-title', getUiText('sections.interests'));
+
+    setTextById('services-reviewer-label', getUiText('labels.reviewer'));
+    setTextById('interests-intro', getUiText('labels.interestsIntro'));
+    setTextById('interests-outro', getUiText('labels.interestsOutro'));
+
+    const backToTop = document.getElementById('back-to-top');
+    if (backToTop) {
+        const text = getUiText('labels.backToTop');
+        backToTop.title = text;
+        backToTop.setAttribute('aria-label', text);
+    }
+
+    updateWechatModalLanguage();
+}
+
+function getUiText(keyPath) {
+    const current = getNestedValue(UI_TEXT[currentLanguage], keyPath);
+    if (typeof current === 'string') {
+        return current;
+    }
+    const fallback = getNestedValue(UI_TEXT[DEFAULT_LANGUAGE], keyPath);
+    return typeof fallback === 'string' ? fallback : keyPath;
+}
+
+function getNestedValue(source, keyPath) {
+    if (!source || typeof keyPath !== 'string') {
+        return undefined;
+    }
+    return keyPath.split('.').reduce((obj, key) => (obj && Object.prototype.hasOwnProperty.call(obj, key) ? obj[key] : undefined), source);
+}
+
+function setTextById(id, value) {
+    const element = document.getElementById(id);
+    if (element) {
+        element.textContent = value;
+    }
+}
+
+function buildPageTitle(name, isContactPage) {
+    if (currentLanguage === 'zh') {
+        return `${isContactPage ? '联系我 - ' : ''}${name}的个人主页`;
+    }
+    return `${isContactPage ? 'Contact ' : ''}${name}'s Personal Homepage`.trim();
+}
+
+function getLocalizedValue(source, key, fallback = '') {
+    if (!source || typeof source !== 'object') {
+        return fallback;
+    }
+
+    const baseValue = source[key];
+    if (baseValue && typeof baseValue === 'object' && !Array.isArray(baseValue)) {
+        const localizedObjectValue = baseValue[currentLanguage];
+        if (localizedObjectValue !== undefined && localizedObjectValue !== null && String(localizedObjectValue).trim() !== '') {
+            return localizedObjectValue;
+        }
+        const englishObjectValue = baseValue.en;
+        if (englishObjectValue !== undefined && englishObjectValue !== null && String(englishObjectValue).trim() !== '') {
+            return englishObjectValue;
+        }
+    }
+
+    const localizedKey = `${key}_${currentLanguage}`;
+    const localizedValue = source[localizedKey];
+    if (localizedValue !== undefined && localizedValue !== null && String(localizedValue).trim() !== '') {
+        return localizedValue;
+    }
+
+    if (baseValue !== undefined && baseValue !== null && String(baseValue).trim() !== '') {
+        return baseValue;
+    }
+
+    return fallback;
 }
 
 async function loadDataFiles(fileNames) {
@@ -118,11 +370,17 @@ function initPublicationAbstractToggle() {
 
     container.addEventListener('click', function(event) {
         const button = event.target.closest('.abstract-toggle');
-        if (!button) {
+        const media = event.target.closest('.publication-media[data-target]');
+        const trigger = button || media;
+        if (!trigger) {
             return;
         }
 
-        const abstractId = button.getAttribute('data-target');
+        const abstractId = trigger.getAttribute('data-target');
+        if (!abstractId) {
+            return;
+        }
+
         const abstract = document.getElementById(abstractId);
         if (!abstract) {
             return;
@@ -130,8 +388,17 @@ function initPublicationAbstractToggle() {
 
         const expanding = abstract.hidden;
         abstract.hidden = !expanding;
-        button.setAttribute('aria-expanded', String(expanding));
-        button.textContent = expanding ? 'HIDE ABS' : 'ABS';
+
+        const relatedButton = container.querySelector(`.abstract-toggle[data-target="${abstractId}"]`);
+        if (relatedButton) {
+            relatedButton.setAttribute('aria-expanded', String(expanding));
+            relatedButton.textContent = expanding ? getUiText('publications.hideAbs') : getUiText('publications.abs');
+        }
+
+        const relatedMedia = container.querySelector(`.publication-media[data-target="${abstractId}"]`);
+        if (relatedMedia) {
+            relatedMedia.setAttribute('aria-expanded', String(expanding));
+        }
 
         if (expanding) {
             setTimeout(() => {
@@ -140,33 +407,53 @@ function initPublicationAbstractToggle() {
         }
     });
 
+    container.addEventListener('keydown', function(event) {
+        const media = event.target.closest('.publication-media[data-target]');
+        if (!media) {
+            return;
+        }
+
+        if (event.key !== 'Enter' && event.key !== ' ') {
+            return;
+        }
+
+        event.preventDefault();
+        media.click();
+    });
+
     container.dataset.abstractBound = 'true';
 }
 
 // Render personal information
 function renderPersonalInfo(data) {
     const contact = data.contact || {};
+    const displayName = getLocalizedValue(data, 'name', '');
+    const title = getLocalizedValue(data, 'title', '');
+    const department = getLocalizedValue(data, 'department', '');
+    const university = getLocalizedValue(data, 'university', '');
+    const location = getLocalizedValue(data, 'location', '');
+    const email = getLocalizedValue(data, 'email', '');
 
-    document.getElementById('name').textContent = data.name || '';
+    document.getElementById('name').textContent = displayName;
 
     const personalInfoHtml = [
-        escapeHtml(data.title || ''),
-        escapeHtml(data.department || ''),
-        escapeHtml(data.university || ''),
-        escapeHtml(data.location || ''),
-        `<strong>Email</strong>: ${escapeHtml(data.email || '')}`
+        escapeHtml(title),
+        escapeHtml(department),
+        escapeHtml(university),
+        escapeHtml(location),
+        `<strong>${escapeHtml(getUiText('labels.email'))}</strong>: ${escapeHtml(email)}`
     ].join('<br>');
     document.getElementById('personal-info').innerHTML = personalInfoHtml;
 
-    const bioWithLineBreaks = String(data.bio || '').replace(/\\n/g, '<br><br>');
+    const bioWithLineBreaks = String(getLocalizedValue(data, 'bio', '')).replace(/\\n/g, '<br><br>');
     document.getElementById('bio').innerHTML = bioWithLineBreaks;
 
-    document.getElementById('contact-email').textContent = contact.email || '';
-    document.getElementById('contact-location').textContent = contact.location || '';
+    document.getElementById('contact-email').textContent = getLocalizedValue(contact, 'email', contact.email || '');
+    document.getElementById('contact-location').textContent = getLocalizedValue(contact, 'location', contact.location || '');
 
     const banner = document.getElementById('job-seeking-banner');
     if (banner) {
-        const bannerText = typeof data.jobSeekingBanner === 'string' ? data.jobSeekingBanner.trim() : '';
+        const bannerText = String(getLocalizedValue(data, 'jobSeekingBanner', '')).trim();
         const bannerTextEl = banner.querySelector('.job-seeking-text');
 
         if (bannerText) {
@@ -181,26 +468,227 @@ function renderPersonalInfo(data) {
 
     const socialLinksContainer = document.getElementById('social-links');
     const socialLinks = Array.isArray(data.social)
-        ? data.social.map(link => {
-            const iconClass = typeof link.icon === 'string' ? link.icon : 'fas fa-link';
-            const platform = escapeHtml(link.platform || 'Link');
-            const url = sanitizeUrl(link.url);
-            return `<a href="${url}" target="_blank" rel="noopener noreferrer"><i class="${iconClass}"></i> ${platform}</a>`;
-        })
+        ? data.social.map(link => renderSocialLink(link)).filter(Boolean)
         : [];
 
     const cvEntries = Array.isArray(data.cvs) ? data.cvs : (data.cv ? [data.cv] : []);
     const cvLinks = cvEntries.map(item => {
         const iconClass = typeof item.icon === 'string' ? item.icon : 'fas fa-file';
-        const label = escapeHtml(item.label || 'CV');
+        const label = escapeHtml(getLocalizedValue(item, 'label', 'CV'));
         const url = sanitizeUrl(item.url);
         return `<a href="${url}" target="_blank" class="cv-button" rel="noopener noreferrer"><i class="${iconClass}"></i> ${label}</a>`;
     });
 
     socialLinksContainer.innerHTML = [...socialLinks, ...cvLinks].join('');
+    bindWechatModalTriggers(socialLinksContainer);
 
-    if (data.name) {
-        document.title = `${data.name}'s Personal Homepage`;
+    if (displayName) {
+        document.title = buildPageTitle(displayName, false);
+    }
+}
+
+function renderSocialLink(link) {
+    const iconClass = typeof link?.icon === 'string' ? link.icon : 'fas fa-link';
+    const platform = escapeHtml(getLocalizedValue(link, 'platform', 'Link'));
+
+    if (isWechatModalLink(link)) {
+        const wechatId = escapeHtml(resolveWechatId(link));
+        const qrSource = escapeHtml(resolveWechatQrSource(link));
+        return `
+            <a
+                href="#"
+                class="wechat-trigger wechat-link"
+                data-wechat-id="${wechatId}"
+                data-wechat-qr="${qrSource}"
+                aria-haspopup="dialog"
+                aria-controls="wechat-modal"
+            >
+                <i class="${iconClass}"></i> ${platform}
+            </a>
+        `;
+    }
+
+    const url = sanitizeUrl(link?.url);
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer"><i class="${iconClass}"></i> ${platform}</a>`;
+}
+
+function isWechatModalLink(link) {
+    return String(link?.interaction || '').toLowerCase() === 'wechat-modal';
+}
+
+function resolveWechatId(link) {
+    if (typeof link?.wechat_id === 'string' && link.wechat_id.trim()) {
+        return link.wechat_id.trim();
+    }
+    if (typeof link?.wechatId === 'string' && link.wechatId.trim()) {
+        return link.wechatId.trim();
+    }
+    if (typeof link?.details === 'string') {
+        const match = link.details.match(/wechat\s*id[:：]\s*([a-zA-Z0-9_-]+)/i);
+        if (match && match[1]) {
+            return match[1];
+        }
+    }
+
+    return '';
+}
+
+function resolveWechatQrSource(link) {
+    const localQr = sanitizeAssetUrl(link?.qr_image || link?.qrImage || '');
+    if (localQr !== '#') {
+        return localQr;
+    }
+
+    const wechatId = resolveWechatId(link);
+    if (!wechatId) {
+        return '#';
+    }
+
+    const generatedQrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=360x360&data=${encodeURIComponent(`WeChat ID: ${wechatId}`)}`;
+    return sanitizeAssetUrl(generatedQrUrl);
+}
+
+function bindWechatModalTriggers(container) {
+    if (!container || container.dataset.wechatBound === 'true') {
+        return;
+    }
+
+    const modal = ensureWechatModal();
+    if (!modal) {
+        return;
+    }
+
+    container.addEventListener('click', event => {
+        const trigger = event.target.closest('.wechat-trigger');
+        if (!trigger) {
+            return;
+        }
+
+        event.preventDefault();
+        openWechatModal(trigger);
+    });
+
+    container.dataset.wechatBound = 'true';
+}
+
+function ensureWechatModal() {
+    let modal = document.getElementById('wechat-modal');
+    if (!modal) {
+        document.body.insertAdjacentHTML('beforeend', `
+            <div id="wechat-modal" class="wechat-modal" hidden aria-hidden="true">
+                <div class="wechat-modal-backdrop" data-wechat-close="true"></div>
+                <div class="wechat-modal-panel" role="dialog" aria-modal="true" aria-labelledby="wechat-modal-title">
+                    <button type="button" class="wechat-modal-close" data-wechat-close="true" aria-label="Close WeChat QR modal">&times;</button>
+                    <h3 id="wechat-modal-title"><i class="fab fa-weixin"></i> ${escapeHtml(getUiText('wechat.title'))}</h3>
+                    <p id="wechat-modal-subtitle" class="wechat-modal-subtitle">${escapeHtml(getUiText('wechat.subtitle'))}</p>
+                    <img id="wechat-modal-qr" class="wechat-modal-qr" alt="WeChat QR code" loading="lazy">
+                    <p id="wechat-modal-fallback" class="wechat-modal-fallback" hidden>${escapeHtml(getUiText('wechat.fallback'))}</p>
+                    <p id="wechat-modal-id" class="wechat-modal-id"></p>
+                </div>
+            </div>
+        `);
+        modal = document.getElementById('wechat-modal');
+    }
+
+    if (!modal || modal.dataset.bound === 'true') {
+        return modal;
+    }
+
+    modal.addEventListener('click', event => {
+        if (event.target instanceof HTMLElement && event.target.dataset.wechatClose === 'true') {
+            closeWechatModal();
+        }
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && !modal.hidden) {
+            closeWechatModal();
+        }
+    });
+
+    modal.dataset.bound = 'true';
+    updateWechatModalLanguage();
+    return modal;
+}
+
+function updateWechatModalLanguage() {
+    const modal = document.getElementById('wechat-modal');
+    if (!modal) {
+        return;
+    }
+
+    const title = modal.querySelector('#wechat-modal-title');
+    if (title) {
+        title.innerHTML = `<i class="fab fa-weixin"></i> ${escapeHtml(getUiText('wechat.title'))}`;
+    }
+
+    setTextById('wechat-modal-subtitle', getUiText('wechat.subtitle'));
+    setTextById('wechat-modal-fallback', getUiText('wechat.fallback'));
+
+    const closeButton = modal.querySelector('.wechat-modal-close');
+    if (closeButton) {
+        closeButton.setAttribute('aria-label', `${getUiText('wechat.title')} Close`);
+    }
+}
+
+function openWechatModal(trigger) {
+    const modal = ensureWechatModal();
+    if (!modal) {
+        return;
+    }
+
+    const qrImage = modal.querySelector('#wechat-modal-qr');
+    const fallback = modal.querySelector('#wechat-modal-fallback');
+    const idText = modal.querySelector('#wechat-modal-id');
+
+    if (!(qrImage instanceof HTMLImageElement) || !(fallback instanceof HTMLElement) || !(idText instanceof HTMLElement)) {
+        return;
+    }
+
+    const wechatId = trigger.dataset.wechatId ? trigger.dataset.wechatId.trim() : '';
+    const qrUrl = trigger.dataset.wechatQr ? trigger.dataset.wechatQr.trim() : '';
+
+    idText.textContent = wechatId
+        ? `${getUiText('wechat.idPrefix')}: ${wechatId}`
+        : getUiText('wechat.idMissing');
+
+    qrImage.hidden = false;
+    fallback.hidden = true;
+
+    if (!qrUrl || qrUrl === '#') {
+        qrImage.removeAttribute('src');
+        qrImage.hidden = true;
+        fallback.hidden = false;
+    } else {
+        qrImage.onerror = () => {
+            qrImage.hidden = true;
+            fallback.hidden = false;
+        };
+        qrImage.onload = () => {
+            qrImage.hidden = false;
+            fallback.hidden = true;
+        };
+        qrImage.src = qrUrl;
+    }
+
+    modal.hidden = false;
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('wechat-modal-open');
+}
+
+function closeWechatModal() {
+    const modal = document.getElementById('wechat-modal');
+    if (!modal) {
+        return;
+    }
+
+    modal.hidden = true;
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('wechat-modal-open');
+
+    const qrImage = modal.querySelector('#wechat-modal-qr');
+    if (qrImage instanceof HTMLImageElement) {
+        qrImage.removeAttribute('src');
     }
 }
 
@@ -236,14 +724,16 @@ function renderNews(newsItems) {
 
     items.forEach(item => {
         const isRecent = isRecentNews(item.date);
+        const content = getLocalizedValue(item, 'content', '');
+        const displayDate = getLocalizedValue(item, 'date', getUiText('labels.dateTbd'));
         html += `
             <div class="news-item">
-                <p>${isRecent ? '<span class="news-badge">NEW</span> ' : ''}<span class="news-date">[${escapeHtml(item.date || 'Date TBD')}]</span> ${escapeHtml(item.content || '')}</p>
+                <p>${isRecent ? '<span class="news-badge">NEW</span> ' : ''}<span class="news-date">[${escapeHtml(displayDate)}]</span> ${escapeHtml(content)}</p>
             </div>
         `;
     });
 
-    container.innerHTML = html || '<p>No news updates yet.</p>';
+    container.innerHTML = html || `<p>${escapeHtml(getUiText('labels.noNews'))}</p>`;
 }
 
 function parseNewsDate(rawDate) {
@@ -286,7 +776,9 @@ function renderResearchInterests(interests) {
     let html = '';
 
     list.forEach(item => {
-        html += `<li><strong>${escapeHtml(item.area || '')}</strong>: ${escapeHtml(item.details || '')}</li>`;
+        const area = getLocalizedValue(item, 'area', '');
+        const details = getLocalizedValue(item, 'details', '');
+        html += `<li><strong>${escapeHtml(area)}</strong>: ${escapeHtml(details)}</li>`;
     });
 
     container.innerHTML = html;
@@ -299,10 +791,10 @@ function renderSkills(skillCategories) {
     let html = '<div class="skills-grid">';
 
     categories.forEach(category => {
-        const categoryName = escapeHtml(category.category || 'Other');
+        const categoryName = escapeHtml(getLocalizedValue(category, 'category', 'Other'));
         const rawItems = Array.isArray(category.skills)
-            ? category.skills.map(skill => skill.name)
-            : (Array.isArray(category.items) ? category.items : []);
+            ? category.skills.map(skill => getLocalizedValue(skill, 'name', ''))
+            : getLocalizedStringArray(category, 'items');
         const tags = rawItems
             .map(item => String(item || '').trim())
             .filter(item => item.length > 0)
@@ -312,13 +804,36 @@ function renderSkills(skillCategories) {
         html += `
             <section class="skill-group">
                 <h3>${categoryName}</h3>
-                <div class="skill-tags">${tags || '<span class="skill-tag skill-tag-empty">TBD</span>'}</div>
+                <div class="skill-tags">${tags || `<span class="skill-tag skill-tag-empty">${escapeHtml(getUiText('labels.tbd'))}</span>`}</div>
             </section>
         `;
     });
 
     html += '</div>';
     container.innerHTML = html;
+}
+
+function getLocalizedStringArray(source, key) {
+    if (!source || typeof source !== 'object') {
+        return [];
+    }
+
+    const localizedKey = `${key}_${currentLanguage}`;
+    const localized = source[localizedKey];
+    const fallback = source[key];
+    const chosenArray = Array.isArray(localized) && localized.length > 0
+        ? localized
+        : (Array.isArray(fallback) ? fallback : []);
+
+    return chosenArray.map(item => {
+        if (typeof item === 'string') {
+            return item;
+        }
+        if (item && typeof item === 'object') {
+            return getLocalizedValue(item, 'name', getLocalizedValue(item, 'value', ''));
+        }
+        return '';
+    });
 }
 
 // Render publications
@@ -332,7 +847,7 @@ function renderPublications(publicationsData) {
     }
 
     if (publications.length === 0) {
-        container.innerHTML = '<p>No publications available yet.</p>';
+        container.innerHTML = `<p>${escapeHtml(getUiText('publications.noPublications'))}</p>`;
         return;
     }
 
@@ -352,7 +867,7 @@ function renderPublications(publicationsData) {
 
             const abstractId = `abstract-${index + 1}`;
             const actionButtons = [
-                `<button type="button" class="publication-link abstract-toggle" data-target="${abstractId}" aria-expanded="false" aria-controls="${abstractId}">ABS</button>`
+                `<button type="button" class="publication-link abstract-toggle" data-target="${abstractId}" aria-expanded="false" aria-controls="${abstractId}">${escapeHtml(getUiText('publications.abs'))}</button>`
             ];
             publicationLinks.forEach(link => {
                 actionButtons.push(
@@ -362,21 +877,21 @@ function renderPublications(publicationsData) {
 
             const metaItems = [];
             if (pub.impact_factor) {
-                metaItems.push(`Rank: ${escapeHtml(pub.impact_factor)}`);
+                metaItems.push(`${escapeHtml(getUiText('publications.rank'))}: ${escapeHtml(pub.impact_factor)}`);
             }
             if (Number(pub.citations) > 0) {
-                metaItems.push(`Citations: ${escapeHtml(String(pub.citations))}`);
+                metaItems.push(`${escapeHtml(getUiText('publications.citations'))}: ${escapeHtml(String(pub.citations))}`);
             }
             const metaHtml = metaItems.length > 0
                 ? `<p class="publication-impact">${metaItems.join(' | ')}</p>`
                 : '';
 
-            const abstractText = pub.abstract ? escapeHtml(pub.abstract) : 'Abstract not available';
-            const safeTitle = escapeHtml(pub.title || 'Untitled');
-            const safeVenue = escapeHtml(pub.venue || 'Venue information unavailable');
+            const abstractText = getLocalizedValue(pub, 'abstract', '') ? escapeHtml(getLocalizedValue(pub, 'abstract', '')) : escapeHtml(getUiText('publications.abstractUnavailable'));
+            const safeTitle = escapeHtml(getLocalizedValue(pub, 'title', 'Untitled'));
+            const safeVenue = escapeHtml(getLocalizedValue(pub, 'venue', 'Venue information unavailable'));
             const venueTag = escapeHtml(getPublicationVenueTag(pub));
             const thumbnailUrl = sanitizeAssetUrl(pub.thumbnail);
-            const thumbAlt = escapeHtml(pub.thumbnail_alt || `Figure for ${pub.title || 'publication'}`);
+            const thumbAlt = escapeHtml(getLocalizedValue(pub, 'thumbnail_alt', `Figure for ${pub.title || 'publication'}`));
             const mediaClassName = thumbnailUrl === '#' ? 'publication-media no-thumb' : 'publication-media';
             const thumbImage = thumbnailUrl === '#'
                 ? ''
@@ -384,11 +899,11 @@ function renderPublications(publicationsData) {
 
             html += `
                 <article class="publication publication-card">
-                    <div class="${mediaClassName}">
+                    <div class="${mediaClassName}" data-target="${abstractId}" role="button" tabindex="0" aria-controls="${abstractId}" aria-expanded="false">
                         ${thumbImage}
                         <div class="publication-thumb-fallback">
                             <span class="publication-venue-tag">${venueTag}</span>
-                            <span class="publication-thumb-text">Paper Preview</span>
+                            <span class="publication-thumb-text">${escapeHtml(getUiText('publications.paperPreview'))}</span>
                         </div>
                     </div>
                     <div class="publication-content">
@@ -421,7 +936,7 @@ function renderPublications(publicationsData) {
 
     const publicationsUrl = getPublicationsUrl(publicationsData.all_publications_url);
     seeMoreBtn.innerHTML = `<a href="${publicationsUrl}" target="_blank" rel="noopener noreferrer" class="see-more-button">
-        View on Google Scholar <i class="fas fa-graduation-cap"></i>
+        ${escapeHtml(getUiText('publications.viewScholar'))} <i class="fas fa-graduation-cap"></i>
     </a>`;
 
     seeMoreBtn.style.display = 'block';
@@ -598,7 +1113,11 @@ function renderEducation(education) {
     let html = '';
 
     items.forEach(item => {
-        html += `<li><strong>${escapeHtml(item.period || '')}</strong>: ${escapeHtml(item.degree || '')}, ${escapeHtml(item.field || '')}, ${escapeHtml(item.institution || '')}</li>`;
+        const period = getLocalizedValue(item, 'period', '');
+        const degree = getLocalizedValue(item, 'degree', '');
+        const field = getLocalizedValue(item, 'field', '');
+        const institution = getLocalizedValue(item, 'institution', '');
+        html += `<li><strong>${escapeHtml(period)}</strong>: ${escapeHtml(degree)}, ${escapeHtml(field)}, ${escapeHtml(institution)}</li>`;
     });
 
     container.innerHTML = html;
@@ -612,13 +1131,17 @@ function renderExperience(data) {
     let expHtml = '';
 
     experienceItems.forEach(item => {
-        const details = item.department ? `, ${escapeHtml(item.department)}` : '';
-        const highlights = Array.isArray(item.highlights) ? item.highlights : [];
+        const position = getLocalizedValue(item, 'position', '');
+        const company = getLocalizedValue(item, 'company', '');
+        const department = getLocalizedValue(item, 'department', '');
+        const period = getLocalizedValue(item, 'period', '');
+        const details = department ? `, ${escapeHtml(department)}` : '';
+        const highlights = Array.isArray(item.highlights) ? item.highlights.map(text => getLocalizedValue(text, 'text', text)) : [];
         const highlightsHtml = highlights.length > 0
             ? `<div class="experience-highlights">${highlights.map(text => `<div class="experience-highlight-item">- ${escapeHtml(text)}</div>`).join('')}</div>`
             : '';
 
-        expHtml += `<li><strong>${escapeHtml(item.period || '')}</strong>: ${escapeHtml(item.position || '')}, ${escapeHtml(item.company || '')}${details}${highlightsHtml}</li>`;
+        expHtml += `<li><strong>${escapeHtml(period)}</strong>: ${escapeHtml(position)}, ${escapeHtml(company)}${details}${highlightsHtml}</li>`;
     });
 
     expContainer.innerHTML = expHtml;
@@ -628,10 +1151,12 @@ function renderExperience(data) {
     let awardsHtml = '<ul class="awards-list">';
 
     awards.forEach(award => {
+        const awardName = getLocalizedValue(award, 'name', '');
+        const awardYear = getLocalizedValue(award, 'year', '');
         awardsHtml += `
             <li class="award-item">
-                <span class="award-name">${award.name || ''}</span>
-                <span class="award-year">${escapeHtml(award.year || '')}</span>
+                <span class="award-name">${awardName}</span>
+                <span class="award-year">${escapeHtml(awardYear)}</span>
             </li>
         `;
     });
@@ -644,7 +1169,8 @@ function renderExperience(data) {
     let serviceHtml = '';
 
     reviewers.forEach(item => {
-        serviceHtml += `<li>${escapeHtml(item)}</li>`;
+        const service = typeof item === 'string' ? item : getLocalizedValue(item, 'text', '');
+        serviceHtml += `<li>${escapeHtml(service)}</li>`;
     });
 
     serviceContainer.innerHTML = serviceHtml;
@@ -654,7 +1180,10 @@ function renderExperience(data) {
     let teachingHtml = '';
 
     teachingItems.forEach(item => {
-        teachingHtml += `<li><strong>${escapeHtml(item.period || '')}</strong>: ${escapeHtml(item.course || '')}, ${escapeHtml(item.role || '')}</li>`;
+        const period = getLocalizedValue(item, 'period', '');
+        const course = getLocalizedValue(item, 'course', '');
+        const role = getLocalizedValue(item, 'role', '');
+        teachingHtml += `<li><strong>${escapeHtml(period)}</strong>: ${escapeHtml(course)}, ${escapeHtml(role)}</li>`;
     });
 
     teachingContainer.innerHTML = teachingHtml;
@@ -674,19 +1203,21 @@ function renderFooter(footerText) {
 function renderContactPage(data) {
     const contactPage = data.contactPage || {};
 
-    document.getElementById('contact-title').textContent = contactPage.title || 'Contact';
-    document.getElementById('contact-introduction').textContent = contactPage.introduction || '';
+    document.getElementById('contact-title').textContent = getLocalizedValue(contactPage, 'title', getUiText('contact.defaultTitle'));
+    document.getElementById('contact-introduction').textContent = getLocalizedValue(contactPage, 'introduction', getUiText('contact.defaultIntroduction'));
 
     const methodsContainer = document.getElementById('contact-methods-container');
     const contactMethods = Array.isArray(contactPage.contactMethods) ? contactPage.contactMethods : [];
     let methodsHtml = '';
 
     contactMethods.forEach(method => {
+        const type = getLocalizedValue(method, 'type', '');
+        const details = getLocalizedValue(method, 'details', '');
         methodsHtml += `
             <div class="contact-method">
                 <i class="${method.icon}"></i>
-                <h3>${escapeHtml(method.type || '')}</h3>
-                <p>${method.details || ''}</p>
+                <h3>${escapeHtml(type)}</h3>
+                <p>${details || ''}</p>
             </div>
         `;
     });

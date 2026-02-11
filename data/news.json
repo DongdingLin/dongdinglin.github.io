@@ -2,31 +2,45 @@
   "news": [
     {
       "date": "August 2025",
-      "content": "Started a Research Internship at Huawei Hong Kong Research Center (HKRC), Fermat Lab (Huawei 2012 Labs), focusing on LLM-related mathematical reasoning data generation."
+      "date_zh": "2025年8月",
+      "content": "Started a Research Internship at Huawei Hong Kong Research Center (HKRC), Fermat Lab (Huawei 2012 Labs), focusing on LLM-related mathematical reasoning data generation.",
+      "content_zh": "开始在华为香港研究中心（HKRC）Fermat Lab（华为 2012 实验室）担任研究实习生，主要从事 LLM 数学推理相关数据构建工作。"
     },
     {
       "date": "November 2024",
-      "content": "I will attend ACM MM 2024 in Melbourne, Australia. Welcome to have a chat with me at the conference!"
+      "date_zh": "2024年11月",
+      "content": "I will attend ACM MM 2024 in Melbourne, Australia. Welcome to have a chat with me at the conference!",
+      "content_zh": "将参加在澳大利亚墨尔本举办的 ACM MM 2024，欢迎在会场交流。"
     },
     {
       "date": "July 2024",
-      "content": "One paper has been accepted by ACM MM 2024!"
+      "date_zh": "2024年7月",
+      "content": "One paper has been accepted by ACM MM 2024!",
+      "content_zh": "一篇论文被 ACM MM 2024 录用。"
     },
     {
       "date": "May 2024",
-      "content": "One paper has been accepted by ACL 2024!"
+      "date_zh": "2024年5月",
+      "content": "One paper has been accepted by ACL 2024!",
+      "content_zh": "一篇论文被 ACL 2024 录用。"
     },
     {
       "date": "October 2023",
-      "content": "One paper has been accepted by EMNLP 2023!"
+      "date_zh": "2023年10月",
+      "content": "One paper has been accepted by EMNLP 2023!",
+      "content_zh": "一篇论文被 EMNLP 2023 录用。"
     },
     {
       "date": "May 2023",
-      "content": "One paper has been accepted by ACL 2023 Findings!"
+      "date_zh": "2023年5月",
+      "content": "One paper has been accepted by ACL 2023 Findings!",
+      "content_zh": "一篇论文被 ACL 2023 Findings 录用。"
     },
     {
       "date": "November 2022",
-      "content": "One paper has been accepted by AAAI 2023!"
+      "date_zh": "2022年11月",
+      "content": "One paper has been accepted by AAAI 2023!",
+      "content_zh": "一篇论文被 AAAI 2023 录用。"
     }
   ]
 } 

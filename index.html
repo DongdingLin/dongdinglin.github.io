@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles.css?v=20260211">
+    <link rel="stylesheet" href="styles.css?v=20260211lang2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Open Graph / Social Media -->
     <meta property="og:title" content="Dongding Lin's Personal Homepage">
@@ -35,8 +35,13 @@
 
     <div class="nav-bar">
         <ul>
-            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="index.html"><i class="fas fa-home"></i> <span id="nav-home-text">Home</span></a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> <span id="nav-contact-text">Contact</span></a></li>
+            <li>
+                <a href="#" id="language-toggle" class="language-toggle-link" aria-label="Switch language">
+                    <i class="fas fa-language"></i> <span id="language-toggle-text">中文</span>
+                </a>
+            </li>
         </ul>
     </div>
 
@@ -63,14 +68,14 @@
             </section>
 
             <section class="section-card">
-                <h2><i class="fas fa-code"></i> Skills</h2>
+                <h2><i class="fas fa-code"></i> <span id="section-skills-title">Skills</span></h2>
                 <div id="skills-container" class="skills-container">
                     Loading skills...
                 </div>
             </section>
 
             <section class="section-card">
-                <h2><i class="fas fa-file-alt"></i> Selected Publications</h2>
+                <h2><i class="fas fa-file-alt"></i> <span id="section-publications-title">Selected Publications</span></h2>
                 <div id="publications-container" class="publications-container">
                     Loading publications...
                 </div>
@@ -81,43 +86,43 @@
             </section>
 
             <section class="section-card">
-                <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+                <h2><i class="fas fa-graduation-cap"></i> <span id="section-education-title">Education</span></h2>
                 <ul id="education-container">
                     Loading education...
                 </ul>
             </section>
 
             <section class="section-card">
-                <h2><i class="fas fa-briefcase"></i> Experience</h2>
+                <h2><i class="fas fa-briefcase"></i> <span id="section-experience-title">Experience</span></h2>
                 <ul id="experience-container">
                     Loading experience...
                 </ul>
             </section>
 
             <section class="section-card">
-                <h2><i class="fas fa-award"></i> Honors and Awards</h2>
+                <h2><i class="fas fa-award"></i> <span id="section-awards-title">Honors and Awards</span></h2>
                 <div id="awards-container">
                     Loading awards...
                 </div>
             </section>
 
             <section class="section-card">
-                <h2><i class="fas fa-tasks"></i> Academic Services</h2>
-                <p><strong>Reviewer</strong></p>
+                <h2><i class="fas fa-tasks"></i> <span id="section-services-title">Academic Services</span></h2>
+                <p><strong id="services-reviewer-label">Reviewer</strong></p>
                 <ul id="service-container">
                     Loading academic services...
                 </ul>
             </section>
 
             <section class="section-card">
-                <h2><i class="fas fa-chalkboard-teacher"></i> Teaching Experience</h2>
+                <h2><i class="fas fa-chalkboard-teacher"></i> <span id="section-teaching-title">Teaching Experience</span></h2>
                 <ul id="teaching-container">
                     Loading teaching experience...
                 </ul>
             </section>
 
             <section class="section-card">
-                <h2><i class="fas fa-coffee"></i> Miscellaneous</h2>
+                <h2><i class="fas fa-coffee"></i> <span id="section-misc-title">Miscellaneous</span></h2>
                 <p id="misc-content">
                     Loading miscellaneous information...
                 </p>
@@ -134,24 +139,24 @@
             </div>
 
             <section class="section-card sidebar-card">
-                <h2><i class="fas fa-newspaper"></i> News</h2>
+                <h2><i class="fas fa-newspaper"></i> <span id="section-news-title">News</span></h2>
                 <div id="news-container">
                     Loading news...
                 </div>
             </section>
 
             <section class="section-card sidebar-card">
-                <h2><i class="fas fa-flask"></i> Research Interests</h2>
-                <p>My research interests include the following areas:</p>
+                <h2><i class="fas fa-flask"></i> <span id="section-interests-title">Research Interests</span></h2>
+                <p id="interests-intro">My research interests include the following areas:</p>
                 <ul id="research-interests">
                     Loading research interests...
                 </ul>
-                <p><em>I am actively looking for collaborators interested in the above research directions. Please feel free to contact me if you are interested.</em></p>
+                <p><em id="interests-outro">I am actively looking for collaborators interested in the above research directions. Please feel free to contact me if you are interested.</em></p>
             </section>
         </aside>
     </div>
 
-    <a href="#" id="back-to-top" title="Back to Top">
+    <a href="#" id="back-to-top" title="Back to Top" aria-label="Back to Top">
         <i class="fas fa-arrow-up"></i>
     </a>
 
@@ -159,7 +164,7 @@
         <span id="footer-text">Loading footer...</span>
     </footer>
 
-    <script src="theme.js?v=20260211"></script>
-    <script src="js/data-loader.js?v=20260211"></script>
+    <script src="theme.js?v=20260211lang2"></script>
+    <script src="js/data-loader.js?v=20260211lang2"></script>
 </body>
 </html>

@@ -2,44 +2,74 @@
   "experience": [
     {
       "position": "Research Intern",
-      "company": "Huawei Hong Kong Research Center (HKRC)",
+      "position_zh": "研究实习生",
+      "company": "Huawei Hong Kong Research Center",
+      "company_zh": "华为香港研究中心",
       "department": "Fermat Lab, Huawei 2012 Labs",
+      "department_zh": "Fermat Lab（华为 2012 实验室）",
       "period": "Aug 2025-Present",
-      "description": "Research internship focused on wireless optimization and mathematical reasoning data generation."
+      "period_zh": "2025.08-至今",
+      "description_zh": "边缘 AI 与 LLM 数据工程：围绕端侧在线学习、神经符号数学数据合成与对话数据治理搭建生产级流程，实现训练算力降低 4 倍（性能衰减 <3%），并提升数学推理泛化能力（Math500 42.7→58.6%，AIME/HMMT 7.8→63.9%），核心算法以加密 SDK 方式交付。",
+      "description": "Edge AI & LLM Data Engineering — Built production-grade pipelines for on-device online learning, neuro-symbolic math data synthesis, and dialogue curation; implemented GPU-accelerated OOD filtering and Mathematica-verified generation, cutting training compute 4× (<3% perf drop) and boosting generalization (Math500 42.7→58.6%, AIME/HMMT 7.8→63.9%), delivered as an encrypted SDK."
     },
     {
-      "position": "Research Assistant",
+      "position": "Ph.D. Candidate",
+      "position_zh": "博士研究生",
       "company": "The Hong Kong Polytechnic University",
+      "company_zh": "香港理工大学",
       "department": "NLP Group, PolyU",
+      "department_zh": "NLP 研究组，香港理工大学",
       "period": "Dec 2022-Present",
+      "period_zh": "2022.12-至今",
+      "description_zh": "研究情境对话推荐与大模型/多模态对话系统，围绕任务设计、数据构建、基线建模和评测体系开展工作。导师：李文婕教授。",
       "description": "Situated Conversational Recommendation - Investigating techniques related to large-scale pre-trained language models and multi-modal dialogue system with the goal of increasing user engagement in our dialogue system. By leveraging multiple types of information, we aim to create a more immersive experience for the user. Supervisor: Prof. Wenjie, Li"
     },
     {
       "position": "Research Assistant",
+      "position_zh": "研究助理",
       "company": "The Hong Kong Polytechnic University",
+      "company_zh": "香港理工大学",
       "department": "NLP Group, PolyU",
+      "department_zh": "NLP 研究组，香港理工大学",
       "period": "Jul 2021-Dec 2022",
+      "period_zh": "2021.07-2022.12",
+      "description_zh": "研究目标导向对话推荐与知识增强生成，相关工作发表于 KaRS 2021 与 AAAI 2023。导师：李文婕教授。",
       "description": "Conversational Recommender System - Investigated the problem of target-guided knowledge-aware recommendation dialogue and design a dialogue generation system to make high-quality recommendations through interactive conversations proactively and naturally. This work has been accepted by the 3rd Workshop of Knowledge-aware and Conversational Recommender Systems (KaRS 2021) and the 37th AAAI conference on Artificial Intelligence (AAAI 2023). Supervisor: Prof. Wenjie, Li"
     },
     {
       "position": "Research Assistant",
+      "position_zh": "研究助理",
       "company": "Sun Yat-sen University",
+      "company_zh": "中山大学",
       "department": "Collective Intelligence Systems Lab",
+      "department_zh": "群体智能系统实验室",
       "period": "Feb 2018-Jul 2020",
+      "period_zh": "2018.02-2020.07",
+      "description_zh": "研究机器阅读理解，提出分层全局信息传递与记忆流机制，在 CoQA 数据集上取得有竞争力结果。导师：潘榕教授。",
       "description": "Machine Reading Comprehension - Proposed a Hierarchical global-aware Information Transmission mechanism, which makes use of the interaction between local-aware information and global-aware information to improve the effectiveness of the model. Employed a Memory Flow mechanism for storing and modifying information from historical questions and answers. The experimental results on CoQA datasets showed that our model obtained competitive results compared to the existing methods. Supervisor: Prof. Rong Pan"
     },
     {
       "position": "Research Intern",
+      "position_zh": "研究实习生",
       "company": "Chinese Academy of Sciences",
+      "company_zh": "中国科学院",
       "department": "NLP Group at SIAT",
+      "department_zh": "中科院深圳先进院 NLP 研究组",
       "period": "Apr 2019-Oct 2019",
+      "period_zh": "2019.04-2019.10",
+      "description_zh": "研究对话式机器阅读理解，提出层次化对话流迁移与推理模型（HCFTR），增强多轮语境建模能力。导师：杨敏教授。",
       "description": "Conversational Machine Reading Comprehension - Proposed a Hierarchical Conversation Flow Transition and Reasoning (HCFTR) model for conversational machine reading comprehension. Designed a multi-flow transition mechanism to integrate global-aware information flow transition and make dynamic reasoning. Developed a multi-level flow-context attention mechanism to fuse multiple levels of hierarchical fine-grained representations and perform advanced reasoning. Supervisor: Prof. Min Yang"
     },
     {
       "position": "Research Assistant",
+      "position_zh": "研究助理",
       "company": "Sun Yat-sen University",
+      "company_zh": "中山大学",
       "department": "Mobile Internet and Financial Big Data Lab",
+      "department_zh": "移动互联网与金融大数据实验室",
       "period": "Jul 2016-Jul 2017",
+      "period_zh": "2016.07-2017.07",
+      "description_zh": "研究面向服务计算的 API 推荐，相关成果发表于 ICSE 2018 与 IEEE Access 2019，并获中山大学优秀毕业论文。导师：郑子彬教授。",
       "description": "Service-Oriented Computing - Designed a Group Preference based API Recommendation System using the Bayesian Personalized Ranking Model. Recommended appropriate APIs for Mashup (a new type of service in internet by integrating multiple sources or functions on the network). This work was also my undergraduate thesis's topic, given the award of the SYSU Excellent Graduation Thesis and accepted by International Conference on Software Engineering (ICSE-2018) and IEEE Access-2019. Supervisor: Prof. ZiBin Zheng"
     }
   ],
@@ -73,39 +103,57 @@
   "awards": [
     {
       "name": "Ranked <strong>4/750</strong> in 2021 Language and Intelligence Challenge (Baidu).",
-      "year": "June 2021"
+      "name_zh": "在 2021 百度语言与智能技术竞赛中获得 <strong>4/750</strong>。",
+      "year": "June 2021",
+      "year_zh": "2021年6月"
     },
     {
       "name": "The <strong>Third Prize</strong> Postgraduate Scholarship of Sun Yat-sen University.",
-      "year": "2018-2019"
+      "name_zh": "中山大学研究生奖学金 <strong>三等奖</strong>。",
+      "year": "2018-2019",
+      "year_zh": "2018-2019学年"
     },
     {
       "name": "Ranked <strong>4/119</strong> in Materials Quality Prediction Kaggle Competition",
-      "year": "April-July 2018"
+      "name_zh": "Kaggle 材料质量预测竞赛排名 <strong>4/119</strong>。",
+      "year": "April-July 2018",
+      "year_zh": "2018年4月-7月"
     },
     {
       "name": "The <strong>Second Prize</strong> Postgraduate Scholarship of Sun Yat-sen University.",
-      "year": "2017-2018"
+      "name_zh": "中山大学研究生奖学金 <strong>二等奖</strong>。",
+      "year": "2017-2018",
+      "year_zh": "2017-2018学年"
     },
     {
       "name": "<strong>Outstanding Graduates Awards</strong> of Sun Yat-sen University (Top 3% awarded)",
-      "year": "June 2017"
+      "name_zh": "中山大学 <strong>优秀毕业生</strong>（前 3%）。",
+      "year": "June 2017",
+      "year_zh": "2017年6月"
     },
     {
       "name": "<strong>Excellent Graduation Thesis</strong> of Sun Yat-sen University (Top 3% awarded)",
-      "year": "June 2017"
+      "name_zh": "中山大学 <strong>优秀毕业论文</strong>（前 3%）。",
+      "year": "June 2017",
+      "year_zh": "2017年6月"
     },
     {
       "name": "The <strong>First Prize</strong> Scholarship of Sun Yat-sen University (Top 5% awarded)",
-      "year": "2016-2017"
+      "name_zh": "中山大学 <strong>一等奖学金</strong>（前 5%）。",
+      "year": "2016-2017",
+      "year_zh": "2016-2017学年"
     },
     {
       "name": "The <strong>First Prize</strong> Scholarship of Sun Yat-sen University (Top 5% awarded)",
-      "year": "2015-2016"
+      "name_zh": "中山大学 <strong>一等奖学金</strong>（前 5%）。",
+      "year": "2015-2016",
+      "year_zh": "2015-2016学年"
     },
     {
       "name": "The <strong>Third Prize</strong> Scholarship of Sun Yat-sen University",
-      "year": "2014-2015"
+      "name_zh": "中山大学 <strong>三等奖学金</strong>。",
+      "year": "2014-2015",
+      "year_zh": "2014-2015学年"
     }
   ]
 }

@@ -2,36 +2,41 @@
   "skills": [
     {
       "category": "Languages",
+      "category_zh": "语言能力",
       "skills": [
-        {"name": "Mandarin", "level": 100},
-        {"name": "English", "level": 80},
-        {"name": "Cantonese", "level": 80},
-        {"name": "Chaoshan Dialect", "level": 100}
+        {"name": "Mandarin", "name_zh": "普通话", "level": 100},
+        {"name": "English", "name_zh": "英语", "level": 80},
+        {"name": "Cantonese", "name_zh": "粤语", "level": 80},
+        {"name": "Chaoshan Dialect", "name_zh": "潮汕话", "level": 100}
       ]
     },
     {
       "category": "Programming Languages",
+      "category_zh": "编程语言",
       "skills": [
-        {"name": "Python", "level": 95},
-        {"name": "Java", "level": 85},
-        {"name": "C++", "level": 80},
-        {"name": "JavaScript", "level": 75},
-        {"name": "SQL", "level": 85}
+        {"name": "Python", "name_zh": "Python", "level": 95},
+        {"name": "Java", "name_zh": "Java", "level": 85},
+        {"name": "C++", "name_zh": "C++", "level": 80},
+        {"name": "JavaScript", "name_zh": "JavaScript", "level": 75},
+        {"name": "SQL", "name_zh": "SQL", "level": 85}
       ]
     },
     {
       "category": "Frameworks & Libraries",
+      "category_zh": "框架与库",
       "skills": [
-        {"name": "PyTorch", "level": 90},
-        {"name": "TensorFlow", "level": 85},
-        {"name": "Scikit-learn", "level": 90},
-        {"name": "Hugging Face", "level": 95},
-        {"name": "Matlab", "level": 80}
+        {"name": "PyTorch", "name_zh": "PyTorch", "level": 90},
+        {"name": "TensorFlow", "name_zh": "TensorFlow", "level": 85},
+        {"name": "Scikit-learn", "name_zh": "Scikit-learn", "level": 90},
+        {"name": "Hugging Face", "name_zh": "Hugging Face", "level": 95},
+        {"name": "Matlab", "name_zh": "Matlab", "level": 80}
       ]
     },
     {
       "category": "Tools & Technologies",
-      "items": ["Git", "Linux", "LaTeX"]
+      "category_zh": "工具与技术",
+      "items": ["Git", "Linux", "LaTeX"],
+      "items_zh": ["Git", "Linux", "LaTeX"]
     }
   ]
 } 
