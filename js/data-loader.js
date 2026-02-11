@@ -1,6 +1,6 @@
 // Data loader for personal website
 const FALLBACK_PUBLICATIONS_URL = 'https://scholar.google.com/citations?view_op=list_works&hl=en&user=JM4i0R8AAAAJ';
-const DATA_VERSION = '2026-02-09';
+const DATA_VERSION = '2026-02-11';
 const HOME_DATA_FILES = [
     'personal.json',
     'publications.json',
@@ -131,7 +131,7 @@ function initPublicationAbstractToggle() {
         const expanding = abstract.hidden;
         abstract.hidden = !expanding;
         button.setAttribute('aria-expanded', String(expanding));
-        button.textContent = expanding ? 'Hide Abstract' : 'Abstract';
+        button.textContent = expanding ? 'HIDE ABS' : 'ABS';
 
         if (expanding) {
             setTimeout(() => {
@@ -327,24 +327,38 @@ function renderPublications(publicationsData) {
     const publications = Array.isArray(publicationsData.publications) ? publicationsData.publications : [];
     let html = '';
 
+    if (!container) {
+        return;
+    }
+
+    if (publications.length === 0) {
+        container.innerHTML = '<p>No publications available yet.</p>';
+        return;
+    }
+
     publications.forEach((pub, index) => {
         try {
             const authorsHtml = Array.isArray(pub.authors) && pub.authors.length > 0
                 ? pub.authors.map(author => author.is_self ? `<strong>${escapeHtml(author.name || '')}</strong>` : escapeHtml(author.name || '')).join(', ')
                 : 'Authors information unavailable';
 
-            const publicationLinks = Array.isArray(pub.links)
-                ? pub.links.map(link => {
-                    const linkType = escapeHtml(link.type || 'Link');
-                    const url = sanitizeUrl(link.url);
-                    return `<a class="publication-link" href="${url}" target="_blank" rel="noopener noreferrer">${linkType}</a>`;
-                })
-                : [];
+            const publicationLinks = normalizePublicationLinks(pub.links);
+            const doiLink = getPublicationDoiLink(pub, publicationLinks);
+            if (doiLink) {
+                publicationLinks.push(doiLink);
+            }
+
+            publicationLinks.sort((a, b) => getPublicationLinkPriority(a.label) - getPublicationLinkPriority(b.label));
 
             const abstractId = `abstract-${index + 1}`;
-            publicationLinks.push(
-                `<button type="button" class="publication-link abstract-toggle" data-target="${abstractId}" aria-expanded="false" aria-controls="${abstractId}">Abstract</button>`
-            );
+            const actionButtons = [
+                `<button type="button" class="publication-link abstract-toggle" data-target="${abstractId}" aria-expanded="false" aria-controls="${abstractId}">ABS</button>`
+            ];
+            publicationLinks.forEach(link => {
+                actionButtons.push(
+                    `<a class="publication-link" href="${link.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>`
+                );
+            });
 
             const metaItems = [];
             if (pub.impact_factor) {
@@ -354,21 +368,37 @@ function renderPublications(publicationsData) {
                 metaItems.push(`Citations: ${escapeHtml(String(pub.citations))}`);
             }
             const metaHtml = metaItems.length > 0
-                ? `<span class="publication-impact">${metaItems.join(' | ')}</span>`
+                ? `<p class="publication-impact">${metaItems.join(' | ')}</p>`
                 : '';
 
             const abstractText = pub.abstract ? escapeHtml(pub.abstract) : 'Abstract not available';
+            const safeTitle = escapeHtml(pub.title || 'Untitled');
+            const safeVenue = escapeHtml(pub.venue || 'Venue information unavailable');
+            const venueTag = escapeHtml(getPublicationVenueTag(pub));
+            const thumbnailUrl = sanitizeAssetUrl(pub.thumbnail);
+            const thumbAlt = escapeHtml(pub.thumbnail_alt || `Figure for ${pub.title || 'publication'}`);
+            const mediaClassName = thumbnailUrl === '#' ? 'publication-media no-thumb' : 'publication-media';
+            const thumbImage = thumbnailUrl === '#'
+                ? ''
+                : `<img class="publication-thumb" src="${thumbnailUrl}" alt="${thumbAlt}" loading="lazy">`;
 
             html += `
-                <article class="publication">
-                    <p>
-                        <strong>${escapeHtml(pub.title || 'Untitled')}</strong><br>
-                        ${authorsHtml}<br>
-                        <em>${escapeHtml(pub.venue || 'Venue information unavailable')}</em><br>
+                <article class="publication publication-card">
+                    <div class="${mediaClassName}">
+                        ${thumbImage}
+                        <div class="publication-thumb-fallback">
+                            <span class="publication-venue-tag">${venueTag}</span>
+                            <span class="publication-thumb-text">Paper Preview</span>
+                        </div>
+                    </div>
+                    <div class="publication-content">
+                        <h3 class="publication-title">${safeTitle}</h3>
+                        <p class="publication-authors">${authorsHtml}</p>
+                        <p class="publication-venue"><em>${safeVenue}</em></p>
                         ${metaHtml}
-                    </p>
-                    <div class="publication-links">${publicationLinks.join('')}</div>
-                    <div id="${abstractId}" class="abstract" hidden><p>${abstractText}</p></div>
+                        <div class="publication-links">${actionButtons.join('')}</div>
+                        <div id="${abstractId}" class="abstract" hidden><p>${abstractText}</p></div>
+                    </div>
                 </article>
             `;
         } catch (error) {
@@ -382,6 +412,7 @@ function renderPublications(publicationsData) {
     });
 
     container.innerHTML = html;
+    bindPublicationThumbnailFallback(container);
 
     const seeMoreBtn = document.getElementById('see-more-publications');
     if (!seeMoreBtn) {
@@ -396,6 +427,159 @@ function renderPublications(publicationsData) {
     seeMoreBtn.style.display = 'block';
     seeMoreBtn.style.visibility = 'visible';
     seeMoreBtn.style.opacity = '1';
+}
+
+function normalizePublicationLinks(rawLinks) {
+    if (!Array.isArray(rawLinks)) {
+        return [];
+    }
+
+    return rawLinks
+        .map(link => {
+            const url = sanitizeUrl(link?.url);
+            if (url === '#') {
+                return null;
+            }
+
+            const label = normalizePublicationLinkLabel(link?.type, link?.url);
+            if (label === 'ABS') {
+                return null;
+            }
+
+            return {
+                label,
+                url
+            };
+        })
+        .filter(Boolean)
+        .filter((link, index, allLinks) => allLinks.findIndex(item => item.label === link.label && item.url === link.url) === index);
+}
+
+function normalizePublicationLinkLabel(rawType, rawUrl) {
+    const type = String(rawType || '').trim().toLowerCase();
+    const url = String(rawUrl || '').toLowerCase();
+
+    if (type.includes('doi')) {
+        return 'DOI';
+    }
+    if (type.includes('abs')) {
+        return 'ABS';
+    }
+    if (type.includes('code') || type.includes('github')) {
+        return 'CODE';
+    }
+    if (type.includes('website') || type.includes('site')) {
+        return 'WEBSITE';
+    }
+    if (type.includes('project')) {
+        return 'PROJECT';
+    }
+    if (type.includes('poster')) {
+        return 'POSTER';
+    }
+    if (type.includes('video')) {
+        return 'VIDEO';
+    }
+    if (type.includes('dataset') || type.includes('data')) {
+        return 'DATA';
+    }
+    if (type.includes('paper') || type.includes('pdf') || url.endsWith('.pdf') || url.includes('/pdf/')) {
+        return 'PDF';
+    }
+
+    return type ? type.toUpperCase() : 'LINK';
+}
+
+function getPublicationDoiLink(publication, normalizedLinks) {
+    const hasDoiAlready = normalizedLinks.some(link => link.label === 'DOI');
+    if (hasDoiAlready) {
+        return null;
+    }
+
+    const doiCandidate = extractPublicationDoi(publication);
+    if (!doiCandidate) {
+        return null;
+    }
+
+    const doiUrl = sanitizeUrl(`https://doi.org/${doiCandidate}`);
+    if (doiUrl === '#') {
+        return null;
+    }
+
+    return { label: 'DOI', url: doiUrl };
+}
+
+function extractPublicationDoi(publication) {
+    if (typeof publication?.doi === 'string' && publication.doi.trim()) {
+        return normalizeDoi(publication.doi);
+    }
+
+    const links = Array.isArray(publication?.links) ? publication.links : [];
+    for (const link of links) {
+        if (typeof link?.url !== 'string') {
+            continue;
+        }
+
+        const decoded = safeDecodeURIComponent(link.url);
+        const match = decoded.match(/10\.\d{4,9}\/[-._;()/:A-Z0-9]+/i);
+        if (match && match[0]) {
+            return normalizeDoi(match[0]);
+        }
+    }
+
+    return '';
+}
+
+function normalizeDoi(value) {
+    return String(value || '')
+        .trim()
+        .replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, '')
+        .replace(/[)>.,;]+$/, '');
+}
+
+function safeDecodeURIComponent(value) {
+    try {
+        return decodeURIComponent(value);
+    } catch (error) {
+        return value;
+    }
+}
+
+function getPublicationLinkPriority(label) {
+    const orderedLabels = ['DOI', 'PDF', 'CODE', 'WEBSITE', 'PROJECT', 'DATA', 'POSTER', 'VIDEO', 'LINK', 'ABS'];
+    const index = orderedLabels.indexOf(label);
+    return index === -1 ? 999 : index;
+}
+
+function getPublicationVenueTag(publication) {
+    const explicitBadge = typeof publication?.badge === 'string' ? publication.badge.trim() : '';
+    if (explicitBadge) {
+        return explicitBadge;
+    }
+
+    const venue = String(publication?.venue || '').trim();
+    const upperVenue = venue.toUpperCase();
+    const candidates = ['ACM MM', 'EMNLP', 'ACL', 'AAAI', 'TOIS', 'TNNLS', 'ARXIV', 'CEUR-WS'];
+    const matched = candidates.find(candidate => upperVenue.includes(candidate));
+    if (matched) {
+        return matched;
+    }
+
+    const compact = venue.replace(/\(.*\)/g, '').replace(/\d{4}.*/, '').trim();
+    return compact ? compact.slice(0, 14).toUpperCase() : 'PAPER';
+}
+
+function bindPublicationThumbnailFallback(container) {
+    const images = container.querySelectorAll('.publication-thumb');
+    images.forEach(image => {
+        image.addEventListener('error', () => {
+            const media = image.closest('.publication-media');
+            if (media) {
+                media.classList.add('no-thumb');
+            }
+            image.remove();
+        }, { once: true });
+    });
 }
 
 function getPublicationsUrl(rawUrl) {
@@ -519,6 +703,24 @@ function sanitizeUrl(rawUrl) {
         const parsedUrl = new URL(rawUrl, window.location.origin);
         const protocol = parsedUrl.protocol.toLowerCase();
         if (protocol === 'http:' || protocol === 'https:' || protocol === 'mailto:') {
+            return parsedUrl.href;
+        }
+    } catch (error) {
+        return '#';
+    }
+
+    return '#';
+}
+
+function sanitizeAssetUrl(rawUrl) {
+    if (typeof rawUrl !== 'string' || rawUrl.trim().length === 0) {
+        return '#';
+    }
+
+    try {
+        const parsedUrl = new URL(rawUrl, window.location.origin);
+        const protocol = parsedUrl.protocol.toLowerCase();
+        if (protocol === 'http:' || protocol === 'https:') {
             return parsedUrl.href;
         }
     } catch (error) {

@@ -21,12 +21,12 @@
   ],
   "cvs": [
     {
-      "url": "files/CV_DongdingLin_CN.pdf",
+      "url": "cv/cv_cn_modern.pdf",
       "label": "简历下载",
       "icon": "fas fa-file-pdf"
     },
     {
-      "url": "files/CV_DongdingLin_EN.pdf",
+      "url": "cv/cv_en_modern.pdf",
       "label": "CV Download",
       "icon": "fas fa-file-pdf"
     }

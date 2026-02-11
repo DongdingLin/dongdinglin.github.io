@@ -11,6 +11,7 @@
       "venue": "ACM MM 2024 (The 32nd ACM International Conference on Multimedia)",
       "impact_factor": "CCF-A",
       "citations": 1,
+      "doi": "10.1145/3664647.3681651",
       "links": [
         {"type": "Paper", "url": "https://dl.acm.org/doi/pdf/10.1145/3664647.3681651"},
         {"type": "Code", "url": "https://github.com/DongdingLin/SCREEN"}
@@ -27,6 +28,7 @@
       "venue": "TOIS 2024 (ACM Transactions on Information Systems)",
       "impact_factor": "CCF-A",
       "citations": 9,
+      "doi": "10.1145/3652598",
       "links": [
         {"type": "Paper", "url": "https://dl.acm.org/doi/pdf/10.1145/3652598"},
         {"type": "Code", "url": "https://github.com/iwangjian/TRIP"}

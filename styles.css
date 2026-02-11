@@ -37,8 +37,7 @@ body.dark-theme a:hover {
     color: #6fc3ff;
 }
 
-body.dark-theme .news-item,
-body.dark-theme .publication {
+body.dark-theme .news-item {
     border-left-color: #4facfe;
 }
 
@@ -161,13 +160,13 @@ a:hover {
 }
 
 /* 内容项目样式 */
-.news-item, .publication {
+.news-item {
     margin-bottom: 15px;
     padding-left: 10px;
     border-left: 3px solid #3498db;
 }
 
-.news-item p, .publication p {
+.news-item p {
     margin: 0.5em 0;
 }
 
@@ -556,37 +555,162 @@ body.dark-theme .highlight-content h3 {
 }
 
 .publication {
-    margin-bottom: 20px;
-    padding-left: 10px;
-    border-left: 3px solid #3498db;
+    margin-bottom: 16px;
 }
 
-.publication p {
-    margin: 0.5em 0;
+.publication-card {
+    display: grid;
+    grid-template-columns: 168px minmax(0, 1fr);
+    gap: 16px;
+    padding: 14px;
+    border: 1px solid #d9e6f7;
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+.publication-media {
+    position: relative;
+    width: 168px;
+    min-height: 110px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #d4e1f4;
+    background: #edf4ff;
+}
+
+.publication-thumb {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 110px;
+    object-fit: cover;
+}
+
+.publication-thumb-fallback {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: linear-gradient(145deg, #f6faff 0%, #eaf2ff 100%);
+}
+
+.publication-media.no-thumb .publication-thumb-fallback {
+    display: flex;
+}
+
+.publication-venue-tag {
+    display: block;
+    padding: 6px 10px;
+    font-weight: 800;
+    font-size: 0.84rem;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+    background: linear-gradient(90deg, #0f6dd3, #2d8af1);
+    text-align: center;
+}
+
+.publication-thumb-text {
+    margin: auto 12px;
+    text-align: center;
+    color: #45607e;
+    font-size: 0.8rem;
+    line-height: 1.35;
+}
+
+.publication-content {
+    min-width: 0;
+}
+
+.publication-title {
+    margin: 0 0 6px;
+    color: #142a45;
+    line-height: 1.35;
+    font-size: 1.15rem;
+}
+
+.publication-authors,
+.publication-venue,
+.publication-impact {
+    margin: 0 0 6px;
+}
+
+.publication-authors {
+    color: #293f5a;
+}
+
+.publication-venue {
+    color: #23374f;
 }
 
 .publication-impact {
-    color: #27ae60;
-    font-weight: bold;
+    color: #1f7a39;
+    font-weight: 700;
     font-size: 0.9em;
 }
 
 .abstract {
-    background-color: #f9f9f9;
-    border-left: 3px solid #e67e22;
+    background-color: #f7faff;
+    border: 1px solid #deebfc;
     margin-top: 10px;
-    padding: 10px;
-    font-size: 0.9em;
-    border-radius: 0 5px 5px 0;
+    padding: 10px 12px;
+    font-size: 0.92em;
+    border-radius: 10px;
+}
+
+.abstract p {
+    margin: 0;
 }
 
 body.dark-theme .abstract {
-    background-color: #2c3e50;
-    border-left-color: #e67e22;
+    background-color: #223249;
+    border-color: #365073;
 }
 
 body.dark-theme .publication-impact {
-    color: #2ecc71;
+    color: #68d58a;
+}
+
+body.dark-theme .publication-card {
+    background: #1d2b3f;
+    border-color: #355170;
+}
+
+body.dark-theme .publication-media {
+    border-color: #3b5676;
+    background: #21334c;
+}
+
+body.dark-theme .publication-thumb-fallback {
+    background: linear-gradient(145deg, #24364f 0%, #1f2f45 100%);
+}
+
+body.dark-theme .publication-venue-tag {
+    background: linear-gradient(90deg, #2f7bcf, #4f98e8);
+}
+
+body.dark-theme .publication-thumb-text {
+    color: #b5cae4;
+}
+
+body.dark-theme .publication-title {
+    color: #e8f1ff;
+}
+
+body.dark-theme .publication-authors,
+body.dark-theme .publication-venue {
+    color: #c4d5ea;
+}
+
+@media (max-width: 780px) {
+    .publication-card {
+        grid-template-columns: 1fr;
+    }
+
+    .publication-media {
+        width: 100%;
+        max-width: 280px;
+    }
 }
 
 .see-more-publications {
@@ -778,8 +902,7 @@ body.dark-theme .contact-info p {
     border-color: #082a4c;
 }
 
-.homepage .news-item,
-.homepage .publication {
+.homepage .news-item {
     margin-bottom: 12px;
     padding: 12px 14px;
     border-radius: 12px;
@@ -787,8 +910,12 @@ body.dark-theme .contact-info p {
     border-left: 4px solid var(--accent);
 }
 
-.homepage .publication .abstract {
-    background-color: #ffffff;
+.homepage .publication {
+    margin-bottom: 14px;
+}
+
+.homepage .publication-card {
+    background: #f9fbff;
 }
 
 .homepage ul {
@@ -885,8 +1012,11 @@ body.dark-theme .contact-info p {
     border-color: #7b4438;
 }
 
-.homepage.dark-theme .news-item,
-.homepage.dark-theme .publication {
+.homepage.dark-theme .news-item {
+    background: #1d2b3f;
+}
+
+.homepage.dark-theme .publication-card {
     background: #1d2b3f;
 }
 
@@ -988,33 +1118,37 @@ body.dark-theme .contact-info p {
 .publication-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 8px;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .publication-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 4px 10px;
-    border-radius: 999px;
-    border: 1px solid #bfd8fa;
-    background: #eff6ff;
-    color: #1b4f87;
-    font-size: 0.88rem;
-    font-weight: 600;
+    min-width: 58px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid #8fa9cb;
+    background: #ffffff;
+    color: #16385f;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
     text-decoration: none;
+    text-transform: uppercase;
     cursor: pointer;
 }
 
 .publication-link:hover {
     text-decoration: none;
-    background: #e3efff;
-    color: #143d68;
+    background: #ecf3fd;
+    color: #0f2f54;
 }
 
 button.publication-link {
     font-family: inherit;
+    line-height: 1.2;
 }
 
 .publication-link:focus-visible {
@@ -1085,14 +1219,14 @@ body.dark-theme .skill-tag-empty {
 }
 
 body.dark-theme .publication-link {
-    background: #24364f;
-    border-color: #3c5d85;
-    color: #b6d7ff;
+    background: #22354d;
+    border-color: #4a6891;
+    color: #c4dcff;
 }
 
 body.dark-theme .publication-link:hover {
-    background: #2b4260;
-    color: #d1e6ff;
+    background: #2c4362;
+    color: #e0edff;
 }
 
 body.dark-theme .award-item {
