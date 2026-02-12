@@ -14,8 +14,14 @@ const RECENT_NEWS_WINDOW_DAYS = 365;
 const LANGUAGE_STORAGE_KEY = 'site_language';
 const DEFAULT_LANGUAGE = 'en';
 const SUPPORTED_LANGUAGES = ['en', 'zh'];
-const FOOTER_COUNTER_API = 'https://api.countapi.xyz/hit/lindongding-github-io/site-visits';
+const FOOTER_COUNTER_API = 'https://api.counterapi.dev/v1/lindongding-github-io/site-visits/up';
 const FOOTER_CLOCK_REFRESH_MS = 1000;
+// Replace with the `d` parameter from your ClustrMaps widget script URL.
+const CLUSTRMAPS_TOKEN = 'eShH9477-m_gyjW0kwUSBY6IHrbgC1gDu6TedOFLHHU';
+const CLUSTRMAPS_SCRIPT_ID = 'clstr_globe';
+const CLUSTRMAPS_SCRIPT_BASE = 'https://clustrmaps.com/globe.js';
+const CLUSTRMAPS_RENDER_CHECK_DELAY_MS = 2500;
+const VISITOR_MAP_MAX_WIDTH_PX = 105;
 const UI_TEXT = {
     en: {
         nav: {
@@ -46,7 +52,11 @@ const UI_TEXT = {
             tbd: 'TBD',
             visits: 'Visits',
             visitsUnavailable: 'Unavailable',
-            currentTime: 'Current Time'
+            currentTime: 'Current Time',
+            visitorMap: 'Visitor Map',
+            visitorMapSetup: 'Visitor map is not configured yet.',
+            visitorMapSetupLink: 'Get ClustrMaps widget code',
+            visitorMapLoadFailed: 'Visitor map failed to load from ClustrMaps.'
         },
         publications: {
             rank: 'Rank',
@@ -99,7 +109,11 @@ const UI_TEXT = {
             tbd: '待补充',
             visits: '访问人数',
             visitsUnavailable: '暂不可用',
-            currentTime: '当前时间'
+            currentTime: '当前时间',
+            visitorMap: '访客地图',
+            visitorMapSetup: '访客地图尚未配置。',
+            visitorMapSetupLink: '获取 ClustrMaps 小组件代码',
+            visitorMapLoadFailed: '访客地图加载失败（ClustrMaps）。'
         },
         publications: {
             rank: '级别',
@@ -130,6 +144,8 @@ let cachedDataByFile = null;
 let isCurrentContactPage = false;
 let footerClockTimerId = null;
 let footerVisitCount = null;
+let visitorMapNeedsSetupHint = false;
+let visitorMapResizeBound = false;
 
 document.addEventListener('DOMContentLoaded', function() {
     currentLanguage = resolveInitialLanguage();
@@ -1253,11 +1269,16 @@ function initFooterMeta() {
     footerClockTimerId = window.setInterval(updateFooterClock, FOOTER_CLOCK_REFRESH_MS);
 
     void refreshFooterVisitCount();
+    initVisitorMap();
 }
 
 function updateFooterMetaText() {
     updateFooterVisitText();
     updateFooterClock();
+    updateVisitorMapTitle();
+    if (visitorMapNeedsSetupHint) {
+        renderVisitorMapSetupHint();
+    }
 }
 
 function updateFooterVisitText() {
@@ -1301,14 +1322,140 @@ async function refreshFooterVisitCount() {
         }
 
         const payload = await response.json();
-        if (typeof payload.value === 'number' && Number.isFinite(payload.value)) {
-            footerVisitCount = payload.value;
+        const countCandidate = Number(payload?.count ?? payload?.value);
+        if (Number.isFinite(countCandidate)) {
+            footerVisitCount = countCandidate;
         }
     } catch (error) {
         footerVisitCount = null;
     }
 
     updateFooterVisitText();
+}
+
+function updateVisitorMapTitle() {
+    const titleElement = document.getElementById('visitor-map-title');
+    if (titleElement) {
+        titleElement.textContent = getUiText('labels.visitorMap');
+    }
+}
+
+function initVisitorMap() {
+    const mapContainer = document.getElementById('visitor-map-container');
+    if (!mapContainer) {
+        return;
+    }
+
+    if (!visitorMapResizeBound) {
+        window.addEventListener('resize', () => {
+            const container = document.getElementById('visitor-map-container');
+            if (hasInteractiveVisitorMapRendered(container)) {
+                fitVisitorMapWidget(container);
+            }
+        });
+        visitorMapResizeBound = true;
+    }
+
+    updateVisitorMapTitle();
+
+    const token = (CLUSTRMAPS_TOKEN || '').trim();
+    if (!token || token === 'REPLACE_WITH_YOUR_CLUSTRMAPS_D_TOKEN') {
+        visitorMapNeedsSetupHint = true;
+        renderVisitorMapSetupHint();
+        return;
+    }
+
+    visitorMapNeedsSetupHint = false;
+    const existingScript = document.getElementById(CLUSTRMAPS_SCRIPT_ID);
+    if (existingScript) {
+        return;
+    }
+
+    const scriptQuery = new URLSearchParams({
+        d: token
+    });
+    mapContainer.innerHTML = '';
+
+    const widgetScript = document.createElement('script');
+    widgetScript.id = CLUSTRMAPS_SCRIPT_ID;
+    widgetScript.type = 'text/javascript';
+    widgetScript.async = true;
+    widgetScript.src = `${CLUSTRMAPS_SCRIPT_BASE}?${scriptQuery.toString()}`;
+    widgetScript.addEventListener('error', () => {
+        renderVisitorMapLoadFailedHint();
+    });
+    widgetScript.addEventListener('load', () => {
+        window.setTimeout(() => {
+            if (hasInteractiveVisitorMapRendered(mapContainer)) {
+                fitVisitorMapWidget(mapContainer);
+            } else {
+                renderVisitorMapLoadFailedHint();
+            }
+        }, CLUSTRMAPS_RENDER_CHECK_DELAY_MS);
+    });
+    mapContainer.appendChild(widgetScript);
+}
+
+function renderVisitorMapSetupHint() {
+    const mapContainer = document.getElementById('visitor-map-container');
+    if (!mapContainer) {
+        return;
+    }
+
+    mapContainer.innerHTML = '';
+}
+
+function renderVisitorMapLoadFailedHint() {
+    const mapContainer = document.getElementById('visitor-map-container');
+    if (!mapContainer) {
+        return;
+    }
+
+    mapContainer.innerHTML = '';
+}
+
+function getVisitorMapWidgetNode(container) {
+    if (!container) {
+        return null;
+    }
+
+    return Array.from(container.children).find(node => {
+        if (!(node instanceof HTMLElement)) {
+            return false;
+        }
+        return !node.classList.contains('visitor-map-hint') &&
+            node.tagName !== 'SCRIPT';
+    }) || null;
+}
+
+function fitVisitorMapWidget(container) {
+    const widgetNode = getVisitorMapWidgetNode(container);
+    if (!(widgetNode instanceof HTMLElement)) {
+        return;
+    }
+
+    widgetNode.classList.add('visitor-map-widget');
+    widgetNode.style.transform = '';
+    container.style.height = '';
+
+    const targetWidth = Math.min(VISITOR_MAP_MAX_WIDTH_PX, container.clientWidth || VISITOR_MAP_MAX_WIDTH_PX);
+    const rect = widgetNode.getBoundingClientRect();
+    if (rect.width <= 0 || targetWidth <= 0) {
+        return;
+    }
+
+    if (rect.width > targetWidth + 1) {
+        const scale = targetWidth / rect.width;
+        widgetNode.style.transformOrigin = 'top center';
+        widgetNode.style.transform = `scale(${scale})`;
+        container.style.height = `${Math.ceil(rect.height * scale)}px`;
+    } else {
+        container.style.height = `${Math.ceil(rect.height)}px`;
+    }
+}
+
+function hasInteractiveVisitorMapRendered(container) {
+    return getVisitorMapWidgetNode(container) !== null;
 }
 
 // Render contact page
