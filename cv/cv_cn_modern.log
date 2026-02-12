@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2026.2.10)  12 FEB 2026 09:47
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2026.2.10)  12 FEB 2026 11:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -594,7 +594,7 @@ Package rerunfilecheck Info: File `cv_cn_modern.out' has not changed.
 Here is how much of TeX's memory you used:
  17088 strings out of 473832
  376829 string characters out of 5729481
- 818603 words of memory out of 5000000
+ 819603 words of memory out of 5000000
  39946 multiletter control sequences out of 15000+600000
  563818 words of font info for 78 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191

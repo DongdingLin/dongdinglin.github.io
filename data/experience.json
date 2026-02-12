@@ -9,8 +9,8 @@
       "department_zh": "Fermat Lab（华为 2012 实验室）",
       "period": "Aug 2025-Present",
       "period_zh": "2025.08-至今",
-      "description_zh": "边缘 AI 与 LLM 数据工程：围绕端侧在线学习、神经符号数学数据合成与对话数据治理搭建生产级流程，实现训练算力降低 4 倍（性能衰减 <3%），并提升数学推理泛化能力（Math500 42.7→58.6%，AIME/HMMT 7.8→63.9%），核心算法以加密 SDK 方式交付。",
-      "description": "Edge AI & LLM Data Engineering — Built production-grade pipelines for on-device online learning, neuro-symbolic math data synthesis, and dialogue curation; implemented GPU-accelerated OOD filtering and Mathematica-verified generation, cutting training compute 4× (<3% perf drop) and boosting generalization (Math500 42.7→58.6%, AIME/HMMT 7.8→63.9%), delivered as an encrypted SDK."
+      "description_zh": "实习期间，我主导了覆盖模型训练、推理增强与评估的全栈数据策略优化。在训练效率方面，我针对在线场景设计了基于蒸馏与 GPU-KMeans 的数据筛减策略，在性能基本无损（<3%）的前提下将算力消耗降低 \\textbf{4x}。在推理能力方面，我搭建了集成 Mathematica 的自动化数学泛化与形式化校验流水线（封装为 SDK），将新题准确率提升至 \\textbf{99%}，并将竞赛级题目的泛化率从 7.8% 跃升至 \\textbf{63.95%}。此外，为确保评估可靠性，我构建了混合规则与向量检索的数据清洗系统，剔除噪声与离群样本，沉淀了高质量的同分布（IID）对话评测集。",
+      "description": "During my internship, I focused on advancing data-centric pipelines across training, reasoning, and evaluation phases. To optimize online training efficiency, I designed a data pruning strategy using distillation and GPU-KMeans, reducing compute overhead by \\textbf{4x} with negligible performance loss (<3%). Simultaneously, to enhance mathematical reasoning, I engineered an automated generalization and formal verification SDK (integrating Mathematica) that boosted new-item accuracy to \\textbf{99%} and competition-level problem generalization to \\textbf{63.95%}. Furthermore, I established robust model evaluation standards by constructing high-quality, in-distribution dialogue datasets using a hybrid cleaning pipeline combining rule-based heuristics and embedding retrieval."
     },
     {
       "position": "Ph.D. Candidate",
@@ -18,11 +18,11 @@
       "company": "The Hong Kong Polytechnic University",
       "company_zh": "香港理工大学",
       "department": "NLP Group, PolyU",
-      "department_zh": "NLP 研究组，香港理工大学",
+      "department_zh": "NLP Group，香港理工大学",
       "period": "Dec 2022-Present",
       "period_zh": "2022.12-至今",
-      "description_zh": "研究情境对话推荐与大模型/多模态对话系统，围绕任务设计、数据构建、基线建模和评测体系开展工作。导师：李文婕教授。",
-      "description": "Situated Conversational Recommendation - Investigating techniques related to large-scale pre-trained language models and multi-modal dialogue system with the goal of increasing user engagement in our dialogue system. By leveraging multiple types of information, we aim to create a more immersive experience for the user. Supervisor: Prof. Wenjie, Li"
+      "description_zh": "研究情境对话推荐与大模型/多模态对话系统，围绕任务设计、数据构建、基线建模和评测体系开展工作。导师：Prof. Wenjie Li。",
+      "description": "Situated Conversational Recommendation - Investigating techniques related to large-scale pre-trained language models and multi-modal dialogue system with the goal of increasing user engagement in our dialogue system. By leveraging multiple types of information, we aim to create a more engaging experience for the user. Supervisor: Prof. Wenjie, Li"
     },
     {
       "position": "Research Assistant",
@@ -30,7 +30,7 @@
       "company": "The Hong Kong Polytechnic University",
       "company_zh": "香港理工大学",
       "department": "NLP Group, PolyU",
-      "department_zh": "NLP 研究组，香港理工大学",
+      "department_zh": "NLP Group，香港理工大学",
       "period": "Jul 2021-Dec 2022",
       "period_zh": "2021.07-2022.12",
       "description_zh": "研究目标导向对话推荐与知识增强生成，相关工作发表于 KaRS 2021 与 AAAI 2023。导师：李文婕教授。",
@@ -45,7 +45,7 @@
       "department_zh": "群体智能系统实验室",
       "period": "Feb 2018-Jul 2020",
       "period_zh": "2018.02-2020.07",
-      "description_zh": "研究机器阅读理解，提出分层全局信息传递与记忆流机制，在 CoQA 数据集上取得有竞争力结果。导师：潘榕教授。",
+      "description_zh": "研究机器阅读理解，提出分层全局信息传递与记忆流机制，在 CoQA 数据集上取得有竞争力结果。导师：潘嵘教授。",
       "description": "Machine Reading Comprehension - Proposed a Hierarchical global-aware Information Transmission mechanism, which makes use of the interaction between local-aware information and global-aware information to improve the effectiveness of the model. Employed a Memory Flow mechanism for storing and modifying information from historical questions and answers. The experimental results on CoQA datasets showed that our model obtained competitive results compared to the existing methods. Supervisor: Prof. Rong Pan"
     },
     {
@@ -101,6 +101,12 @@
     }
   ],
   "awards": [
+    {
+      "name": "<strong>Excellent Intern Award</strong>, Huawei Hong Kong Research Center (HKRC).",
+      "name_zh": "获评华为香港研究中心（HKRC）<strong>优秀实习生</strong>。",
+      "year": "2025",
+      "year_zh": "2025年"
+    },
     {
       "name": "Ranked <strong>4/750</strong> in 2021 Language and Intelligence Challenge (Baidu).",
       "name_zh": "在 2021 百度语言与智能技术竞赛中获得 <strong>4/750</strong>。",

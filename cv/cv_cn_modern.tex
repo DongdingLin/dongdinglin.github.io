@@ -67,7 +67,7 @@
 \EduOneLine[-1.4em]{中山大学}{2013.09 -- 2017.07}{软件工程学士，GPA 3.8/4.0（排名 37/433）}{广州，中国}
 
 \Section{实习与研究经历}
-\Entry{华为香港研究中心（HKRC）Fermat Lab}{2025.08 -- 至今}{Research Intern，优秀实习生}{香港}
+\Entry{华为香港研究中心（HKRC）Fermat Lab}{2025.08 -- 至今}{Research Intern，\textbf{优秀实习生}}{香港}
 \begin{itemize}
     \item \textbf{无线在线训练数据筛减（基站资源优化）:}
     面向在线训练场景，设计本地数据筛选与分布外（OOD）过滤策略；结合蒸馏式判别与 GPU-KMeans 聚类，在基本不损性能的前提下将训练算力 \textbf{降低 4x}，性能衰减控制在 \textbf{≤3\%}，并提交技术报告和相应的代码实现，形成可复用配置与日志闭环，支持快速回滚与复现实验。
@@ -76,22 +76,21 @@
 
 \end{itemize}
 
-\Entry{香港理工大学 NLP Group}{2022.12 -- 至今}{PhD Research}{香港}
+\Entry{香港理工大学 NLP Group}{2022.12 -- 至今}{PhD Research， Supervisor: Prof. Wenjie Li}{香港}
 \begin{itemize}
     \item \textbf{情境会话推荐（SCR）建模与评测：}围绕场景、上下文与用户偏好，梳理交互链路并定义任务设定与评测指标；实现数据处理、训练与评测的端到端流水线，支撑系列论文与可复现实验。
     \item \textbf{SiPeR：场景迁移 + 贝叶斯偏好推断：}面向 SCR 的“去哪/选什么（Where/What）”决策，同时建模场景迁移与目标场景预测，估计当前场景是否满足需求并在必要时引导迁移到更合适场景；利用多模态大模型 likelihood 做贝叶斯逆推断以刻画隐式偏好，在 SIMMC 2.1 与 SCREEN 上平均提升 \textbf{10.9\%/10.6\%}。
-
     \item \textbf{Re2A：Rubric 驱动的偏好推理与双对齐生成：}将 SCR 设计为 reason-then-align 流程：用自动 Rubrics 提供多维奖励信号，实现\textbf{无需人工标注}的显式偏好状态推理；
     再用 Preference-conditioned DPO 同时对齐“偏好满足 + 场景一致”，在 SIMMC 2.1 上将幻觉率从 \textbf{25.4\% 降至 5.2\%}、弱匹配率从 \textbf{22.6\% 降至 7.4\%}。
 \end{itemize}
 
-\Entry{香港理工大学 NLP Group}{2021.07 -- 2022.12}{Research Assistant}{香港}
+\Entry{香港理工大学 NLP Group}{2021.07 -- 2022.12}{Research Assistant, Supervisor: Prof. Wenjie Li}{香港}
 \begin{itemize}
     \item \textbf{目标导向对话规划与生成（框架工程化）：}
     围绕“目标约束、对话状态与用户偏好”设计对话规划与生成方案，引入 look-ahead/反馈修正等策略提升多轮可控性与目标达成；并将数据预处理、状态/意图建模、规划器与生成器模块化封装，统一训练/推理接口与评测脚本，支持多策略快速对比与复现实验。
 \end{itemize}
 
-\Entry{中山大学CIS实验室}{2018.02 -- 2020.07}{Research Assistant}{广州}
+\Entry{中山大学CIS实验室}{2018.02 -- 2020.07}{Research Assistant, Supervisor: 潘嵘教授 \& 杨敏教授}{广州}
 \begin{itemize}
     \item \textbf{机器阅读理解与多跳推理（层级传播 + 记忆流）：}
     面向长文档证据聚合与跨句关系建模，提出分层信息传递与记忆更新机制增强证据追踪与信息保真，搭建训练/评测流水线并开展系统性消融与误差分析，沉淀可复现实验代码与配置。

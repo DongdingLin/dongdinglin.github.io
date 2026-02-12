@@ -1,6 +1,12 @@
 {
   "news": [
     {
+      "date": "December 2025",
+      "date_zh": "2025年12月",
+      "content": "Received the Excellent Intern Award during my internship at Huawei Hong Kong Research Center (HKRC), Fermat Lab.",
+      "content_zh": "在华为香港研究中心（HKRC）Fermat Lab 实习期间，获评优秀实习生。"
+    },
+    {
       "date": "August 2025",
       "date_zh": "2025年8月",
       "content": "Started a Research Internship at Huawei Hong Kong Research Center (HKRC), Fermat Lab (Huawei 2012 Labs), focusing on LLM-related mathematical reasoning data generation.",

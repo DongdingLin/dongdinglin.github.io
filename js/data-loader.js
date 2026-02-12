@@ -1,6 +1,6 @@
 // Data loader for personal website
 const FALLBACK_PUBLICATIONS_URL = 'https://scholar.google.com/citations?view_op=list_works&hl=en&user=JM4i0R8AAAAJ';
-const DATA_VERSION = '2026-02-11-lang2';
+const DATA_VERSION = '2026-02-11-thumbbadge1';
 const HOME_DATA_FILES = [
     'personal.json',
     'publications.json',
@@ -889,7 +889,9 @@ function renderPublications(publicationsData) {
             const abstractText = getLocalizedValue(pub, 'abstract', '') ? escapeHtml(getLocalizedValue(pub, 'abstract', '')) : escapeHtml(getUiText('publications.abstractUnavailable'));
             const safeTitle = escapeHtml(getLocalizedValue(pub, 'title', 'Untitled'));
             const safeVenue = escapeHtml(getLocalizedValue(pub, 'venue', 'Venue information unavailable'));
-            const venueTag = escapeHtml(getPublicationVenueTag(pub));
+            const venueTagRaw = getPublicationVenueTag(pub);
+            const venueTag = escapeHtml(venueTagRaw);
+            const venueThemeClass = getPublicationVenueThemeClass(venueTagRaw);
             const thumbnailUrl = sanitizeAssetUrl(pub.thumbnail);
             const thumbAlt = escapeHtml(getLocalizedValue(pub, 'thumbnail_alt', `Figure for ${pub.title || 'publication'}`));
             const mediaClassName = thumbnailUrl === '#' ? 'publication-media no-thumb' : 'publication-media';
@@ -900,10 +902,12 @@ function renderPublications(publicationsData) {
             html += `
                 <article class="publication publication-card">
                     <div class="${mediaClassName}" data-target="${abstractId}" role="button" tabindex="0" aria-controls="${abstractId}" aria-expanded="false">
-                        ${thumbImage}
-                        <div class="publication-thumb-fallback">
-                            <span class="publication-venue-tag">${venueTag}</span>
-                            <span class="publication-thumb-text">${escapeHtml(getUiText('publications.paperPreview'))}</span>
+                        <span class="publication-venue-ribbon ${venueThemeClass}">${venueTag}</span>
+                        <div class="publication-media-body">
+                            ${thumbImage}
+                            <div class="publication-thumb-fallback">
+                                <span class="publication-thumb-text">${escapeHtml(getUiText('publications.paperPreview'))}</span>
+                            </div>
                         </div>
                     </div>
                     <div class="publication-content">
@@ -1082,6 +1086,35 @@ function getPublicationVenueTag(publication) {
 
     const compact = venue.replace(/\(.*\)/g, '').replace(/\d{4}.*/, '').trim();
     return compact ? compact.slice(0, 14).toUpperCase() : 'PAPER';
+}
+
+function getPublicationVenueThemeClass(tag) {
+    const normalized = String(tag || '').toUpperCase();
+    if (normalized.includes('ACM MM')) {
+        return 'venue-theme-acmmm';
+    }
+    if (normalized.includes('EMNLP')) {
+        return 'venue-theme-emnlp';
+    }
+    if (normalized.includes('ACL')) {
+        return 'venue-theme-acl';
+    }
+    if (normalized.includes('AAAI')) {
+        return 'venue-theme-aaai';
+    }
+    if (normalized.includes('TOIS')) {
+        return 'venue-theme-tois';
+    }
+    if (normalized.includes('TNNLS')) {
+        return 'venue-theme-tnnls';
+    }
+    if (normalized.includes('CEUR-WS')) {
+        return 'venue-theme-ceur';
+    }
+    if (normalized.includes('ARXIV')) {
+        return 'venue-theme-arxiv';
+    }
+    return 'venue-theme-default';
 }
 
 function bindPublicationThumbnailFallback(container) {
