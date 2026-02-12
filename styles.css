@@ -220,6 +220,24 @@ footer {
     border-top: 1px solid #eee;
 }
 
+.footer-meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    font-size: 0.95em;
+}
+
+.footer-meta-separator {
+    color: #a0a0a0;
+}
+
+body.dark-theme .footer-meta-separator {
+    color: #666;
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
     .container {

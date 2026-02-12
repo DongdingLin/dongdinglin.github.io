@@ -14,6 +14,8 @@ const RECENT_NEWS_WINDOW_DAYS = 365;
 const LANGUAGE_STORAGE_KEY = 'site_language';
 const DEFAULT_LANGUAGE = 'en';
 const SUPPORTED_LANGUAGES = ['en', 'zh'];
+const FOOTER_COUNTER_API = 'https://api.countapi.xyz/hit/lindongding-github-io/site-visits';
+const FOOTER_CLOCK_REFRESH_MS = 1000;
 const UI_TEXT = {
     en: {
         nav: {
@@ -41,7 +43,10 @@ const UI_TEXT = {
             backToTop: 'Back to Top',
             noNews: 'No news updates yet.',
             dateTbd: 'Date TBD',
-            tbd: 'TBD'
+            tbd: 'TBD',
+            visits: 'Visits',
+            visitsUnavailable: 'Unavailable',
+            currentTime: 'Current Time'
         },
         publications: {
             rank: 'Rank',
@@ -91,7 +96,10 @@ const UI_TEXT = {
             backToTop: '回到顶部',
             noNews: '暂无新闻更新。',
             dateTbd: '日期待定',
-            tbd: '待补充'
+            tbd: '待补充',
+            visits: '访问人数',
+            visitsUnavailable: '暂不可用',
+            currentTime: '当前时间'
         },
         publications: {
             rank: '级别',
@@ -120,12 +128,15 @@ const UI_TEXT = {
 let currentLanguage = DEFAULT_LANGUAGE;
 let cachedDataByFile = null;
 let isCurrentContactPage = false;
+let footerClockTimerId = null;
+let footerVisitCount = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     currentLanguage = resolveInitialLanguage();
     installLanguageToggle();
     setLanguage(currentLanguage, { persist: false, rerender: false });
     initBackToTop();
+    initFooterMeta();
     initPage().catch(error => {
         showLoadingError(`Failed to load data: ${error.message}. Please refresh the page and try again.`);
     });
@@ -248,6 +259,7 @@ function applyStaticTranslations() {
     }
 
     updateWechatModalLanguage();
+    updateFooterMetaText();
 }
 
 function getUiText(keyPath) {
@@ -1230,6 +1242,73 @@ function renderMisc(miscText) {
 // Render footer
 function renderFooter(footerText) {
     document.getElementById('footer-text').textContent = footerText;
+}
+
+function initFooterMeta() {
+    updateFooterClock();
+
+    if (footerClockTimerId !== null) {
+        clearInterval(footerClockTimerId);
+    }
+    footerClockTimerId = window.setInterval(updateFooterClock, FOOTER_CLOCK_REFRESH_MS);
+
+    void refreshFooterVisitCount();
+}
+
+function updateFooterMetaText() {
+    updateFooterVisitText();
+    updateFooterClock();
+}
+
+function updateFooterVisitText() {
+    const visitElement = document.getElementById('visitor-counter');
+    if (!visitElement) {
+        return;
+    }
+
+    const locale = currentLanguage === 'zh' ? 'zh-CN' : 'en-US';
+    const countText = Number.isFinite(footerVisitCount)
+        ? footerVisitCount.toLocaleString(locale)
+        : getUiText('labels.visitsUnavailable');
+
+    visitElement.textContent = `${getUiText('labels.visits')}: ${countText}`;
+}
+
+function updateFooterClock() {
+    const timeElement = document.getElementById('current-time');
+    if (!timeElement) {
+        return;
+    }
+
+    const locale = currentLanguage === 'zh' ? 'zh-CN' : 'en-US';
+    const now = new Date();
+    const timeText = now.toLocaleString(locale, {
+        hour12: false
+    });
+    timeElement.textContent = `${getUiText('labels.currentTime')}: ${timeText}`;
+}
+
+async function refreshFooterVisitCount() {
+    updateFooterVisitText();
+
+    try {
+        const response = await fetch(FOOTER_COUNTER_API, {
+            cache: 'no-store'
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        const payload = await response.json();
+        if (typeof payload.value === 'number' && Number.isFinite(payload.value)) {
+            footerVisitCount = payload.value;
+        }
+    } catch (error) {
+        footerVisitCount = null;
+    }
+
+    updateFooterVisitText();
 }
 
 // Render contact page
