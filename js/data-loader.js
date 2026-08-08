@@ -1,6 +1,6 @@
 // Data loader for personal website
 const FALLBACK_PUBLICATIONS_URL = 'https://scholar.google.com/citations?view_op=list_works&hl=en&user=JM4i0R8AAAAJ';
-const DATA_VERSION = '2026-08-08-huawei1';
+const DATA_VERSION = '2026-08-08-redesign1';
 const HOME_DATA_FILES = [
     'personal.json',
     'publications.json',
