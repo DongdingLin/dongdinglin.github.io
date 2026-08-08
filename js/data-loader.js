@@ -1,6 +1,6 @@
 // Data loader for personal website
 const FALLBACK_PUBLICATIONS_URL = 'https://scholar.google.com/citations?view_op=list_works&hl=en&user=JM4i0R8AAAAJ';
-const DATA_VERSION = '2026-08-08-redesign1';
+const DATA_VERSION = '2026-08-08-structure1';
 const HOME_DATA_FILES = [
     'personal.json',
     'publications.json',
@@ -756,7 +756,8 @@ function renderNews(newsItems) {
         const displayDate = getLocalizedValue(item, 'date', getUiText('labels.dateTbd'));
         html += `
             <div class="news-item">
-                <p>${isRecent ? '<span class="news-badge">NEW</span> ' : ''}<span class="news-date">[${escapeHtml(displayDate)}]</span> ${escapeHtml(content)}</p>
+                <p class="news-meta">${isRecent ? '<span class="news-badge">NEW</span>' : ''}<span class="news-date">${escapeHtml(displayDate)}</span></p>
+                <p class="news-text">${escapeHtml(content)}</p>
             </div>
         `;
     });
@@ -1178,7 +1179,7 @@ function renderEducation(education) {
         const degree = getLocalizedValue(item, 'degree', '');
         const field = getLocalizedValue(item, 'field', '');
         const institution = getLocalizedValue(item, 'institution', '');
-        html += `<li><strong>${escapeHtml(period)}</strong>: ${escapeHtml(degree)}, ${escapeHtml(field)}, ${escapeHtml(institution)}</li>`;
+        html += `<li class="entry-item"><span class="entry-period">${escapeHtml(period)}</span><span class="entry-body"><strong>${escapeHtml(degree)}</strong>, ${escapeHtml(field)}, ${escapeHtml(institution)}</span></li>`;
     });
 
     container.innerHTML = html;
@@ -1202,7 +1203,7 @@ function renderExperience(data) {
             ? `<div class="experience-highlights">${highlights.map(text => `<div class="experience-highlight-item">- ${escapeHtml(text)}</div>`).join('')}</div>`
             : '';
 
-        expHtml += `<li><strong>${escapeHtml(period)}</strong>: ${escapeHtml(position)}, ${escapeHtml(company)}${details}${highlightsHtml}</li>`;
+        expHtml += `<li class="entry-item"><span class="entry-period">${escapeHtml(period)}</span><span class="entry-body"><strong>${escapeHtml(position)}</strong>, ${escapeHtml(company)}${details}${highlightsHtml}</span></li>`;
     });
 
     expContainer.innerHTML = expHtml;
@@ -1244,7 +1245,7 @@ function renderExperience(data) {
         const period = getLocalizedValue(item, 'period', '');
         const course = getLocalizedValue(item, 'course', '');
         const role = getLocalizedValue(item, 'role', '');
-        teachingHtml += `<li><strong>${escapeHtml(period)}</strong>: ${escapeHtml(course)}, ${escapeHtml(role)}</li>`;
+        teachingHtml += `<li class="entry-item"><span class="entry-period">${escapeHtml(period)}</span><span class="entry-body">${escapeHtml(course)} — ${escapeHtml(role)}</span></li>`;
     });
 
     teachingContainer.innerHTML = teachingHtml;
