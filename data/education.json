@@ -1,13 +1,13 @@
 {
   "education": [
     {
-      "degree": "PhD Candidate",
-      "degree_zh": "博士研究生",
+      "degree": "Ph.D.",
+      "degree_zh": "博士",
       "field": "The Department of Computing",
       "field_zh": "电子计算学系",
       "institution": "The Hong Kong Polytechnic University",
       "institution_zh": "香港理工大学",
-      "period": "2022-Present"
+      "period": "2022-2026"
     },
     {
       "degree": "Master's Degree",

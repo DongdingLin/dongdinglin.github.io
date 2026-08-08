@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2026.2.10)  12 FEB 2026 11:21
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2026.2.10)  8 AUG 2026 19:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -575,8 +575,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 65--68
 
  []
 
-Missing character: There is no ≤ (U+2264) in font [lmroman10-bold]:mapping=tex-
-text;!
 
 
 [1
@@ -592,12 +590,12 @@ Package rerunfilecheck Info: File `cv_cn_modern.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 17088 strings out of 473832
- 376829 string characters out of 5729481
- 819603 words of memory out of 5000000
- 39946 multiletter control sequences out of 15000+600000
- 563818 words of font info for 78 fonts, out of 8000000 for 9000
+ 17097 strings out of 473832
+ 377587 string characters out of 5729481
+ 820603 words of memory out of 5000000
+ 39956 multiletter control sequences out of 15000+600000
+ 563810 words of font info for 77 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 93i,9n,112p,427b,411s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 93i,9n,112p,427b,465s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on cv_cn_modern.pdf (2 pages).
+Output written on cv_cn_modern.xdv (2 pages, 51120 bytes).

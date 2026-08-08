@@ -1,6 +1,18 @@
 {
   "news": [
     {
+      "date": "August 2026",
+      "date_zh": "2026年8月",
+      "content": "Life update: I received my Ph.D. degree from The Hong Kong Polytechnic University and joined Huawei Hong Kong Research Center (HKRC) as a Senior Research Engineer!",
+      "content_zh": "人生新阶段：我已从香港理工大学博士毕业，并正式入职华为香港研究所（HKRC），担任高级研究工程师！"
+    },
+    {
+      "date": "July 2026",
+      "date_zh": "2026年7月",
+      "content": "Our paper SiPeR on situated conversational recommendation has been published at ACL 2026 (Main Conference, Long Paper)!",
+      "content_zh": "我们关于情境会话推荐的论文 SiPeR 发表于 ACL 2026 主会（长文）！"
+    },
+    {
       "date": "December 2025",
       "date_zh": "2025年12月",
       "content": "Received the Excellent Intern Award during my internship at Huawei Hong Kong Research Center (HKRC), Fermat Lab.",

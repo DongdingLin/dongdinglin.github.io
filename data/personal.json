@@ -1,19 +1,17 @@
 {
   "name": "Dongding Lin",
   "name_zh": "林东定",
-  "title": "Ph.D. Candidate",
-  "title_zh": "博士研究生",
-  "department": "Department of Computing",
-  "department_zh": "计算学系",
-  "university": "The Hong Kong Polytechnic University",
-  "university_zh": "香港理工大学",
-  "location": "Hung Hom, Kowloon, Hong Kong, China",
-  "location_zh": "中国香港九龙红磡",
-  "email": "22037064r (at) connect.polyu.hk or lindongding (at) gmail.com",
-  "jobSeekingBanner": "Actively seeking industry research positions in NLP/LLMs (2026).",
-  "jobSeekingBanner_zh": "正在积极寻找 2026 年 NLP/LLM 相关产业研究岗位。",
-  "bio": "<p>I am currently a fourth-year Ph.D. candidate in the <a href='https://polyunlp.github.io/' target='_blank'>NLP Group</a> at <a href='https://www.polyu.edu.hk/' target='_blank'>The Hong Kong Polytechnic University</a>, under the supervision of Professor <a href='https://www4.comp.polyu.edu.hk/~cswjli/' target='_blank'>Maggie Wenjie Li</a>. My research focuses on Situated Conversational Recommendation, LLM-based Reasoning, and Multimodal LLMs. Additionally, I am deeply interested in areas such as Speech Generation and Visual Understanding. Since August 2025, I have been serving as a Research Intern at <a href='https://www.linkedin.com/company/huawei-hong-kong-research-center-hkrc/?originalSubdomain=hk' target='_blank'>Huawei Hong Kong Research Center (HKRC)</a>, Fermat Lab (Huawei 2012 Labs), where I received the <em>Excellent Intern Award</em>. I am passionate about applying NLP technologies to real-world scenarios, aiming to help people experience the various ways in which AI can enrich their lives.</p><p>Prior to my doctoral studies, I earned a Bachelor's degree from <a href='https://www.sysu.edu.cn/' target='_blank'>Sun Yat-sen University</a>, graduating with a GPA of <strong>3.8/4.0</strong>, ranking <strong>37th out of 433</strong> students. I was directly admitted to the Master's program through the postgraduate recommendation and successfully completed my Master's degree, achieving a GPA of <strong>3.9/4.0</strong>. During my master's studies, I was advised by <a href='https://cse.sysu.edu.cn/teacher/Panrong' target='_blank'>Prof. Rong Pan</a>. After that, I completed a research internship at SIAT, Chinese Academy of Sciences, under the supervision of <a href='https://minyang.me/' target='_blank'>Prof. Min Yang</a>.</p>",
-  "bio_zh": "<p>我目前是<a href='https://www.polyu.edu.hk/' target='_blank'>香港理工大学</a><a href='https://polyunlp.github.io/' target='_blank'> NLP Group</a> 的四年级博士生，导师为 <a href='https://www4.comp.polyu.edu.hk/~cswjli/' target='_blank'>Maggie Wenjie Li</a> 教授。我的研究聚焦于情境会话推荐、基于 LLM 的推理和多模态 LLM。此外，我也对语音生成和视觉理解等方向非常感兴趣。自 2025 年 8 月起，我在<a href='https://www.linkedin.com/company/huawei-hong-kong-research-center-hkrc/?originalSubdomain=hk' target='_blank'>华为香港研究中心（HKRC）</a> Fermat Lab（华为 2012 实验室）担任研究实习生，期间获评<em>优秀实习生</em>。我热衷于将 NLP 技术应用到真实世界场景中，希望帮助人们体验 AI 丰富生活的多种方式。</p><p>在攻读博士之前，我本科毕业于<a href='https://www.sysu.edu.cn/' target='_blank'>中山大学</a>，GPA 为 <strong>3.8/4.0</strong>，在 <strong>433</strong> 名学生中排名 <strong>37</strong>。随后我通过推免直接进入硕士阶段并顺利完成学业，硕士 GPA 为 <strong>3.9/4.0</strong>。硕士期间，我的导师是<a href='https://cse.sysu.edu.cn/teacher/Panrong' target='_blank'>潘嵘教授</a>。之后我前往中国科学院深圳先进技术研究院（SIAT）实习，接受 <a href='https://minyang.me/' target='_blank'>杨敏老师</a> 指导。</p>",
+  "title": "Senior Research Engineer",
+  "title_zh": "高级研究工程师",
+  "department": "Huawei Hong Kong Research Center (HKRC)",
+  "department_zh": "华为香港研究所（HKRC）",
+  "university": "Huawei Technologies Co., Ltd.",
+  "university_zh": "华为技术有限公司",
+  "location": "Hong Kong, China",
+  "location_zh": "中国香港",
+  "email": "lindongding (at) gmail.com or 22037064r (at) connect.polyu.hk",
+  "bio": "<p>I am currently a Senior Research Engineer at <a href='https://www.linkedin.com/company/huawei-hong-kong-research-center-hkrc/?originalSubdomain=hk' target='_blank'>Huawei Hong Kong Research Center (HKRC)</a>. I received my Ph.D. degree in 2026 from the <a href='https://polyunlp.github.io/' target='_blank'>NLP Group</a> at <a href='https://www.polyu.edu.hk/' target='_blank'>The Hong Kong Polytechnic University</a>, under the supervision of Professor <a href='https://www4.comp.polyu.edu.hk/~cswjli/' target='_blank'>Maggie Wenjie Li</a>. My research focuses on Situated Conversational Recommendation, LLM-based Reasoning, and Multimodal LLMs. Additionally, I am deeply interested in areas such as Speech Generation and Visual Understanding. Before joining Huawei full-time, I served as a Research Intern at HKRC, Fermat Lab (Huawei 2012 Labs) starting from August 2025, where I received the <em>Excellent Intern Award</em>. I am passionate about applying NLP technologies to real-world scenarios, aiming to help people experience the various ways in which AI can enrich their lives.</p><p>Prior to my doctoral studies, I earned a Bachelor's degree from <a href='https://www.sysu.edu.cn/' target='_blank'>Sun Yat-sen University</a>, graduating with a GPA of <strong>3.8/4.0</strong>, ranking <strong>37th out of 433</strong> students. I was directly admitted to the Master's program through the postgraduate recommendation and successfully completed my Master's degree, achieving a GPA of <strong>3.9/4.0</strong>. During my master's studies, I was advised by <a href='https://cse.sysu.edu.cn/teacher/Panrong' target='_blank'>Prof. Rong Pan</a>. After that, I completed a research internship at SIAT, Chinese Academy of Sciences, under the supervision of <a href='https://minyang.me/' target='_blank'>Prof. Min Yang</a>.</p>",
+  "bio_zh": "<p>我目前在<a href='https://www.linkedin.com/company/huawei-hong-kong-research-center-hkrc/?originalSubdomain=hk' target='_blank'>华为香港研究所（HKRC）</a>担任高级研究工程师（Senior Research Engineer）。我于 2026 年在<a href='https://www.polyu.edu.hk/' target='_blank'>香港理工大学</a><a href='https://polyunlp.github.io/' target='_blank'> NLP Group</a> 获得博士学位，导师为 <a href='https://www4.comp.polyu.edu.hk/~cswjli/' target='_blank'>Maggie Wenjie Li</a> 教授。我的研究聚焦于情境会话推荐、基于 LLM 的推理和多模态 LLM。此外，我也对语音生成和视觉理解等方向非常感兴趣。在正式入职华为之前，我自 2025 年 8 月起在 HKRC Fermat Lab（华为 2012 实验室）担任研究实习生，期间获评<em>优秀实习生</em>。我热衷于将 NLP 技术应用到真实世界场景中，希望帮助人们体验 AI 丰富生活的多种方式。</p><p>在攻读博士之前，我本科毕业于<a href='https://www.sysu.edu.cn/' target='_blank'>中山大学</a>，GPA 为 <strong>3.8/4.0</strong>，在 <strong>433</strong> 名学生中排名 <strong>37</strong>。随后我通过推免直接进入硕士阶段并顺利完成学业，硕士 GPA 为 <strong>3.9/4.0</strong>。硕士期间，我的导师是<a href='https://cse.sysu.edu.cn/teacher/Panrong' target='_blank'>潘嵘教授</a>。之后我前往中国科学院深圳先进技术研究院（SIAT）实习，接受 <a href='https://minyang.me/' target='_blank'>杨敏老师</a> 指导。</p>",
   "social": [
     {
       "platform": "WeChat",
@@ -53,8 +51,9 @@
     }
   ],
   "contact": {
-    "email": "22037064r@connect.polyu.hk",
-    "location": "Hung Hom, Kowloon, Hong Kong, China"
+    "email": "lindongding@gmail.com",
+    "location": "Hong Kong, China",
+    "location_zh": "中国香港"
   },
   "research_interests": [
     {
@@ -78,8 +77,8 @@
   ],
   "misc": "<p>I enjoy table tennis, mobile games, reading, and movies.</p><p>I hope to travel around the world someday and explore different cultures and landscapes.</p>",
   "misc_zh": "<p>我平时喜欢打乒乓球、玩手游、看书和看电影。</p><p>也希望未来有机会去更多国家旅行，体验不同文化与风景。</p>",
-  "footerText": "© 2026 Dongding Lin | Last updated: February 2026",
-  "footerText_zh": "© 2026 林东定 | 最近更新：2026 年 2 月",
+  "footerText": "© 2026 Dongding Lin | Last updated: August 2026",
+  "footerText_zh": "© 2026 林东定 | 最近更新：2026 年 8 月",
   "contactPage": {
     "title": "Contact Me",
     "title_zh": "联系方式",
@@ -90,14 +89,14 @@
         "type": "Email",
         "type_zh": "邮箱",
         "icon": "fas fa-envelope",
-        "details": "22037064r@connect.polyu.hk"
+        "details": "lindongding@gmail.com"
       },
       {
         "type": "Office Address",
         "type_zh": "办公地址",
         "icon": "fas fa-map-marker-alt",
-        "details": "Hung Hom, Kowloon, Hong Kong, China<br>The Hong Kong Polytechnic University, PQ719",
-        "details_zh": "中国香港九龙红磡<br>香港理工大学 PQ719"
+        "details": "Hong Kong, China<br>Huawei Hong Kong Research Center (HKRC)",
+        "details_zh": "中国香港<br>华为香港研究所（HKRC）"
       },
       {
         "type": "WeChat",
