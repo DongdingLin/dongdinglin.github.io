@@ -19,8 +19,8 @@
       "company_zh": "华为香港研究中心",
       "department": "Fermat Lab, Huawei 2012 Labs",
       "department_zh": "费马实验室（华为 2012 实验室）",
-      "period": "Aug 2025-2026",
-      "period_zh": "2025.08-2026",
+      "period": "Aug 2025-Jun 2026",
+      "period_zh": "2025.08-2026.06",
       "description_zh": "实习期间，我主导了覆盖模型训练、推理增强与评估的全栈数据策略优化。在训练效率方面，我针对在线场景设计了基于蒸馏与 GPU-KMeans 的数据筛减策略，在性能基本无损（<3%）的前提下将算力消耗降低 \\textbf{4x}。在推理能力方面，我搭建了集成 Mathematica 的自动化数学泛化与形式化校验流水线（封装为 SDK），将新题准确率提升至 \\textbf{99%}，并将竞赛级题目的泛化率从 7.8% 跃升至 \\textbf{63.95%}。此外，为确保评估可靠性，我构建了混合规则与向量检索的数据清洗系统，剔除噪声与离群样本，沉淀了高质量的同分布（IID）对话评测集。",
       "description": "During my internship, I focused on advancing data-centric pipelines across training, reasoning, and evaluation phases. To optimize online training efficiency, I designed a data pruning strategy using distillation and GPU-KMeans, reducing compute overhead by \\textbf{4x} with negligible performance loss (<3%). Simultaneously, to enhance mathematical reasoning, I engineered an automated generalization and formal verification SDK (integrating Mathematica) that boosted new-item accuracy to \\textbf{99%} and competition-level problem generalization to \\textbf{63.95%}. Furthermore, I established robust model evaluation standards by constructing high-quality, in-distribution dialogue datasets using a hybrid cleaning pipeline combining rule-based heuristics and embedding retrieval."
     },
