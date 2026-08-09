@@ -1,6 +1,6 @@
 // Data loader for personal website
 const FALLBACK_PUBLICATIONS_URL = 'https://scholar.google.com/citations?view_op=list_works&hl=en&user=JM4i0R8AAAAJ';
-const DATA_VERSION = '2026-08-08-dates2';
+const DATA_VERSION = '2026-08-09-barron';
 const HOME_DATA_FILES = [
     'personal.json',
     'publications.json',
@@ -464,20 +464,23 @@ function renderPersonalInfo(data) {
 
     document.getElementById('name').textContent = displayName;
 
-    const personalInfoHtml = [
-        escapeHtml(title),
-        escapeHtml(department),
-        escapeHtml(university),
-        escapeHtml(location),
-        `<strong>${escapeHtml(getUiText('labels.email'))}</strong>: ${escapeHtml(email)}`
-    ].join('<br>');
-    document.getElementById('personal-info').innerHTML = personalInfoHtml;
+    const personalInfoElement = document.getElementById('personal-info');
+    if (personalInfoElement) {
+        const personalInfoHtml = [
+            escapeHtml(title),
+            escapeHtml(department),
+            escapeHtml(university),
+            escapeHtml(location),
+            `<strong>${escapeHtml(getUiText('labels.email'))}</strong>: ${escapeHtml(email)}`
+        ].join('<br>');
+        personalInfoElement.innerHTML = personalInfoHtml;
+    }
 
     const bioWithLineBreaks = String(getLocalizedValue(data, 'bio', '')).replace(/\\n/g, '<br><br>');
     document.getElementById('bio').innerHTML = bioWithLineBreaks;
 
-    document.getElementById('contact-email').textContent = getLocalizedValue(contact, 'email', contact.email || '');
-    document.getElementById('contact-location').textContent = getLocalizedValue(contact, 'location', contact.location || '');
+    setTextById('contact-email', getLocalizedValue(contact, 'email', contact.email || ''));
+    setTextById('contact-location', getLocalizedValue(contact, 'location', contact.location || ''));
 
     const banner = document.getElementById('job-seeking-banner');
     if (banner) {
@@ -499,6 +502,11 @@ function renderPersonalInfo(data) {
         ? data.social.map(link => renderSocialLink(link)).filter(Boolean)
         : [];
 
+    const contactEmail = String(contact.email || '').trim();
+    const emailLink = contactEmail
+        ? [`<a href="mailto:${escapeHtml(contactEmail)}">${escapeHtml(getUiText('labels.email'))}</a>`]
+        : [];
+
     const cvEntries = Array.isArray(data.cvs) ? data.cvs : (data.cv ? [data.cv] : []);
     const cvLinks = cvEntries.map(item => {
         const iconClass = typeof item.icon === 'string' ? item.icon : 'fas fa-file';
@@ -507,7 +515,9 @@ function renderPersonalInfo(data) {
         return `<a href="${url}" target="_blank" class="cv-button" rel="noopener noreferrer"><i class="${iconClass}"></i> ${label}</a>`;
     });
 
-    socialLinksContainer.innerHTML = [...socialLinks, ...cvLinks].join('');
+    socialLinksContainer.innerHTML = [...emailLink, ...socialLinks, ...cvLinks]
+        .map(link => link.trim())
+        .join('<span class="link-sep">/</span>');
     bindWechatModalTriggers(socialLinksContainer);
 
     if (displayName) {
@@ -756,8 +766,8 @@ function renderNews(newsItems) {
         const displayDate = getLocalizedValue(item, 'date', getUiText('labels.dateTbd'));
         html += `
             <div class="news-item">
-                <p class="news-meta">${isRecent ? '<span class="news-badge">NEW</span>' : ''}<span class="news-date">${escapeHtml(displayDate)}</span></p>
-                <p class="news-text">${escapeHtml(content)}</p>
+                <span class="news-date">${escapeHtml(displayDate)}</span>
+                <span class="news-text">${isRecent ? '<span class="news-badge">New</span>' : ''}${escapeHtml(content)}</span>
             </div>
         `;
     });
@@ -817,28 +827,27 @@ function renderResearchInterests(interests) {
 function renderSkills(skillCategories) {
     const container = document.getElementById('skills-container');
     const categories = Array.isArray(skillCategories) ? skillCategories : [];
-    let html = '<div class="skills-grid">';
+    let html = '';
 
     categories.forEach(category => {
         const categoryName = escapeHtml(getLocalizedValue(category, 'category', 'Other'));
         const rawItems = Array.isArray(category.skills)
             ? category.skills.map(skill => getLocalizedValue(skill, 'name', ''))
             : getLocalizedStringArray(category, 'items');
-        const tags = rawItems
+        const itemsText = rawItems
             .map(item => String(item || '').trim())
             .filter(item => item.length > 0)
-            .map(item => `<span class="skill-tag">${escapeHtml(item)}</span>`)
-            .join('');
+            .map(item => escapeHtml(item))
+            .join(', ');
 
         html += `
-            <section class="skill-group">
-                <h3>${categoryName}</h3>
-                <div class="skill-tags">${tags || `<span class="skill-tag skill-tag-empty">${escapeHtml(getUiText('labels.tbd'))}</span>`}</div>
-            </section>
+            <div class="skill-row">
+                <span class="skill-cat">${categoryName}</span>
+                <span class="skill-items">${itemsText || escapeHtml(getUiText('labels.tbd'))}</span>
+            </div>
         `;
     });
 
-    html += '</div>';
     container.innerHTML = html;
 }
 
@@ -896,55 +905,38 @@ function renderPublications(publicationsData) {
 
             const abstractId = `abstract-${index + 1}`;
             const actionButtons = [
-                `<button type="button" class="publication-link abstract-toggle" data-target="${abstractId}" aria-expanded="false" aria-controls="${abstractId}">${escapeHtml(getUiText('publications.abs'))}</button>`
+                `<button type="button" class="pub-link abstract-toggle" data-target="${abstractId}" aria-expanded="false" aria-controls="${abstractId}">${escapeHtml(getUiText('publications.abs'))}</button>`
             ];
             publicationLinks.forEach(link => {
                 actionButtons.push(
-                    `<a class="publication-link" href="${link.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>`
+                    `<a class="pub-link" href="${link.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>`
                 );
             });
 
-            const metaItems = [];
-            if (pub.impact_factor) {
-                metaItems.push(`${escapeHtml(getUiText('publications.rank'))}: ${escapeHtml(pub.impact_factor)}`);
-            }
-            if (Number(pub.citations) > 0) {
-                metaItems.push(`${escapeHtml(getUiText('publications.citations'))}: ${escapeHtml(String(pub.citations))}`);
-            }
-            const metaHtml = metaItems.length > 0
-                ? `<p class="publication-impact">${metaItems.join(' | ')}</p>`
+            const rankHtml = pub.impact_factor
+                ? ` <span class="pub-rank">(${escapeHtml(pub.impact_factor)})</span>`
+                : '';
+            const citationsHtml = Number(pub.citations) > 0
+                ? ` <span class="pub-meta">· ${escapeHtml(getUiText('publications.citations'))}: ${escapeHtml(String(pub.citations))}</span>`
                 : '';
 
             const abstractText = getLocalizedValue(pub, 'abstract', '') ? escapeHtml(getLocalizedValue(pub, 'abstract', '')) : escapeHtml(getUiText('publications.abstractUnavailable'));
             const safeTitle = escapeHtml(getLocalizedValue(pub, 'title', 'Untitled'));
             const safeVenue = escapeHtml(getLocalizedValue(pub, 'venue', 'Venue information unavailable'));
-            const venueTagRaw = getPublicationVenueTag(pub);
-            const venueTag = escapeHtml(venueTagRaw);
-            const venueThemeClass = getPublicationVenueThemeClass(venueTagRaw);
             const thumbnailUrl = sanitizeAssetUrl(pub.thumbnail);
             const thumbAlt = escapeHtml(getLocalizedValue(pub, 'thumbnail_alt', `Figure for ${pub.title || 'publication'}`));
-            const mediaClassName = thumbnailUrl === '#' ? 'publication-media no-thumb' : 'publication-media';
-            const thumbImage = thumbnailUrl === '#'
-                ? ''
+            const thumbHtml = thumbnailUrl === '#'
+                ? `<div class="pub-thumb-fallback">${escapeHtml(getUiText('publications.paperPreview'))}</div>`
                 : `<img class="publication-thumb" src="${thumbnailUrl}" alt="${thumbAlt}" loading="lazy">`;
 
             html += `
-                <article class="publication publication-card">
-                    <div class="${mediaClassName}" data-target="${abstractId}" role="button" tabindex="0" aria-controls="${abstractId}" aria-expanded="false">
-                        <span class="publication-venue-ribbon ${venueThemeClass}">${venueTag}</span>
-                        <div class="publication-media-body">
-                            ${thumbImage}
-                            <div class="publication-thumb-fallback">
-                                <span class="publication-thumb-text">${escapeHtml(getUiText('publications.paperPreview'))}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="publication-content">
-                        <h3 class="publication-title">${safeTitle}</h3>
-                        <p class="publication-authors">${authorsHtml}</p>
-                        <p class="publication-venue"><em>${safeVenue}</em></p>
-                        ${metaHtml}
-                        <div class="publication-links">${actionButtons.join('')}</div>
+                <article class="publication">
+                    <div class="pub-thumb">${thumbHtml}</div>
+                    <div class="pub-info">
+                        <h3 class="pub-title">${safeTitle}</h3>
+                        <p class="pub-authors">${authorsHtml}</p>
+                        <p class="pub-venue"><em>${safeVenue}</em>${rankHtml}${citationsHtml}</p>
+                        <p class="pub-links">${actionButtons.join(' <span class="link-sep">/</span> ')}</p>
                         <div id="${abstractId}" class="abstract" hidden><p>${abstractText}</p></div>
                     </div>
                 </article>
@@ -1099,62 +1091,16 @@ function getPublicationLinkPriority(label) {
     return index === -1 ? 999 : index;
 }
 
-function getPublicationVenueTag(publication) {
-    const explicitBadge = typeof publication?.badge === 'string' ? publication.badge.trim() : '';
-    if (explicitBadge) {
-        return explicitBadge;
-    }
-
-    const venue = String(publication?.venue || '').trim();
-    const upperVenue = venue.toUpperCase();
-    const candidates = ['ACM MM', 'EMNLP', 'ACL', 'AAAI', 'TOIS', 'TNNLS', 'ARXIV', 'CEUR-WS'];
-    const matched = candidates.find(candidate => upperVenue.includes(candidate));
-    if (matched) {
-        return matched;
-    }
-
-    const compact = venue.replace(/\(.*\)/g, '').replace(/\d{4}.*/, '').trim();
-    return compact ? compact.slice(0, 14).toUpperCase() : 'PAPER';
-}
-
-function getPublicationVenueThemeClass(tag) {
-    const normalized = String(tag || '').toUpperCase();
-    if (normalized.includes('ACM MM')) {
-        return 'venue-theme-acmmm';
-    }
-    if (normalized.includes('EMNLP')) {
-        return 'venue-theme-emnlp';
-    }
-    if (normalized.includes('ACL')) {
-        return 'venue-theme-acl';
-    }
-    if (normalized.includes('AAAI')) {
-        return 'venue-theme-aaai';
-    }
-    if (normalized.includes('TOIS')) {
-        return 'venue-theme-tois';
-    }
-    if (normalized.includes('TNNLS')) {
-        return 'venue-theme-tnnls';
-    }
-    if (normalized.includes('CEUR-WS')) {
-        return 'venue-theme-ceur';
-    }
-    if (normalized.includes('ARXIV')) {
-        return 'venue-theme-arxiv';
-    }
-    return 'venue-theme-default';
-}
-
 function bindPublicationThumbnailFallback(container) {
     const images = container.querySelectorAll('.publication-thumb');
     images.forEach(image => {
         image.addEventListener('error', () => {
-            const media = image.closest('.publication-media');
-            if (media) {
-                media.classList.add('no-thumb');
+            const thumb = image.closest('.pub-thumb');
+            if (thumb) {
+                thumb.innerHTML = `<div class="pub-thumb-fallback">${escapeHtml(getUiText('publications.paperPreview'))}</div>`;
+            } else {
+                image.remove();
             }
-            image.remove();
         }, { once: true });
     });
 }

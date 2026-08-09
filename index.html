@@ -16,9 +16,9 @@
     <link rel="shortcut icon" href="pic/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,500;0,600;0,700;1,500&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles.css?v=20260808dates2">
+    <link rel="stylesheet" href="styles.css?v=20260809barron">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Open Graph / Social Media -->
     <meta property="og:title" content="Dongding Lin's Personal Homepage">
@@ -46,114 +46,95 @@
     </div>
 
     <div class="container">
-        <div class="main-content">
-            <section class="hero-card">
-                <h1 id="name">Loading...</h1>
-                <p id="personal-info">
-                    Loading personal information...
-                </p>
-
-                <div id="job-seeking-banner" class="job-seeking-banner" hidden>
-                    <i class="fas fa-briefcase"></i>
-                    <span class="job-seeking-text"></span>
-                </div>
-
-                <div id="social-links" class="social-links">
-                    Loading social links...
-                </div>
-
-                <p id="bio">
-                    Loading bio...
-                </p>
-            </section>
-
-            <section class="section-card">
-                <h2><i class="fas fa-code"></i> <span id="section-skills-title">Skills</span></h2>
-                <div id="skills-container" class="skills-container">
-                    Loading skills...
-                </div>
-            </section>
-
-            <section class="section-card">
-                <h2><i class="fas fa-file-alt"></i> <span id="section-publications-title">Selected Publications</span></h2>
-                <div id="publications-container" class="publications-container">
-                    Loading publications...
-                </div>
-
-                <div id="see-more-publications" class="see-more-publications">
-                    <a href="#" class="see-more-button">See All Publications <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </section>
-
-            <section class="section-card">
-                <h2><i class="fas fa-graduation-cap"></i> <span id="section-education-title">Education</span></h2>
-                <ul id="education-container">
-                    Loading education...
-                </ul>
-            </section>
-
-            <section class="section-card">
-                <h2><i class="fas fa-briefcase"></i> <span id="section-experience-title">Experience</span></h2>
-                <ul id="experience-container">
-                    Loading experience...
-                </ul>
-            </section>
-
-            <section class="section-card">
-                <h2><i class="fas fa-award"></i> <span id="section-awards-title">Honors and Awards</span></h2>
-                <div id="awards-container">
-                    Loading awards...
-                </div>
-            </section>
-
-            <section class="section-card">
-                <h2><i class="fas fa-tasks"></i> <span id="section-services-title">Academic Services</span></h2>
-                <p><strong id="services-reviewer-label">Reviewer</strong></p>
-                <ul id="service-container">
-                    Loading academic services...
-                </ul>
-            </section>
-
-            <section class="section-card">
-                <h2><i class="fas fa-chalkboard-teacher"></i> <span id="section-teaching-title">Teaching Experience</span></h2>
-                <ul id="teaching-container">
-                    Loading teaching experience...
-                </ul>
-            </section>
-
-            <section class="section-card">
-                <h2><i class="fas fa-coffee"></i> <span id="section-misc-title">Miscellaneous</span></h2>
-                <p id="misc-content">
-                    Loading miscellaneous information...
-                </p>
-            </section>
-        </div>
-
-        <aside class="sidebar">
-            <div class="profile-card">
+        <header class="intro">
+            <div class="intro-photo">
                 <img src="pic/profile.jpg" alt="Photo of Dongding Lin" class="profile-pic" loading="lazy">
-                <div class="contact-info">
-                    <p><i class="fas fa-envelope"></i> <span id="contact-email">Loading email...</span></p>
-                    <p><i class="fas fa-map-marker-alt"></i> <span id="contact-location">Loading location...</span></p>
+            </div>
+            <div class="intro-main">
+                <h1 id="name">Loading...</h1>
+                <div id="bio" class="intro-bio">
+                    Loading bio...
                 </div>
+                <p id="social-links" class="intro-links">
+                    Loading links...
+                </p>
+            </div>
+        </header>
+
+        <section>
+            <h2 id="section-news-title">News</h2>
+            <div id="news-container">
+                Loading news...
+            </div>
+        </section>
+
+        <section>
+            <h2 id="section-interests-title">Research Interests</h2>
+            <ul id="research-interests" class="interests-list">
+                Loading research interests...
+            </ul>
+        </section>
+
+        <section>
+            <h2 id="section-publications-title">Selected Publications</h2>
+            <div id="publications-container" class="publications-container">
+                Loading publications...
             </div>
 
-            <section class="section-card sidebar-card">
-                <h2><i class="fas fa-newspaper"></i> <span id="section-news-title">News</span></h2>
-                <div id="news-container">
-                    Loading news...
-                </div>
-            </section>
+            <div id="see-more-publications" class="see-more-publications">
+                <a href="#" class="see-more-button">See All Publications <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
 
-            <section class="section-card sidebar-card">
-                <h2><i class="fas fa-flask"></i> <span id="section-interests-title">Research Interests</span></h2>
-                <p id="interests-intro">My research interests include the following areas:</p>
-                <ul id="research-interests">
-                    Loading research interests...
-                </ul>
-                <p><em id="interests-outro">I am actively looking for collaborators interested in the above research directions. Please feel free to contact me if you are interested.</em></p>
-            </section>
-        </aside>
+        <section>
+            <h2 id="section-education-title">Education</h2>
+            <ul id="education-container">
+                Loading education...
+            </ul>
+        </section>
+
+        <section>
+            <h2 id="section-experience-title">Experience</h2>
+            <ul id="experience-container">
+                Loading experience...
+            </ul>
+        </section>
+
+        <section>
+            <h2 id="section-awards-title">Honors and Awards</h2>
+            <div id="awards-container">
+                Loading awards...
+            </div>
+        </section>
+
+        <section>
+            <h2 id="section-services-title">Academic Services</h2>
+            <p><strong id="services-reviewer-label">Reviewer</strong></p>
+            <ul id="service-container" class="service-list">
+                Loading academic services...
+            </ul>
+        </section>
+
+        <section>
+            <h2 id="section-teaching-title">Teaching Experience</h2>
+            <ul id="teaching-container">
+                Loading teaching experience...
+            </ul>
+        </section>
+
+        <section>
+            <h2 id="section-skills-title">Skills</h2>
+            <div id="skills-container" class="skills-container">
+                Loading skills...
+            </div>
+        </section>
+
+        <section>
+            <h2 id="section-misc-title">Miscellaneous</h2>
+            <p id="misc-content">
+                Loading miscellaneous information...
+            </p>
+        </section>
     </div>
 
     <a href="#" id="back-to-top" title="Back to Top" aria-label="Back to Top">
@@ -173,7 +154,7 @@
         </div>
     </footer>
 
-    <script src="theme.js?v=20260808dates2"></script>
-    <script src="js/data-loader.js?v=20260808dates2"></script>
+    <script src="theme.js?v=20260809barron"></script>
+    <script src="js/data-loader.js?v=20260809barron"></script>
 </body>
 </html>
