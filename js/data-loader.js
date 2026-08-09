@@ -1,6 +1,6 @@
 // Data loader for personal website
 const FALLBACK_PUBLICATIONS_URL = 'https://scholar.google.com/citations?view_op=list_works&hl=en&user=JM4i0R8AAAAJ';
-const DATA_VERSION = '2026-08-09-barron';
+const DATA_VERSION = '2026-08-10-teaching';
 const HOME_DATA_FILES = [
     'personal.json',
     'publications.json',
@@ -1186,12 +1186,17 @@ function renderExperience(data) {
     const teachingContainer = document.getElementById('teaching-container');
     const teachingItems = Array.isArray(data.teaching) ? data.teaching : [];
     let teachingHtml = '';
+    let previousRole = null;
 
     teachingItems.forEach(item => {
         const period = getLocalizedValue(item, 'period', '');
         const course = getLocalizedValue(item, 'course', '');
         const role = getLocalizedValue(item, 'role', '');
-        teachingHtml += `<li class="entry-item"><span class="entry-period">${escapeHtml(period)}</span><span class="entry-body">${escapeHtml(course)} — ${escapeHtml(role)}</span></li>`;
+        if (role && role !== previousRole) {
+            teachingHtml += `<li class="entry-group-label">${escapeHtml(role)}</li>`;
+        }
+        previousRole = role;
+        teachingHtml += `<li class="entry-item"><span class="entry-period">${escapeHtml(period)}</span><span class="entry-body">${escapeHtml(course)}</span></li>`;
     });
 
     teachingContainer.innerHTML = teachingHtml;

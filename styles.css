@@ -323,6 +323,16 @@ li.entry-item {
     min-width: 0;
 }
 
+.entry-group-label {
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 2px 0;
+}
+
+li.entry-item + .entry-group-label {
+    margin-top: 10px;
+}
+
 .experience-highlights {
     margin-top: 2px;
     color: var(--muted);

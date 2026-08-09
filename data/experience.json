@@ -94,21 +94,25 @@
     {
       "course": "NATURAL LANGUAGE PROCESSING (COMP5423_20242_A)",
       "role": "Teaching Assistant",
+      "role_zh": "助教",
       "period": "2024/25 Semester 2"
     },
     {
       "course": "DATA STRUCTURES AND DATABASE SYSTEMS (COMP5112_20241_B)",
       "role": "Teaching Assistant",
+      "role_zh": "助教",
       "period": "2024/25 Semester 1"
     },
     {
       "course": "NATURAL LANGUAGE PROCESSING (COMP5423_20232_A)",
       "role": "Teaching Assistant",
+      "role_zh": "助教",
       "period": "2023/24 Semester 2"
     },
     {
       "course": "MOBILE COMPUTING (COMP4342_20231_A)",
       "role": "Teaching Assistant",
+      "role_zh": "助教",
       "period": "2023/24 Semester 1"
     }
   ],
