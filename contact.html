@@ -16,9 +16,9 @@
     <link rel="shortcut icon" href="pic/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+SC:wght@500;600&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles.css?v=20260810teaching">
+    <link rel="stylesheet" href="styles.css?v=20260810studio">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Open Graph / Social Media -->
     <meta property="og:title" content="Contact Dongding Lin">
@@ -33,48 +33,56 @@
         Failed to load data. Please refresh the page or try again later.
     </div>
 
-    <div class="nav-bar">
-        <ul>
-            <li><a href="index.html"><i class="fas fa-home"></i> <span id="nav-home-text">Home</span></a></li>
-            <li><a href="contact.html"><i class="fas fa-envelope"></i> <span id="nav-contact-text">Contact</span></a></li>
-            <li>
-                <a href="#" id="language-toggle" class="language-toggle-link" aria-label="Switch language">
-                    <i class="fas fa-language"></i> <span id="language-toggle-text">中文</span>
-                </a>
-            </li>
-        </ul>
-    </div>
+    <header class="nav-bar">
+        <div class="nav-inner">
+            <a class="nav-brand" href="index.html"><span id="nav-brand-name">Dongding Lin</span></a>
+            <nav class="nav-right">
+                <ul class="nav-utils">
+                    <li><a href="index.html"><span id="nav-home-text">Home</span></a></li>
+                    <li><a href="contact.html" class="is-active"><span id="nav-contact-text">Contact</span></a></li>
+                    <li>
+                        <a href="#" id="language-toggle" class="language-toggle-link" aria-label="Switch language">
+                            <span id="language-toggle-text">中文</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container">
-        <div class="main-content">
-            <h1><i class="fas fa-paper-plane"></i> <span id="contact-title">Loading...</span></h1>
-            
-            <p id="contact-introduction">Loading introduction...</p>
-            
+    <main class="container container-narrow">
+        <section class="section section-lead">
+            <h1 id="contact-title">Loading...</h1>
+            <p id="contact-introduction" class="lead">Loading introduction...</p>
+        </section>
+
+        <section class="section">
             <div id="contact-methods-container" class="contact-methods">
                 Loading contact methods...
             </div>
-        </div>
-    </div>
-    
+        </section>
+    </main>
+
     <a href="#" id="back-to-top" title="Back to Top" aria-label="Back to Top">
         <i class="fas fa-arrow-up"></i>
     </a>
-    
+
     <footer>
-        <span id="footer-text">Loading footer...</span>
-        <div class="footer-meta" aria-live="polite">
-            <span id="visitor-counter">Visits: --</span>
-            <span class="footer-meta-separator">|</span>
-            <span id="current-time">Current Time: --</span>
-        </div>
-        <div class="visitor-map-block">
-            <div id="visitor-map-title" class="visitor-map-title">Visitor Map</div>
-            <div id="visitor-map-container" class="visitor-map-container"></div>
+        <div class="footer-inner">
+            <span id="footer-text">Loading footer...</span>
+            <div class="footer-meta" aria-live="polite">
+                <span id="visitor-counter">Visits: --</span>
+                <span class="footer-meta-separator">·</span>
+                <span id="current-time">Current Time: --</span>
+            </div>
+            <div class="visitor-map-block">
+                <div id="visitor-map-title" class="visitor-map-title">Visitor Map</div>
+                <div id="visitor-map-container" class="visitor-map-container"></div>
+            </div>
         </div>
     </footer>
 
-    <script src="theme.js?v=20260810teaching"></script>
-    <script src="js/data-loader.js?v=20260810teaching"></script>
+    <script src="theme.js?v=20260810studio"></script>
+    <script src="js/data-loader.js?v=20260810studio"></script>
 </body>
-</html> 
+</html>

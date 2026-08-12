@@ -1,6 +1,7 @@
 // Data loader for personal website
 const FALLBACK_PUBLICATIONS_URL = 'https://scholar.google.com/citations?view_op=list_works&hl=en&user=JM4i0R8AAAAJ';
-const DATA_VERSION = '2026-08-10-teaching';
+const DATA_VERSION = '2026-08-10-studio';
+const NEWS_COLLAPSED_COUNT = 6;
 const HOME_DATA_FILES = [
     'personal.json',
     'publications.json',
@@ -27,7 +28,12 @@ const UI_TEXT = {
         nav: {
             home: 'Home',
             contact: 'Contact',
-            toggleLanguage: '中文'
+            toggleLanguage: '中文',
+            news: 'News',
+            research: 'Research',
+            publications: 'Publications',
+            experience: 'Experience',
+            awards: 'Awards'
         },
         sections: {
             skills: 'Skills',
@@ -44,7 +50,13 @@ const UI_TEXT = {
         labels: {
             reviewer: 'Reviewer',
             email: 'Email',
-            interestsIntro: 'My research interests include the following areas:',
+            links: 'Links',
+            cv: 'CV',
+            focus: 'Focus',
+            lab: 'Lab',
+            based: 'Based',
+            showAllNews: 'Show all updates',
+            showFewerNews: 'Show fewer',
             interestsOutro: 'I am actively looking for collaborators interested in the above research directions. Please feel free to contact me if you are interested.',
             backToTop: 'Back to Top',
             noNews: 'No news updates yet.',
@@ -61,8 +73,8 @@ const UI_TEXT = {
         publications: {
             rank: 'Rank',
             citations: 'Citations',
-            abs: 'ABS',
-            hideAbs: 'HIDE ABS',
+            abs: 'Abstract',
+            hideAbs: 'Hide abstract',
             abstractUnavailable: 'Abstract not available',
             noPublications: 'No publications available yet.',
             paperPreview: 'Paper Preview',
@@ -84,7 +96,12 @@ const UI_TEXT = {
         nav: {
             home: '主页',
             contact: '联系',
-            toggleLanguage: 'EN'
+            toggleLanguage: 'EN',
+            news: '动态',
+            research: '研究',
+            publications: '论文',
+            experience: '经历',
+            awards: '荣誉'
         },
         sections: {
             skills: '技能',
@@ -101,7 +118,13 @@ const UI_TEXT = {
         labels: {
             reviewer: '审稿服务',
             email: '邮箱',
-            interestsIntro: '我的研究兴趣主要包括以下方向：',
+            links: '链接',
+            cv: '简历',
+            focus: '方向',
+            lab: '实验室',
+            based: '常驻',
+            showAllNews: '展开全部动态',
+            showFewerNews: '收起',
             interestsOutro: '欢迎对上述方向感兴趣的老师与同学联系交流，期待合作。',
             backToTop: '回到顶部',
             noNews: '暂无新闻更新。',
@@ -117,7 +140,7 @@ const UI_TEXT = {
         },
         publications: {
             rank: '级别',
-            citations: '引用',
+            citations: '被引',
             abs: '摘要',
             hideAbs: '收起摘要',
             abstractUnavailable: '暂无摘要',
@@ -142,6 +165,7 @@ const UI_TEXT = {
 let currentLanguage = DEFAULT_LANGUAGE;
 let cachedDataByFile = null;
 let isCurrentContactPage = false;
+let newsExpanded = false;
 let footerClockTimerId = null;
 let footerVisitCount = null;
 let visitorMapNeedsSetupHint = false;
@@ -153,6 +177,8 @@ document.addEventListener('DOMContentLoaded', function() {
     setLanguage(currentLanguage, { persist: false, rerender: false });
     initBackToTop();
     initFooterMeta();
+    initReveal();
+    initScrollSpy();
     initPage().catch(error => {
         showLoadingError(`Failed to load data: ${error.message}. Please refresh the page and try again.`);
     });
@@ -246,6 +272,11 @@ function setLanguage(lang, options = {}) {
 function applyStaticTranslations() {
     setTextById('nav-home-text', getUiText('nav.home'));
     setTextById('nav-contact-text', getUiText('nav.contact'));
+    setTextById('nav-news-text', getUiText('nav.news'));
+    setTextById('nav-research-text', getUiText('nav.research'));
+    setTextById('nav-publications-text', getUiText('nav.publications'));
+    setTextById('nav-experience-text', getUiText('nav.experience'));
+    setTextById('nav-awards-text', getUiText('nav.awards'));
     setTextById('language-toggle-text', getUiText('nav.toggleLanguage'));
     const languageToggle = document.getElementById('language-toggle');
     if (languageToggle) {
@@ -264,8 +295,10 @@ function applyStaticTranslations() {
     setTextById('section-interests-title', getUiText('sections.interests'));
 
     setTextById('services-reviewer-label', getUiText('labels.reviewer'));
-    setTextById('interests-intro', getUiText('labels.interestsIntro'));
     setTextById('interests-outro', getUiText('labels.interestsOutro'));
+    setTextById('fact-focus-label', getUiText('labels.focus'));
+    setTextById('fact-lab-label', getUiText('labels.lab'));
+    setTextById('fact-based-label', getUiText('labels.based'));
 
     const backToTop = document.getElementById('back-to-top');
     if (backToTop) {
@@ -390,6 +423,88 @@ function initBackToTop() {
     });
 }
 
+// Fade sections in as they enter the viewport
+function initReveal() {
+    const items = document.querySelectorAll('.reveal');
+    if (items.length === 0) {
+        return;
+    }
+
+    document.body.classList.add('reveal-ready');
+
+    const revealAll = () => items.forEach(item => item.classList.add('is-visible'));
+
+    if (!('IntersectionObserver' in window)) {
+        revealAll();
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
+
+    items.forEach(item => observer.observe(item));
+
+    // Safety net: never leave content hidden if the observer misses an element
+    const revealScrolledIntoView = () => {
+        items.forEach(item => {
+            if (!item.classList.contains('is-visible') &&
+                item.getBoundingClientRect().top < window.innerHeight * 0.94) {
+                item.classList.add('is-visible');
+            }
+        });
+    };
+
+    window.addEventListener('scroll', revealScrolledIntoView, { passive: true });
+    window.addEventListener('resize', revealScrolledIntoView, { passive: true });
+    window.addEventListener('load', revealScrolledIntoView);
+}
+
+// Underline the navigation anchor for the section currently in view
+function initScrollSpy() {
+    const links = Array.from(document.querySelectorAll('[data-nav-anchor]'));
+    const targets = links
+        .map(link => ({ link, section: document.getElementById(link.dataset.navAnchor) }))
+        .filter(item => item.section);
+
+    if (targets.length === 0) {
+        return;
+    }
+
+    let ticking = false;
+    const update = () => {
+        ticking = false;
+        const probe = window.pageYOffset + 140;
+        let active = null;
+
+        targets.forEach(item => {
+            const top = item.section.getBoundingClientRect().top + window.pageYOffset;
+            if (top <= probe) {
+                active = item;
+            }
+        });
+
+        targets.forEach(item => item.link.classList.toggle('is-active', item === active));
+    };
+
+    const requestUpdate = () => {
+        if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(update);
+        }
+    };
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate, { passive: true });
+    window.addEventListener('load', requestUpdate);
+    update();
+}
+
 function initPublicationAbstractToggle() {
     const container = document.getElementById('publications-container');
     if (!container || container.dataset.abstractBound === 'true') {
@@ -397,9 +512,7 @@ function initPublicationAbstractToggle() {
     }
 
     container.addEventListener('click', function(event) {
-        const button = event.target.closest('.abstract-toggle');
-        const media = event.target.closest('.publication-media[data-target]');
-        const trigger = button || media;
+        const trigger = event.target.closest('.abstract-toggle');
         if (!trigger) {
             return;
         }
@@ -423,11 +536,6 @@ function initPublicationAbstractToggle() {
             relatedButton.textContent = expanding ? getUiText('publications.hideAbs') : getUiText('publications.abs');
         }
 
-        const relatedMedia = container.querySelector(`.publication-media[data-target="${abstractId}"]`);
-        if (relatedMedia) {
-            relatedMedia.setAttribute('aria-expanded', String(expanding));
-        }
-
         if (expanding) {
             setTimeout(() => {
                 abstract.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -435,24 +543,10 @@ function initPublicationAbstractToggle() {
         }
     });
 
-    container.addEventListener('keydown', function(event) {
-        const media = event.target.closest('.publication-media[data-target]');
-        if (!media) {
-            return;
-        }
-
-        if (event.key !== 'Enter' && event.key !== ' ') {
-            return;
-        }
-
-        event.preventDefault();
-        media.click();
-    });
-
     container.dataset.abstractBound = 'true';
 }
 
-// Render personal information
+// Render the hero (kicker, name, tagline, bio, facts) and the profile card
 function renderPersonalInfo(data) {
     const contact = data.contact || {};
     const displayName = getLocalizedValue(data, 'name', '');
@@ -460,74 +554,96 @@ function renderPersonalInfo(data) {
     const department = getLocalizedValue(data, 'department', '');
     const university = getLocalizedValue(data, 'university', '');
     const location = getLocalizedValue(data, 'location', '');
-    const email = getLocalizedValue(data, 'email', '');
 
-    document.getElementById('name').textContent = displayName;
-
-    const personalInfoElement = document.getElementById('personal-info');
-    if (personalInfoElement) {
-        const personalInfoHtml = [
-            escapeHtml(title),
-            escapeHtml(department),
-            escapeHtml(university),
-            escapeHtml(location),
-            `<strong>${escapeHtml(getUiText('labels.email'))}</strong>: ${escapeHtml(email)}`
-        ].join('<br>');
-        personalInfoElement.innerHTML = personalInfoHtml;
-    }
+    setTextById('name', displayName);
+    setTextById('nav-brand-name', displayName);
+    setTextById('card-name', displayName);
+    setTextById('card-role', title);
+    setTextById('hero-kicker', [title, university].filter(Boolean).join(' · '));
+    setTextById('tagline', getLocalizedValue(data, 'tagline', ''));
 
     const bioWithLineBreaks = String(getLocalizedValue(data, 'bio', '')).replace(/\\n/g, '<br><br>');
     document.getElementById('bio').innerHTML = bioWithLineBreaks;
 
-    setTextById('contact-email', getLocalizedValue(contact, 'email', contact.email || ''));
-    setTextById('contact-location', getLocalizedValue(contact, 'location', contact.location || ''));
+    const interests = Array.isArray(data.research_interests) ? data.research_interests : [];
+    const focusText = interests
+        .map(item => getLocalizedValue(item, 'area', ''))
+        .filter(Boolean)
+        .join(' · ');
+    setTextById('fact-focus', focusText);
+    setTextById('fact-lab', department);
+    setTextById('fact-based', location);
 
-    const banner = document.getElementById('job-seeking-banner');
-    if (banner) {
-        const bannerText = String(getLocalizedValue(data, 'jobSeekingBanner', '')).trim();
-        const bannerTextEl = banner.querySelector('.job-seeking-text');
-
-        if (bannerText) {
-            if (bannerTextEl) {
-                bannerTextEl.textContent = bannerText;
-            }
-            banner.hidden = false;
-        } else {
-            banner.hidden = true;
-        }
-    }
-
-    const socialLinksContainer = document.getElementById('social-links');
-    const socialLinks = Array.isArray(data.social)
-        ? data.social.map(link => renderSocialLink(link)).filter(Boolean)
-        : [];
-
-    const contactEmail = String(contact.email || '').trim();
-    const emailLink = contactEmail
-        ? [`<a href="mailto:${escapeHtml(contactEmail)}">${escapeHtml(getUiText('labels.email'))}</a>`]
-        : [];
-
-    const cvEntries = Array.isArray(data.cvs) ? data.cvs : (data.cv ? [data.cv] : []);
-    const cvLinks = cvEntries.map(item => {
-        const iconClass = typeof item.icon === 'string' ? item.icon : 'fas fa-file';
-        const label = escapeHtml(getLocalizedValue(item, 'label', 'CV'));
-        const url = sanitizeUrl(item.url);
-        return `<a href="${url}" target="_blank" class="cv-button" rel="noopener noreferrer"><i class="${iconClass}"></i> ${label}</a>`;
-    });
-
-    socialLinksContainer.innerHTML = [...emailLink, ...socialLinks, ...cvLinks]
-        .map(link => link.trim())
-        .join('<span class="link-sep">/</span>');
-    bindWechatModalTriggers(socialLinksContainer);
+    renderProfileCard(data, contact);
 
     if (displayName) {
         document.title = buildPageTitle(displayName, false);
     }
 }
 
+function renderProfileCard(data, contact) {
+    const cardRows = document.getElementById('card-rows');
+    if (!cardRows) {
+        return;
+    }
+
+    const rows = [];
+    const email = String(getLocalizedValue(contact, 'email', contact.email || '')).trim();
+    if (email) {
+        rows.push({
+            label: getUiText('labels.email'),
+            value: `<a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a>`
+        });
+    }
+
+    const socialLinks = Array.isArray(data.social)
+        ? data.social.map(link => renderSocialLink(link)).filter(Boolean)
+        : [];
+    if (socialLinks.length > 0) {
+        rows.push({
+            label: getUiText('labels.links'),
+            value: joinInlineLinks(socialLinks)
+        });
+    }
+
+    const cvEntries = Array.isArray(data.cvs) ? data.cvs : (data.cv ? [data.cv] : []);
+    const cvLinks = cvEntries.map(item => {
+        const label = escapeHtml(getLocalizedValue(item, 'label', 'CV'));
+        const url = sanitizeUrl(item.url);
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+    });
+    if (cvLinks.length > 0) {
+        rows.push({
+            label: getUiText('labels.cv'),
+            value: joinInlineLinks(cvLinks)
+        });
+    }
+
+    cardRows.innerHTML = rows
+        .map(row => `
+            <div class="card-row">
+                <span class="card-label">${escapeHtml(row.label)}</span>
+                <span class="card-value">${row.value}</span>
+            </div>
+        `)
+        .join('');
+    bindWechatModalTriggers(cardRows);
+
+    const statusText = String(getLocalizedValue(data, 'status', '')).trim();
+    const statusElement = document.getElementById('card-status');
+    if (statusElement) {
+        statusElement.textContent = statusText;
+        statusElement.hidden = statusText.length === 0;
+    }
+}
+
+function joinInlineLinks(links) {
+    return links.map(link => link.trim()).join('<span class="link-sep">·</span>');
+}
+
 function renderSocialLink(link) {
     const iconClass = typeof link?.icon === 'string' ? link.icon : 'fas fa-link';
-    const platform = escapeHtml(getLocalizedValue(link, 'platform', 'Link'));
+    const platform = escapeHtml(getLocalizedValue(link, 'short', getLocalizedValue(link, 'platform', 'Link')));
 
     if (isWechatModalLink(link)) {
         const wechatId = escapeHtml(resolveWechatId(link));
@@ -752,7 +868,7 @@ function renderHighlights(highlights) {
     container.innerHTML = html;
 }
 
-// Render news items
+// Render news items, collapsing older entries behind a toggle
 function renderNews(newsItems) {
     const container = document.getElementById('news-container');
     const items = Array.isArray(newsItems) ? [...newsItems] : [];
@@ -760,19 +876,54 @@ function renderNews(newsItems) {
 
     items.sort((a, b) => (parseNewsDate(b.date) || 0) - (parseNewsDate(a.date) || 0));
 
-    items.forEach(item => {
+    items.forEach((item, index) => {
         const isRecent = isRecentNews(item.date);
         const content = getLocalizedValue(item, 'content', '');
         const displayDate = getLocalizedValue(item, 'date', getUiText('labels.dateTbd'));
+        const isCollapsed = !newsExpanded && index >= NEWS_COLLAPSED_COUNT;
         html += `
-            <div class="news-item">
+            <div class="news-item${isRecent ? ' is-recent' : ''}"${isCollapsed ? ' hidden' : ''}>
                 <span class="news-date">${escapeHtml(displayDate)}</span>
-                <span class="news-text">${isRecent ? '<span class="news-badge">New</span>' : ''}${escapeHtml(content)}</span>
+                <span class="news-text">${escapeHtml(content)}</span>
             </div>
         `;
     });
 
     container.innerHTML = html || `<p>${escapeHtml(getUiText('labels.noNews'))}</p>`;
+    updateNewsToggle(items.length);
+}
+
+function updateNewsToggle(totalItems) {
+    const toggle = document.getElementById('news-toggle');
+    if (!toggle) {
+        return;
+    }
+
+    if (totalItems <= NEWS_COLLAPSED_COUNT) {
+        toggle.hidden = true;
+        return;
+    }
+
+    toggle.hidden = false;
+    toggle.textContent = newsExpanded
+        ? `${getUiText('labels.showFewerNews')} ↑`
+        : `${getUiText('labels.showAllNews')} (${totalItems}) ↓`;
+    toggle.setAttribute('aria-expanded', String(newsExpanded));
+
+    if (toggle.dataset.bound !== 'true') {
+        toggle.addEventListener('click', () => {
+            newsExpanded = !newsExpanded;
+            applyNewsCollapse();
+            updateNewsToggle(document.querySelectorAll('.news-item').length);
+        });
+        toggle.dataset.bound = 'true';
+    }
+}
+
+function applyNewsCollapse() {
+    document.querySelectorAll('.news-item').forEach((item, index) => {
+        item.hidden = !newsExpanded && index >= NEWS_COLLAPSED_COUNT;
+    });
 }
 
 function parseNewsDate(rawDate) {
@@ -808,19 +959,39 @@ function isRecentNews(rawDate) {
     return daysAgo >= 0 && daysAgo <= RECENT_NEWS_WINDOW_DAYS;
 }
 
-// Render research interests
+// Render research interests as a card grid
 function renderResearchInterests(interests) {
     const container = document.getElementById('research-interests');
     const list = Array.isArray(interests) ? interests : [];
     let html = '';
 
-    list.forEach(item => {
+    list.forEach((item, index) => {
         const area = getLocalizedValue(item, 'area', '');
         const details = getLocalizedValue(item, 'details', '');
-        html += `<li><strong>${escapeHtml(area)}</strong>: ${escapeHtml(details)}</li>`;
+        html += `
+            <article class="interest-card">
+                <span class="interest-index">${String(index + 1).padStart(2, '0')}</span>
+                <span class="interest-title">${escapeHtml(area)}</span>
+                <span class="interest-detail">${escapeHtml(details)}</span>
+            </article>
+        `;
     });
 
     container.innerHTML = html;
+
+    const section = container.closest('.section');
+    if (!section) {
+        return;
+    }
+
+    let outro = section.querySelector('#interests-outro');
+    if (!outro) {
+        outro = document.createElement('p');
+        outro.id = 'interests-outro';
+        outro.className = 'interests-outro';
+        section.appendChild(outro);
+    }
+    outro.textContent = getUiText('labels.interestsOutro');
 }
 
 // Render skills
@@ -904,39 +1075,54 @@ function renderPublications(publicationsData) {
             publicationLinks.sort((a, b) => getPublicationLinkPriority(a.label) - getPublicationLinkPriority(b.label));
 
             const abstractId = `abstract-${index + 1}`;
-            const actionButtons = [
-                `<button type="button" class="pub-link abstract-toggle" data-target="${abstractId}" aria-expanded="false" aria-controls="${abstractId}">${escapeHtml(getUiText('publications.abs'))}</button>`
+            const venueRaw = getLocalizedValue(pub, 'venue', '');
+            const venueTag = getPublicationVenueTag(pub, venueRaw);
+
+            const actionPills = [
+                `<span class="pill pill-venue">${escapeHtml(venueTag)}</span>`,
+                `<button type="button" class="pill abstract-toggle" data-target="${abstractId}" aria-expanded="false" aria-controls="${abstractId}">${escapeHtml(getUiText('publications.abs'))}</button>`
             ];
             publicationLinks.forEach(link => {
-                actionButtons.push(
-                    `<a class="pub-link" href="${link.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>`
+                actionPills.push(
+                    `<a class="pill" href="${link.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(formatPublicationLinkLabel(link.label))}</a>`
                 );
             });
 
-            const rankHtml = pub.impact_factor
-                ? ` <span class="pub-rank">(${escapeHtml(pub.impact_factor)})</span>`
-                : '';
-            const citationsHtml = Number(pub.citations) > 0
-                ? ` <span class="pub-meta">· ${escapeHtml(getUiText('publications.citations'))}: ${escapeHtml(String(pub.citations))}</span>`
+            const venueMeta = [];
+            const venueDetail = getPublicationVenueDetail(venueRaw, venueTag);
+            if (venueDetail) {
+                venueMeta.push(escapeHtml(venueDetail));
+            }
+            if (pub.impact_factor) {
+                venueMeta.push(escapeHtml(pub.impact_factor));
+            }
+            if (Number(pub.citations) > 0) {
+                venueMeta.push(`${escapeHtml(getUiText('publications.citations'))}: ${escapeHtml(String(pub.citations))}`);
+            }
+            const venueHtml = venueMeta.length > 0
+                ? `<p class="pub-venue">${venueMeta.join(' · ')}</p>`
                 : '';
 
             const abstractText = getLocalizedValue(pub, 'abstract', '') ? escapeHtml(getLocalizedValue(pub, 'abstract', '')) : escapeHtml(getUiText('publications.abstractUnavailable'));
             const safeTitle = escapeHtml(getLocalizedValue(pub, 'title', 'Untitled'));
-            const safeVenue = escapeHtml(getLocalizedValue(pub, 'venue', 'Venue information unavailable'));
             const thumbnailUrl = sanitizeAssetUrl(pub.thumbnail);
             const thumbAlt = escapeHtml(getLocalizedValue(pub, 'thumbnail_alt', `Figure for ${pub.title || 'publication'}`));
-            const thumbHtml = thumbnailUrl === '#'
-                ? `<div class="pub-thumb-fallback">${escapeHtml(getUiText('publications.paperPreview'))}</div>`
-                : `<img class="publication-thumb" src="${thumbnailUrl}" alt="${thumbAlt}" loading="lazy">`;
+            const primaryUrl = publicationLinks.length > 0 ? publicationLinks[0].url : '';
+            const thumbInner = thumbnailUrl === '#'
+                ? `<span class="pub-thumb-fallback">${escapeHtml(getUiText('publications.paperPreview'))}</span>`
+                : `<img class="pub-thumb publication-thumb" src="${thumbnailUrl}" alt="${thumbAlt}" loading="lazy">`;
+            const mediaHtml = primaryUrl
+                ? `<a class="pub-media" href="${primaryUrl}" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">${thumbInner}</a>`
+                : `<div class="pub-media">${thumbInner}</div>`;
 
             html += `
                 <article class="publication">
-                    <div class="pub-thumb">${thumbHtml}</div>
+                    ${mediaHtml}
                     <div class="pub-info">
                         <h3 class="pub-title">${safeTitle}</h3>
                         <p class="pub-authors">${authorsHtml}</p>
-                        <p class="pub-venue"><em>${safeVenue}</em>${rankHtml}${citationsHtml}</p>
-                        <p class="pub-links">${actionButtons.join(' <span class="link-sep">/</span> ')}</p>
+                        ${venueHtml}
+                        <div class="pub-actions">${actionPills.join('')}</div>
                         <div id="${abstractId}" class="abstract" hidden><p>${abstractText}</p></div>
                     </div>
                 </article>
@@ -1091,13 +1277,47 @@ function getPublicationLinkPriority(label) {
     return index === -1 ? 999 : index;
 }
 
+function formatPublicationLinkLabel(label) {
+    const displayLabels = {
+        DOI: 'DOI',
+        PDF: 'PDF',
+        CODE: 'Code',
+        WEBSITE: 'Website',
+        PROJECT: 'Project',
+        DATA: 'Data',
+        POSTER: 'Poster',
+        VIDEO: 'Video',
+        LINK: 'Link'
+    };
+    const normalized = String(label || '').toUpperCase();
+    return displayLabels[normalized] || label;
+}
+
+// Short venue badge, e.g. "ACL 2026 (The 64th Annual Meeting…)" -> "ACL 2026"
+function getPublicationVenueTag(publication, venue) {
+    const explicitBadge = typeof publication?.badge === 'string' ? publication.badge.trim() : '';
+    if (explicitBadge) {
+        return explicitBadge;
+    }
+
+    const compact = String(venue || '').replace(/\(.*\)/g, '').trim();
+    return compact || 'Paper';
+}
+
+// The expanded venue name inside the parentheses, when it adds information
+function getPublicationVenueDetail(venue, venueTag) {
+    const match = String(venue || '').match(/\(([^)]+)\)/);
+    const detail = match ? match[1].trim() : String(venue || '').trim();
+    return detail && detail !== venueTag ? detail : '';
+}
+
 function bindPublicationThumbnailFallback(container) {
     const images = container.querySelectorAll('.publication-thumb');
     images.forEach(image => {
         image.addEventListener('error', () => {
-            const thumb = image.closest('.pub-thumb');
-            if (thumb) {
-                thumb.innerHTML = `<div class="pub-thumb-fallback">${escapeHtml(getUiText('publications.paperPreview'))}</div>`;
+            const media = image.closest('.pub-media');
+            if (media) {
+                media.innerHTML = `<span class="pub-thumb-fallback">${escapeHtml(getUiText('publications.paperPreview'))}</span>`;
             } else {
                 image.remove();
             }
@@ -1143,13 +1363,9 @@ function renderExperience(data) {
         const company = getLocalizedValue(item, 'company', '');
         const department = getLocalizedValue(item, 'department', '');
         const period = getLocalizedValue(item, 'period', '');
-        const details = department ? `, ${escapeHtml(department)}` : '';
-        const highlights = Array.isArray(item.highlights) ? item.highlights.map(text => getLocalizedValue(text, 'text', text)) : [];
-        const highlightsHtml = highlights.length > 0
-            ? `<div class="experience-highlights">${highlights.map(text => `<div class="experience-highlight-item">- ${escapeHtml(text)}</div>`).join('')}</div>`
-            : '';
+        const details = department ? `<span class="entry-detail">, ${escapeHtml(department)}</span>` : '';
 
-        expHtml += `<li class="entry-item"><span class="entry-period">${escapeHtml(period)}</span><span class="entry-body"><strong>${escapeHtml(position)}</strong>, ${escapeHtml(company)}${details}${highlightsHtml}</span></li>`;
+        expHtml += `<li class="entry-item"><span class="entry-period">${escapeHtml(period)}</span><span class="entry-body"><strong>${escapeHtml(position)}</strong>, ${escapeHtml(company)}${details}</span></li>`;
     });
 
     expContainer.innerHTML = expHtml;
@@ -1163,8 +1379,8 @@ function renderExperience(data) {
         const awardYear = getLocalizedValue(award, 'year', '');
         awardsHtml += `
             <li class="award-item">
-                <span class="award-name">${awardName}</span>
                 <span class="award-year">${escapeHtml(awardYear)}</span>
+                <span class="award-name">${awardName}</span>
             </li>
         `;
     });
@@ -1174,14 +1390,15 @@ function renderExperience(data) {
 
     const serviceContainer = document.getElementById('service-container');
     const reviewers = Array.isArray(data.academic_service?.reviewer) ? data.academic_service.reviewer : [];
-    let serviceHtml = '';
+    const serviceItems = reviewers
+        .map(item => (typeof item === 'string' ? item : getLocalizedValue(item, 'text', '')))
+        .flatMap(text => String(text).split(/[,、]/))
+        .map(text => text.trim())
+        .filter(Boolean);
 
-    reviewers.forEach(item => {
-        const service = typeof item === 'string' ? item : getLocalizedValue(item, 'text', '');
-        serviceHtml += `<li>${escapeHtml(service)}</li>`;
-    });
-
-    serviceContainer.innerHTML = serviceHtml;
+    serviceContainer.innerHTML = serviceItems
+        .map(text => `<span class="pill pill-static">${escapeHtml(text)}</span>`)
+        .join('');
 
     const teachingContainer = document.getElementById('teaching-container');
     const teachingItems = Array.isArray(data.teaching) ? data.teaching : [];

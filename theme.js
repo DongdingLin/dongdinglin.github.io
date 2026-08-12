@@ -8,13 +8,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add theme toggle button to navigation bar (if not exists)
     if (!document.getElementById('theme-toggle')) {
-        const navBar = document.querySelector('.nav-bar ul');
+        const navBar = document.querySelector('.nav-utils') || document.querySelector('.nav-bar ul');
         if (navBar) {
             const themeToggleLi = document.createElement('li');
             themeToggleLi.innerHTML = `
-                <a href="#" id="theme-toggle">
-                    <i class="fas fa-moon" id="theme-icon"></i> 
-                    <span id="theme-text">Dark Mode</span>
+                <a href="#" id="theme-toggle" aria-label="Switch colour theme">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                    <span id="theme-text">Dark</span>
                 </a>
             `;
             navBar.appendChild(themeToggleLi);
@@ -70,10 +70,10 @@ function updateThemeToggle(theme, language = 'en') {
     
     if (theme === 'dark') {
         themeIcon.className = 'fas fa-sun';
-        themeText.textContent = lang === 'zh' ? '浅色模式' : 'Light Mode';
+        themeText.textContent = lang === 'zh' ? '浅色' : 'Light';
     } else {
         themeIcon.className = 'fas fa-moon';
-        themeText.textContent = lang === 'zh' ? '深色模式' : 'Dark Mode';
+        themeText.textContent = lang === 'zh' ? '深色' : 'Dark';
     }
 }
 

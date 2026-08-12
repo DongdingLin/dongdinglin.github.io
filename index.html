@@ -16,9 +16,9 @@
     <link rel="shortcut icon" href="pic/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+SC:wght@500;600&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles.css?v=20260810teaching">
+    <link rel="stylesheet" href="styles.css?v=20260810studio">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Open Graph / Social Media -->
     <meta property="og:title" content="Dongding Lin's Personal Homepage">
@@ -33,128 +33,203 @@
         Failed to load data. Please refresh the page or try again later.
     </div>
 
-    <div class="nav-bar">
-        <ul>
-            <li><a href="index.html"><i class="fas fa-home"></i> <span id="nav-home-text">Home</span></a></li>
-            <li><a href="contact.html"><i class="fas fa-envelope"></i> <span id="nav-contact-text">Contact</span></a></li>
-            <li>
-                <a href="#" id="language-toggle" class="language-toggle-link" aria-label="Switch language">
-                    <i class="fas fa-language"></i> <span id="language-toggle-text">中文</span>
-                </a>
-            </li>
-        </ul>
-    </div>
+    <header class="nav-bar">
+        <div class="nav-inner">
+            <a class="nav-brand" href="index.html"><span id="nav-brand-name">Dongding Lin</span></a>
+            <nav class="nav-right">
+                <ul class="nav-anchors">
+                    <li><a href="#news" data-nav-anchor="news"><span id="nav-news-text">News</span></a></li>
+                    <li><a href="#research" data-nav-anchor="research"><span id="nav-research-text">Research</span></a></li>
+                    <li><a href="#publications" data-nav-anchor="publications"><span id="nav-publications-text">Publications</span></a></li>
+                    <li><a href="#experience" data-nav-anchor="experience"><span id="nav-experience-text">Experience</span></a></li>
+                    <li><a href="#awards" data-nav-anchor="awards"><span id="nav-awards-text">Awards</span></a></li>
+                </ul>
+                <ul class="nav-utils">
+                    <li><a href="contact.html"><span id="nav-contact-text">Contact</span></a></li>
+                    <li>
+                        <a href="#" id="language-toggle" class="language-toggle-link" aria-label="Switch language">
+                            <span id="language-toggle-text">中文</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container">
-        <header class="intro">
-            <div class="intro-photo">
-                <img src="pic/profile.jpg" alt="Photo of Dongding Lin" class="profile-pic" loading="lazy">
-            </div>
-            <div class="intro-main">
+    <main class="container">
+        <section class="hero">
+            <div class="hero-main">
+                <p class="hero-kicker"><span class="kicker-rule" aria-hidden="true"></span><span id="hero-kicker"></span></p>
                 <h1 id="name">Loading...</h1>
-                <div id="bio" class="intro-bio">
+                <p id="tagline" class="hero-tagline"></p>
+                <div id="bio" class="hero-bio">
                     Loading bio...
                 </div>
-                <p id="social-links" class="intro-links">
-                    Loading links...
-                </p>
+                <dl class="hero-facts">
+                    <div class="fact-row">
+                        <dt id="fact-focus-label">Focus</dt>
+                        <dd id="fact-focus"></dd>
+                    </div>
+                    <div class="fact-row">
+                        <dt id="fact-lab-label">Lab</dt>
+                        <dd id="fact-lab"></dd>
+                    </div>
+                    <div class="fact-row">
+                        <dt id="fact-based-label">Based</dt>
+                        <dd id="fact-based"></dd>
+                    </div>
+                </dl>
             </div>
-        </header>
 
-        <section>
-            <h2 id="section-news-title">News</h2>
-            <div id="news-container">
+            <aside class="hero-card">
+                <div class="card-head">
+                    <img src="pic/profile.jpg" alt="Photo of Dongding Lin" class="card-photo" loading="lazy">
+                    <div class="card-id">
+                        <p class="card-name" id="card-name"></p>
+                        <p class="card-role" id="card-role"></p>
+                    </div>
+                </div>
+                <div class="card-rows" id="card-rows"></div>
+                <p class="card-status" id="card-status"></p>
+            </aside>
+        </section>
+
+        <section id="news" class="section reveal">
+            <div class="section-head">
+                <span class="section-num" aria-hidden="true">01</span>
+                <h2 id="section-news-title">News</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </div>
+            <div id="news-container" class="news-list">
                 Loading news...
             </div>
+            <div class="news-actions">
+                <button type="button" id="news-toggle" class="pill pill-action" hidden></button>
+            </div>
         </section>
 
-        <section>
-            <h2 id="section-interests-title">Research Interests</h2>
-            <ul id="research-interests" class="interests-list">
+        <section id="research" class="section reveal">
+            <div class="section-head">
+                <span class="section-num" aria-hidden="true">02</span>
+                <h2 id="section-interests-title">Research Interests</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </div>
+            <div id="research-interests" class="interest-grid">
                 Loading research interests...
-            </ul>
+            </div>
         </section>
 
-        <section>
-            <h2 id="section-publications-title">Selected Publications</h2>
+        <section id="publications" class="section reveal">
+            <div class="section-head">
+                <span class="section-num" aria-hidden="true">03</span>
+                <h2 id="section-publications-title">Selected Publications</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </div>
             <div id="publications-container" class="publications-container">
                 Loading publications...
             </div>
-
-            <div id="see-more-publications" class="see-more-publications">
-                <a href="#" class="see-more-button">See All Publications <i class="fas fa-arrow-right"></i></a>
-            </div>
+            <div id="see-more-publications" class="see-more-publications"></div>
         </section>
 
-        <section>
-            <h2 id="section-education-title">Education</h2>
-            <ul id="education-container">
+        <section id="education" class="section reveal">
+            <div class="section-head">
+                <span class="section-num" aria-hidden="true">04</span>
+                <h2 id="section-education-title">Education</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </div>
+            <ul id="education-container" class="entry-list">
                 Loading education...
             </ul>
         </section>
 
-        <section>
-            <h2 id="section-experience-title">Experience</h2>
-            <ul id="experience-container">
+        <section id="experience" class="section reveal">
+            <div class="section-head">
+                <span class="section-num" aria-hidden="true">05</span>
+                <h2 id="section-experience-title">Experience</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </div>
+            <ul id="experience-container" class="entry-list">
                 Loading experience...
             </ul>
         </section>
 
-        <section>
-            <h2 id="section-awards-title">Honors and Awards</h2>
+        <section id="awards" class="section reveal">
+            <div class="section-head">
+                <span class="section-num" aria-hidden="true">06</span>
+                <h2 id="section-awards-title">Honors and Awards</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </div>
             <div id="awards-container">
                 Loading awards...
             </div>
         </section>
 
-        <section>
-            <h2 id="section-services-title">Academic Services</h2>
-            <p><strong id="services-reviewer-label">Reviewer</strong></p>
-            <ul id="service-container" class="service-list">
+        <section id="services" class="section reveal">
+            <div class="section-head">
+                <span class="section-num" aria-hidden="true">07</span>
+                <h2 id="section-services-title">Academic Services</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </div>
+            <p class="subhead" id="services-reviewer-label">Reviewer</p>
+            <div id="service-container" class="pill-row">
                 Loading academic services...
-            </ul>
+            </div>
         </section>
 
-        <section>
-            <h2 id="section-teaching-title">Teaching Experience</h2>
-            <ul id="teaching-container">
+        <section id="teaching" class="section reveal">
+            <div class="section-head">
+                <span class="section-num" aria-hidden="true">08</span>
+                <h2 id="section-teaching-title">Teaching Experience</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </div>
+            <ul id="teaching-container" class="entry-list">
                 Loading teaching experience...
             </ul>
         </section>
 
-        <section>
-            <h2 id="section-skills-title">Skills</h2>
+        <section id="skills" class="section reveal">
+            <div class="section-head">
+                <span class="section-num" aria-hidden="true">09</span>
+                <h2 id="section-skills-title">Skills</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </div>
             <div id="skills-container" class="skills-container">
                 Loading skills...
             </div>
         </section>
 
-        <section>
-            <h2 id="section-misc-title">Miscellaneous</h2>
-            <p id="misc-content">
+        <section id="misc" class="section reveal">
+            <div class="section-head">
+                <span class="section-num" aria-hidden="true">10</span>
+                <h2 id="section-misc-title">Miscellaneous</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </div>
+            <div id="misc-content" class="prose">
                 Loading miscellaneous information...
-            </p>
+            </div>
         </section>
-    </div>
+    </main>
 
     <a href="#" id="back-to-top" title="Back to Top" aria-label="Back to Top">
         <i class="fas fa-arrow-up"></i>
     </a>
 
     <footer>
-        <span id="footer-text">Loading footer...</span>
-        <div class="footer-meta" aria-live="polite">
-            <span id="visitor-counter">Visits: --</span>
-            <span class="footer-meta-separator">|</span>
-            <span id="current-time">Current Time: --</span>
-        </div>
-        <div class="visitor-map-block">
-            <div id="visitor-map-title" class="visitor-map-title">Visitor Map</div>
-            <div id="visitor-map-container" class="visitor-map-container"></div>
+        <div class="footer-inner">
+            <span id="footer-text">Loading footer...</span>
+            <div class="footer-meta" aria-live="polite">
+                <span id="visitor-counter">Visits: --</span>
+                <span class="footer-meta-separator">·</span>
+                <span id="current-time">Current Time: --</span>
+            </div>
+            <div class="visitor-map-block">
+                <div id="visitor-map-title" class="visitor-map-title">Visitor Map</div>
+                <div id="visitor-map-container" class="visitor-map-container"></div>
+            </div>
         </div>
     </footer>
 
-    <script src="theme.js?v=20260810teaching"></script>
-    <script src="js/data-loader.js?v=20260810teaching"></script>
+    <script src="theme.js?v=20260810studio"></script>
+    <script src="js/data-loader.js?v=20260810studio"></script>
 </body>
 </html>
